@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "client-install": "npm install --prefix client",
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "server:debug": "nodemon --inspect app.js",
     "client": "npm start --prefix client",
-    "server": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev:debug": "concurrently \"npm run server:debug\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
