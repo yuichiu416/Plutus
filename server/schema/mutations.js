@@ -105,10 +105,14 @@ const mutations = new GraphQLObjectType({
                 title: { type: GraphQLString },
                 body: { type: GraphQLString },
                 receiver: { type: GraphQLString },
-                sender: { type: GraphQLString }
             },
-            resolve(_, { title, body, receiver, sender }){
-                return new Message({ title, body, sender, receiver }).save();
+            resolve(_, { title, body, receiver }, context){
+                const validUser = await AuthService.verifyUser({ token: context.token });
+
+                if (validUser.loggedIn){
+                    const sender = validUser.id;
+                    return new Message({ title, body, sender, receiver, sender }).save();
+                }
             }
         },
         addReply: {
@@ -118,11 +122,16 @@ const mutations = new GraphQLObjectType({
                 title: { type: GraphQLString },
                 body: { type: GraphQLString },
                 receiver: { type: GraphQLString },
-                sender: { type: GraphQLString }
             },
-            async resolve(_, { id, title, body, receiver, sender }) {
-                const reply = await new Message({ title, body, receiver, sender }).save();
-                return Message.addReply(id, reply);
+            async resolve(_, { id, title, body, receiver }, context) {
+                const validUser = await AuthService.verifyUser({ token: context.token });
+
+                if (validUser.loggedIn){
+                    const sender = validUser.id;
+                    const reply = await new Message({ title, body, receiver, sender }).save();
+                    return Message.addReply(id, reply);
+                }
+                
             }
         }
     }

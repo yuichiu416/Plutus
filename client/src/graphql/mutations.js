@@ -45,4 +45,20 @@ const CREATE_ITEM = gql`
   }
 `;
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM };
+const CREATE_MESSAGE = gql`
+  mutation newMessage($title: String!, $body: String!, $receiver: String!){
+    id
+    title
+    body
+    receiver{
+      id
+      name
+    }
+    replies{
+      title
+      body
+    }
+  }
+`
+
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE };
