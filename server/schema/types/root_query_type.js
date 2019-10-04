@@ -5,12 +5,11 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
 const UserType = require("./user_type");
 const MessageType = require('./message_type');
-const User = mongoose.model("user");
-const Message = mongoose.model("message");
 const CategoryType = require("./category_type");
 const ItemType = require("./item_type");
 
 const User = mongoose.model("user");
+const Message = mongoose.model("message");
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 

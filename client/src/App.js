@@ -11,7 +11,7 @@ import CreateItem from './components/Items/Createitem';
 const App = () => {
   return (
     <div>
-      <Splash />
+      {/* <Splash /> */}
       <Nav />
       <h1>Online Store</h1>
       <Switch>

@@ -2,64 +2,27 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 
 import { CREATE_ITEM } from "../../graphql/mutations";
-import Queries from "../../graphql/queries";
-const { FETCH_ITEMS } = Queries;
 
-const categories = [
-    {
-        "id": "5d977f06d450234e406dab17",
-        "name": "Contemporary Art"
-    },
-    {
-        "id": "5d977f28d450234e406dab18",
-        "name": "Pop Art"
-    },
-    {
-        "id": "5d977f5cd450234e406dab19",
-        "name": "Modern"
-    },
-    {
-        "id": "5d977f61d450234e406dab1a",
-        "name": "Abstract"
-    },
-    {
-        "id": "5d977f66d450234e406dab1b",
-        "name": "Minimalism"
-    },
-    {
-        "id": "5d977f6ad450234e406dab1c",
-        "name": "Surrealism"
-    },
-    {
-        "id": "5d977f6dd450234e406dab1d",
-        "name": "Vintage"
-    },
-    {
-        "id": "5d977f72d450234e406dab1e",
-        "name": "Renaissance"
-    },
-    {
-        "id": "5d97a4846246191f3c60e8c1",
-        "name": "Others"
-    }
-]
+import { Query } from "react-apollo";
+
+import Queries from "../../graphql/queries";
+const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
 class CreateItem extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             message: "",
             name: "",
             seller: "",
             description: "",
-            imageURLs: [],
             starting_price: 0,
             minimum_price: 0,
-            // location: [],
             category: "",
             sold: false,
             appraised: false
+            // imageURLs: [],
+            // location: [],
         };
     }
 
@@ -93,6 +56,21 @@ class CreateItem extends Component {
     updateLocation(){
         return e => console.log("current location");
     }
+    fetchCategories(){
+        return <Query query={FETCH_CATEGORIES}>
+            {({ loading, error, data }) => {
+                if (loading) return "Loading...";
+                if (error) return `Error! ${error.message}`;
+                return (
+                    <select>
+                        {data.categories.map(category => (
+                            <option value={category.id}>{category.name}</option>
+                        ))}
+                    </select>
+                );
+            }}
+        </Query>
+    }
     handleSubmit(e, newItem) {
         e.preventDefault();
         newItem({
@@ -100,21 +78,19 @@ class CreateItem extends Component {
                 name: this.state.name,
                 seller: this.state.seller,
                 description: this.state.description,
-                // imageURLs: this.state.imageURLs,
                 starting_price: this.state.starting_price,
                 minimum_price: this.state.minimum_price,
-                // location: this.state.location,
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised
+                // imageURLs: this.state.imageURLs,
+                // location: this.state.location,
             }
         });
     }
 
     render() {
-        const options = categories.map(item => {
-            return <option value={item.id}>{item.name}</option>
-        })
+        const categories = this.fetchCategories();
         return (
             <Mutation
                 mutation={CREATE_ITEM}
@@ -176,9 +152,6 @@ class CreateItem extends Component {
                                 placeholder="Location"
                             /> */}
                             
-                            <select>
-                                {options}
-                            </select>
                             <label>
                                 Sold:
                                 <input
@@ -188,11 +161,15 @@ class CreateItem extends Component {
                                 />
                             </label>
                             <label>
-                            Appraised: 
-                            <input
-                                onChange={this.update("appraised")}
-                                value={this.state.appraised}
-                            />
+                                Appraised: 
+                                <input
+                                    onChange={this.update("appraised")}
+                                    value={this.state.appraised}
+                                />
+                            </label>
+                            <label>
+                                Category:
+                                {categories}
                             </label>
                             <button type="submit">Create Item</button>
                         </form>
