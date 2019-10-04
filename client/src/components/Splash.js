@@ -237,10 +237,11 @@ function Splash() {
       <div className="logo-container">
         {/* <div className="splash-logo"></div> */}
         {/* <p className="plutus-splash">PLUTUS</p> */}
-        <img src="Logo4.png" alt="plutus-logo" 
+        <img src="Logo4.png" alt="plutus-logo" class="plutus-logo"
         style={{
           zIndex: 10,
-          margin: 160 + 100
+          
+          // height: 300
            }} />
       </div>
     </div>
