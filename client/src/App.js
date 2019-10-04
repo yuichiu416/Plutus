@@ -5,10 +5,12 @@ import Register from "./components/Register";
 import { Route, Switch } from 'react-router-dom';
 import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
+import Splash from './components/Splash';
 
 const App = () => {
   return (
     <div>
+      <Splash />
       <Nav />
       <h1>Online Store</h1>
       <Switch>
