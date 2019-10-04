@@ -1,0 +1,39 @@
+body {
+  /* font-family: Arial, Helvetica, "Liberation Sans", FreeSans, sans-serif; */
+  background-color: #000;
+  margin:0;
+  padding:0;
+  border-width:0;
+  z-index: 1;
+}
+.logo-container {
+  max-width: 50%;
+  max-height: 50%;
+  /* margin: 30px; */
+  /* align-content: center; */
+  display: flex;
+  animation: fadeIn 3s;
+  /* animation-delay: 5s; */
+  animation-fill-mode: inherit;
+
+  /* visibility: hidden; */
+}
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+  /* background-size: contain; */
+  /* max-width: 10px; */
+
+/* .plutus-splash {
+  margin: 2%;
+  font-size: 28px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+} */
+
+.logo-photo {
+    
+
+}
