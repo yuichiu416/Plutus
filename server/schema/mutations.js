@@ -6,9 +6,11 @@ const AuthService = require("../services/auth");
 const UserType = require("./types/user_type");
 const CategoryType = require("./types/category_type");
 const ItemType = require("./types/item_type");
+const MessageType = require('./types/message_type');
 
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
+const Message = mongoose.model("message");
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -61,12 +63,7 @@ const mutations = new GraphQLObjectType({
             }
         },
       
-        // imageURL: {
-        //     type: GraphQLString
-        // },
-        // coordinate: {
-        //     type: GraphQLFloat
-        // },
+        
         newCategory: {
             type: CategoryType,
             args: {
@@ -102,7 +99,43 @@ const mutations = new GraphQLObjectType({
                 return Item.remove({ _id: id });
             }
         },
+        newMessage: {
+            type: MessageType,
+            args: {
+                title: { type: GraphQLString },
+                body: { type: GraphQLString },
+                receiver: { type: GraphQLString },
+            },
+            async resolve(_, { title, body, receiver }, context){
+                const validUser = await AuthService.verifyUser({ token: context.token });
+
+                if (validUser.loggedIn){
+                    const sender = validUser.id;
+                    return new Message({ title, body, sender, receiver, sender }).save();
+                }
+            }
+        },
+        addReply: {
+            type: MessageType,
+            args: {
+                id: { type: GraphQLString },
+                title: { type: GraphQLString },
+                body: { type: GraphQLString },
+                receiver: { type: GraphQLString },
+            },
+            async resolve(_, { id, title, body, receiver }, context) {
+                const validUser = await AuthService.verifyUser({ token: context.token });
+
+                if (validUser.loggedIn){
+                    const sender = validUser.id;
+                    const reply = await new Message({ title, body, receiver, sender }).save();
+                    return Message.addReply(id, reply);
+                }
+                
+            }
+        }
     }
+    
 });
 
 module.exports = mutations;

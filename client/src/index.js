@@ -50,7 +50,6 @@ const client = new ApolloClient({
         console.log("networkError", networkError);
     }
 });
-
 // then if we do have a token we'll go through with our mutation
 if (token) {
     client
@@ -60,7 +59,8 @@ if (token) {
         .then(({ data }) => {
             cache.writeData({
                 data: {
-                    isLoggedIn: data.verifyUser.loggedIn
+                    isLoggedIn: data.verifyUser.loggedIn,
+                    id: data.verifyUser.id
                 }
             });
         });

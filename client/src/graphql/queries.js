@@ -32,4 +32,13 @@ export default {
         }
       }
     `,
+    FETCH_USERS: gql`
+      query FetchUsers{
+        users{
+          id
+          name
+          email
+        }
+      }
+    `
 };

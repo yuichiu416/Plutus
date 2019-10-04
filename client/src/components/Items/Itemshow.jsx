@@ -1,22 +1,22 @@
 import React from 'react';
 import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
-import { Link } from "react-router-dom";
 const { FETCH_ITEMS } = queries;
 
-class ItemIndex extends React.Component {
+class ItemShow extends React.Component {
+
     render() {
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
+                    const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     return (
-                        <ul>
-                            {data.items.map((item, idx) => (
-                                <Link to={`/${item.id}`} key={`/${item.id}`} ><li key={item.id}>{item.name}: {item.description}</li></Link>
-                            ))}
-                        </ul>
+                        <div>
+                            <h1>The item name is: {item.name}</h1>
+                            <p>{item.description}</p>
+                        </div>
                     );
                 }}
             </Query>
@@ -24,4 +24,4 @@ class ItemIndex extends React.Component {
     }
 }
 
-export default ItemIndex;
+export default ItemShow;
