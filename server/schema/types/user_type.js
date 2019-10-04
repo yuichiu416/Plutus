@@ -13,14 +13,14 @@ const UserType = new GraphQLObjectType({
         email: { type: GraphQLString },
         token: { type: GraphQLString },
         loggedIn: { type: GraphQLBoolean },
-        // inbox: {
-        //     type: InboxType,
-        //     resolve(parentValue){
-        //         return Inbox.findById(parentValue.inbox)
-        //             .then(inbox => inbox)
-        //             .catch(err => err)
-        //     }
-        // }
+        inbox: {
+            type: InboxType,
+            resolve(parentValue){
+                return Inbox.findById(parentValue.inbox)
+                    .then(inbox => inbox)
+                    .catch(err => null);
+            }
+        }
 
     })
 });
