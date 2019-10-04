@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Splash() {
 
   "use strict";
@@ -15,7 +16,7 @@ function Splash() {
 
 
   const nbEddies = 5;
-  const nbParticles = 1000; // number of particles
+  const nbParticles = 2000; // number of particles
   const lifeTime = 1000; // average lifetime of particles
 
   let canv, ctx;   // canvas and drawing context
@@ -234,7 +235,13 @@ function Splash() {
 
     <div className="Splash">
       <div className="logo-container">
-        <div className="splash-logo"></div>
+        {/* <div className="splash-logo"></div> */}
+        {/* <p className="plutus-splash">PLUTUS</p> */}
+        <img src="Logo4.png" alt="plutus-logo" 
+        style={{
+          zIndex: 10,
+          margin: 160 + 100
+           }} />
       </div>
     </div>
   );
