@@ -43,7 +43,8 @@ const register = async data => {
         const token = jwt.sign({ id: user._id }, keys);
 
         // then return our created token, set loggedIn to be true, null their password, and send the rest of the user
-        return { token, loggedIn: true, ...user._doc, password: null };
+        const userId = user.id;
+        return { token, loggedIn: true, ...user._doc, id: userId, password: null };
     } catch (err) {
         throw err;
     }
@@ -58,7 +59,7 @@ const logout = async data => {
 
         const token = "";
 
-        return { token, loggedIn: false, ...user._doc, password: null };
+        return { token, loggedIn: false, ...user._doc,  password: null };
     } catch (err) {
         throw err;
     }
@@ -81,8 +82,9 @@ const login = async data => {
         if (!isValidPassword) throw new Error("Invalid password");
 
         const token = jwt.sign({ id: user.id }, keys);
+        const userId = user.id;
 
-        return { token, loggedIn: true, ...user._doc, password: null };
+        return { token, loggedIn: true, ...user._doc, id: userId, password: null };
     } catch (err) {
         throw err;
     }
