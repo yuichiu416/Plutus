@@ -2,3 +2,5 @@
 
 require("./User");
 require("./Message");
+require("./Category");
+require("./Item");

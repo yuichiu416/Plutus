@@ -6,5 +6,20 @@ export default {
     query IsUserLoggedIn {
       isLoggedIn @client
     }
-  `
+  `,
+  FETCH_ITEMS: gql`
+    query FetchItems{
+      items {
+        id
+        name
+        seller
+        description
+        starting_price
+        minimum_price
+        location
+        category
+        sold
+        appraised
+      }
+    }`,
 };

@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
 import Splash from './components/Splash';
+import CreateItem from './components/Items/Createitem';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
+        <Route path="/create_item" component={CreateItem} />
       </Switch>
     </div>
   );
