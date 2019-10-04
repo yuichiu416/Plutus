@@ -5,13 +5,13 @@ body {
   padding:0;
   border-width:0;
   z-index: 1;
-  
 }
 .logo-container {
   display: flex;
   animation: fadeIn 3s;
   /* animation-delay: 5s; */
   animation-fill-mode: inherit;
+  
 
   /* visibility: hidden; */
 }
@@ -34,6 +34,7 @@ body {
   width: 70vw;
   margin-top: 23%;
   margin-left: 15%;
+
   /* margin: 0 auto; */
 }
 
