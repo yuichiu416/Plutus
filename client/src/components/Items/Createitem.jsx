@@ -179,16 +179,21 @@ class CreateItem extends Component {
                             <select>
                                 {options}
                             </select>
-                            <input
-                                onChange={this.update("sold")}
-                                value={this.state.sold}
-                                placeholder="Sold"
-                            />
+                            <label>
+                                Sold:
+                                <input
+                                    onChange={this.update("sold")}
+                                    value={this.state.sold}
+                                    placeholder="Sold"
+                                />
+                            </label>
+                            <label>
+                            Appraised: 
                             <input
                                 onChange={this.update("appraised")}
                                 value={this.state.appraised}
-                                placeholder="Appraised"
                             />
+                            </label>
                             <button type="submit">Create Item</button>
                         </form>
                         <p>{this.state.message}</p>
