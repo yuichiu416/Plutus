@@ -7,6 +7,7 @@ import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
 import Splash from './components/Splash';
 import CreateItem from './components/Items/Createitem';
+import CreateMessage from "./components/Messages/CreateMessage";
 
 const App = () => {
   return (
@@ -17,7 +18,8 @@ const App = () => {
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
-        <Route path="/create_item" component={CreateItem} />
+        <Route exact path="/messages/new" component={CreateMessage}/>
+        <Route exact path="/create_item" component={CreateItem} />
       </Switch>
     </div>
   );
