@@ -28,5 +28,13 @@ const MessageSchema = new Schema({
     }]
 })
 
+MessageSchema.statics.addReply =  (id, reply) => {
+    const Message = mongoose.model("message");
+
+    return Message.findById(id).then(message => {
+        message.replies.push(reply);
+        return message.save().then(message => message);
+    })
+}
 
 module.exports = mongoose.model("message", MessageSchema);

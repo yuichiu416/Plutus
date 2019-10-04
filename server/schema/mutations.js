@@ -110,8 +110,23 @@ const mutations = new GraphQLObjectType({
             resolve(_, { title, body, receiver, sender }){
                 return new Message({ title, body, sender, receiver }).save();
             }
+        },
+        addReply: {
+            type: MessageType,
+            args: {
+                id: { type: GraphQLString },
+                title: { type: GraphQLString },
+                body: { type: GraphQLString },
+                receiver: { type: GraphQLString },
+                sender: { type: GraphQLString }
+            },
+            async resolve(_, { id, title, body, receiver, sender }) {
+                const reply = await new Message({ title, body, receiver, sender }).save();
+                return Message.addReply(id, reply);
+            }
         }
     }
+    
 });
 
 module.exports = mutations;
