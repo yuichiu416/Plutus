@@ -20,6 +20,10 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    inbox: {
+        type: Schema.Types.ObjectId,
+        ref: "inbox"
     }
 });
 
