@@ -3,11 +3,12 @@
 const mongoose = require("mongoose");
 const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
-
 const UserType = require("./user_type");
-
+const MessageType = require('./message_type');
+const InboxType = require('./inbox_type');
 const User = mongoose.model("user");
-
+const Message = mongoose.model("message");
+const Inbox = mongoose.model("inbox");
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
     fields: () => ({
@@ -24,6 +25,32 @@ const RootQueryType = new GraphQLObjectType({
                 return User.findById(args._id);
             }
         },
+        // message: {
+        //     type: MessageType,
+        //     args: { _id: new GraphQLNonNull(GraphQLID) },
+        //     resolve(_, args){
+        //         return Message.findById(args._id);
+        //     }
+        // },
+        // messages: {
+        //     type: new GraphQLList(MessageType),
+        //     resolve(){
+        //         return Message.find({});
+        //     }
+        // },
+        // inbox: {
+        //     type: InboxType,
+        //     args: { _id: new GraphQLNonNull(GraphQLID) },
+        //     resolve(_, args){
+        //         return Inbox.findById(args._id);
+        //     }
+        // },
+        // inboxes: {
+        //     type: new GraphQLList(InboxType),
+        //     resolve() {
+        //         return Inbox.find({});
+        //     }
+        // }
         
     })
 });
