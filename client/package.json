@@ -8,9 +8,12 @@
     "apollo-link": "^1.2.13",
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
     "react": "^16.10.2",
     "react-apollo": "^3.1.2",
     "react-dom": "^16.10.2",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
   "scripts": {
