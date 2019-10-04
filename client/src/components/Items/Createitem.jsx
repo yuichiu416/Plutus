@@ -5,6 +5,45 @@ import { CREATE_ITEM } from "../../graphql/mutations";
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS } = Queries;
 
+const categories = [
+    {
+        "id": "5d977f06d450234e406dab17",
+        "name": "Contemporary Art"
+    },
+    {
+        "id": "5d977f28d450234e406dab18",
+        "name": "Pop Art"
+    },
+    {
+        "id": "5d977f5cd450234e406dab19",
+        "name": "Modern"
+    },
+    {
+        "id": "5d977f61d450234e406dab1a",
+        "name": "Abstract"
+    },
+    {
+        "id": "5d977f66d450234e406dab1b",
+        "name": "Minimalism"
+    },
+    {
+        "id": "5d977f6ad450234e406dab1c",
+        "name": "Surrealism"
+    },
+    {
+        "id": "5d977f6dd450234e406dab1d",
+        "name": "Vintage"
+    },
+    {
+        "id": "5d977f72d450234e406dab1e",
+        "name": "Renaissance"
+    },
+    {
+        "id": "5d97a4846246191f3c60e8c1",
+        "name": "Others"
+    }
+]
+
 class CreateItem extends Component {
     constructor(props) {
         super(props);
@@ -49,10 +88,10 @@ class CreateItem extends Component {
         }
     }
     updateImageURLs(){
-        return e => console.log("upload image url")
+        return e => console.log("upload image url");
     }
     updateLocation(){
-        return e => console.log("current location")
+        return e => console.log("current location");
     }
     handleSubmit(e, newItem) {
         e.preventDefault();
@@ -61,7 +100,7 @@ class CreateItem extends Component {
                 name: this.state.name,
                 seller: this.state.seller,
                 description: this.state.description,
-                imageURLs: this.state.imageURLs,
+                // imageURLs: this.state.imageURLs,
                 starting_price: this.state.starting_price,
                 minimum_price: this.state.minimum_price,
                 // location: this.state.location,
@@ -73,6 +112,9 @@ class CreateItem extends Component {
     }
 
     render() {
+        const options = categories.map(item => {
+            return <option value={item.id}>{item.name}</option>
+        })
         return (
             <Mutation
                 mutation={CREATE_ITEM}
@@ -133,11 +175,10 @@ class CreateItem extends Component {
                                 value={this.state.location}
                                 placeholder="Location"
                             /> */}
-                            <input
-                                onChange={this.update("category")}
-                                value={this.state.category}
-                                placeholder="Category"
-                            />
+                            
+                            <select>
+                                {options}
+                            </select>
                             <input
                                 onChange={this.update("sold")}
                                 value={this.state.sold}
