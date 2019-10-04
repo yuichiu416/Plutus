@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLString } = graphql;
 const User = mongoose.model("user");
-debugger
+const Message = mongoose.model("message");
 const MessageType = new GraphQLObjectType({
     name: "MessageType",
     fields: () => ({
@@ -25,6 +25,14 @@ const MessageType = new GraphQLObjectType({
                     .catch(err => null)
             }
         },
+        replies: {
+            type: new GraphQLList(MessageType),
+            resolve(parentValue){
+                return Message.findById(parentValue.id)
+                        .populate("replies")
+                        .then(message => message.replies);
+            }
+        }
     })
 })
 

@@ -6,9 +6,11 @@ const AuthService = require("../services/auth");
 const UserType = require("./types/user_type");
 const CategoryType = require("./types/category_type");
 const ItemType = require("./types/item_type");
+const MessageType = require('./types/message_type');
 
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
+const Message = mongoose.model("message");
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -61,12 +63,7 @@ const mutations = new GraphQLObjectType({
             }
         },
       
-        // imageURL: {
-        //     type: GraphQLString
-        // },
-        // coordinate: {
-        //     type: GraphQLFloat
-        // },
+        
         newCategory: {
             type: CategoryType,
             args: {
@@ -102,6 +99,18 @@ const mutations = new GraphQLObjectType({
                 return Item.remove({ _id: id });
             }
         },
+        newMessage: {
+            type: MessageType,
+            args: {
+                title: { type: GraphQLString },
+                body: { type: GraphQLString },
+                receiver: { type: GraphQLString },
+                sender: { type: GraphQLString }
+            },
+            resolve(_, { title, body, receiver, sender }){
+                return new Message({ title, body, sender, receiver }).save();
+            }
+        }
     }
 });
 

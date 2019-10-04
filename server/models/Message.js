@@ -21,7 +21,12 @@ const MessageSchema = new Schema({
     receiver: {
         type: Schema.Types.ObjectId,
         ref: "user"
-    }
+    },
+    replies: [{
+        type: Schema.Types.ObjectId,
+        ref: "message"
+    }]
 })
+
 
 module.exports = mongoose.model("message", MessageSchema);

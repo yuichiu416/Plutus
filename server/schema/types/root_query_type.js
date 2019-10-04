@@ -9,9 +9,6 @@ const User = mongoose.model("user");
 const Message = mongoose.model("message");
 const CategoryType = require("./category_type");
 const ItemType = require("./item_type");
-
-const User = mongoose.model("user");
-const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 
 const RootQueryType = new GraphQLObjectType({
