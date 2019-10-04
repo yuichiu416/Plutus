@@ -5,10 +5,8 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
 const UserType = require("./user_type");
 const MessageType = require('./message_type');
-const InboxType = require('./inbox_type');
 const User = mongoose.model("user");
 const Message = mongoose.model("message");
-const Inbox = mongoose.model("inbox");
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
     fields: () => ({
@@ -38,19 +36,7 @@ const RootQueryType = new GraphQLObjectType({
                 return Message.find({});
             }
         },
-        inbox: {
-            type: InboxType,
-            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
-            resolve(_, args){
-                return Inbox.findById(args._id);
-            }
-        },
-        inboxes: {
-            type: new GraphQLList(InboxType),
-            resolve() {
-                return Inbox.find({});
-            }
-        }
+       
         
     })
 });

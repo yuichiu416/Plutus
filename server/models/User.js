@@ -21,10 +21,10 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    inbox: {
+    messages: [{
         type: Schema.Types.ObjectId,
-        ref: "inbox"
-    }
+        ref: "message"
+    }]
 });
 
 module.exports = mongoose.model("user", UserSchema);

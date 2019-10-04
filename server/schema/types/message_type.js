@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLString } = graphql;
-const Inbox = mongoose.model("inbox");
 const User = mongoose.model("user");
 debugger
 const MessageType = new GraphQLObjectType({
@@ -13,19 +12,19 @@ const MessageType = new GraphQLObjectType({
         receiver: { 
             type: require('./user_type'),
             resolve(parentValue){
-                return User.findById(parentValue.user)
+                return User.findById(parentValue.receiver)
                     .then(user => user)
                     .catch(err => null)
             }
          },
-        inbox: {
-            type: require('./inbox_type'),
-            resolve(parentValue){
-                return Inbox.findById(parentValue.inbox)
-                    .then(inbox => inbox)
-                    .catch(err => null);
+        sender: {
+            type: require('./user_type'),
+            resolve(parentValue) {
+                return User.findById(parentValue.sender)
+                    .then(user => user)
+                    .catch(err => null)
             }
-        }
+        },
     })
 })
 

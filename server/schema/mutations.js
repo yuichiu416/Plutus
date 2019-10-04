@@ -53,7 +53,8 @@ const mutations = new GraphQLObjectType({
                     throw new Error('Sorry, you need to be logged in to use the website.');
                 }
             }
-        }
+        },
+      
     }
 });
 
