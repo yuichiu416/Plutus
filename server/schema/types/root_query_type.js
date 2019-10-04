@@ -25,32 +25,32 @@ const RootQueryType = new GraphQLObjectType({
                 return User.findById(args._id);
             }
         },
-        // message: {
-        //     type: MessageType,
-        //     args: { _id: new GraphQLNonNull(GraphQLID) },
-        //     resolve(_, args){
-        //         return Message.findById(args._id);
-        //     }
-        // },
-        // messages: {
-        //     type: new GraphQLList(MessageType),
-        //     resolve(){
-        //         return Message.find({});
-        //     }
-        // },
-        // inbox: {
-        //     type: InboxType,
-        //     args: { _id: new GraphQLNonNull(GraphQLID) },
-        //     resolve(_, args){
-        //         return Inbox.findById(args._id);
-        //     }
-        // },
-        // inboxes: {
-        //     type: new GraphQLList(InboxType),
-        //     resolve() {
-        //         return Inbox.find({});
-        //     }
-        // }
+        message: {
+            type: MessageType,
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) }},
+            resolve(_, args){
+                return Message.findById(args._id);
+            }
+        },
+        messages: {
+            type: new GraphQLList(MessageType),
+            resolve(){
+                return Message.find({});
+            }
+        },
+        inbox: {
+            type: InboxType,
+            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+            resolve(_, args){
+                return Inbox.findById(args._id);
+            }
+        },
+        inboxes: {
+            type: new GraphQLList(InboxType),
+            resolve() {
+                return Inbox.find({});
+            }
+        }
         
     })
 });
