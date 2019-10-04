@@ -42,8 +42,6 @@ const RootQueryType = new GraphQLObjectType({
                 return Message.find({});
             }
         },
-       
-        
         items: {
             type: new GraphQLList(ItemType),
             resolve() {

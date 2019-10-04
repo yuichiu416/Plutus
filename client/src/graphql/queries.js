@@ -8,7 +8,7 @@ export default {
     }
   `,
   FETCH_ITEMS: gql`
-    query FetchItems{
+    query fetchItems{
       items {
         id
         name
@@ -16,8 +16,10 @@ export default {
         description
         starting_price
         minimum_price
-        location
-        category
+        category{
+          id
+          name
+        }
         sold
         appraised
       }

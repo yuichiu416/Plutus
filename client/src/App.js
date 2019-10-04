@@ -7,6 +7,7 @@ import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
 import Splash from './components/Splash';
 import CreateItem from './components/Items/Createitem';
+import ItemIndex from "./components/Items/ItemIndex";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
         <Route path="/create_item" component={CreateItem} />
+        <Route exact path="/" component={ItemIndex} />
       </Switch>
     </div>
   );
