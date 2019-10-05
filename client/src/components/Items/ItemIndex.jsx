@@ -11,6 +11,8 @@ class ItemIndex extends React.Component {
                 {({ loading, error, data }) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
+                    if(data.items.length === 0)
+                        return <h1>No items yet</h1>
                     return (
                         <ul>
                             {data.items.map((item, idx) => (
