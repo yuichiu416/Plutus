@@ -63,7 +63,7 @@ class CreateItem extends Component {
                 if (error) return `Error! ${error.message}`;
                 return (
                     <select onChange={this.update("category")}>
-                    <option value="" disabled selected>--Please Select--</option>
+                    <option value="" disabled defaultValue>--Please Select--</option>
                         {data.categories.map((category) => (
                             <option value={category.id} key={category.id}>{category.name}</option>
                         ))}

@@ -13,8 +13,10 @@
     "react": "^16.10.2",
     "react-apollo": "^3.1.2",
     "react-dom": "^16.10.2",
+    "react-medium-editor": "^1.8.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "websocket": "^1.0.30"
   },
   "scripts": {
     "start": "react-scripts start",
