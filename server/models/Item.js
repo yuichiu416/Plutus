@@ -9,8 +9,8 @@ const ItemSchema = new Schema({
         required: true
     },
     seller:{
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: "user"
     },
     description: {
         type: String,

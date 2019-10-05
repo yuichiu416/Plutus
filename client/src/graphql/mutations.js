@@ -46,17 +46,19 @@ const CREATE_ITEM = gql`
 `;
 
 const CREATE_MESSAGE = gql`
-  mutation newMessage($title: String!, $body: String!, $receiver: String!){
-    id
-    title
-    body
-    receiver{
+  mutation CreateMessage($title: String!, $body: String!, $receiver: String!){
+    newMessage(title: $title, body: $body, receiver: $receiver){
       id
-      name
-    }
-    replies{
       title
       body
+      receiver{
+        id
+        name
+      }
+      replies{
+        title
+        body
+      }
     }
   }
 `

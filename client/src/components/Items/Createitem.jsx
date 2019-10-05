@@ -14,7 +14,6 @@ class CreateItem extends Component {
         this.state = {
             message: "",
             name: "",
-            seller: "",
             description: "",
             starting_price: 0,
             minimum_price: 0,
@@ -28,6 +27,7 @@ class CreateItem extends Component {
 
     update(field) {
         return e => this.setState({ [field]: e.target.value });
+        // this.setState({ category: e.target.options[e.target.selectedIndex].value })
     }
 
     // we need to remember to update our cache directly with our new item
@@ -62,9 +62,10 @@ class CreateItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 return (
-                    <select>
-                        {data.categories.map(category => (
-                            <option value={category.id}>{category.name}</option>
+                    <select onChange={this.update("category")}>
+                    <option value="" disabled selected>--Please Select--</option>
+                        {data.categories.map((category) => (
+                            <option value={category.id} key={category.id}>{category.name}</option>
                         ))}
                     </select>
                 );
@@ -76,7 +77,6 @@ class CreateItem extends Component {
         newItem({
             variables: {
                 name: this.state.name,
-                seller: this.state.seller,
                 description: this.state.description,
                 starting_price: this.state.starting_price,
                 minimum_price: this.state.minimum_price,

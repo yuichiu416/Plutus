@@ -62,8 +62,6 @@ const mutations = new GraphQLObjectType({
                 }
             }
         },
-      
-        
         newCategory: {
             type: CategoryType,
             args: {
@@ -78,16 +76,18 @@ const mutations = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                seller: { type: GraphQLString },
-                // imageURLs: new GraphQLList({ type: GraphQLString }),
+                seller: { type: GraphQLID },
                 starting_price: {type: GraphQLFloat},
                 minimum_price: {type: GraphQLFloat},
-                // location: new GraphQLList({ type: GraphQLFloat }),
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean }
+                // imageURLs: new GraphQLList({ type: GraphQLString }),
+                // location: new GraphQLList({ type: GraphQLFloat }),
             },
-            async resolve(_, { name, description, seller, starting_price, minimum_price, category, sold, appraised }) {
+            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised }, context) {
+                const obj = await AuthService.verifyUser({ token: context.token });
+                const seller = obj.id;
                 const item = await new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised }).save();
                 return Item.updateItemCategory(item._doc._id, category);
             }

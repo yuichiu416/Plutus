@@ -27,15 +27,13 @@ cache.writeData({
     }
 });
 
-
 const httpLink = createHttpLink({
     uri: "http://localhost:5000/graphql",
     headers: {
         // pass our token into the header of each request
-        authorization: localStorage.getItem("auth-token")
+        authorization: token
     }
 });
-
 // make sure we log any additional errors we receive
 onError(({ graphQLErrors }) => {
     if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));

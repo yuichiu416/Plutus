@@ -12,7 +12,7 @@ const ItemType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         description: { type: GraphQLString },
-        seller: { type: GraphQLString },
+        seller: { type: GraphQLID },
         starting_price: { type: GraphQLFloat },
         minimum_price: { type: GraphQLFloat },
         category: {

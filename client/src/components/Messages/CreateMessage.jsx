@@ -1,7 +1,9 @@
 import React from 'react'
+import { Query } from 'react-apollo';
 import { Mutation } from "react-apollo";
 import { CREATE_MESSAGE } from '../../graphql/mutations';
-
+import Queries from '../../graphql/queries';
+const { FETCH_USERS } = Queries;
 
 class CreateMessage extends React.Component {
     constructor(props){
@@ -9,8 +11,10 @@ class CreateMessage extends React.Component {
         this.state = {
             title: "",
             body: "",
+            receiver: "",
             message: ""
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     update(field){
@@ -24,7 +28,8 @@ class CreateMessage extends React.Component {
         newMessage({
             variables: {
                 title: this.state.title,
-                body: this.state.body
+                body: this.state.body,
+                receiver: this.state.receiver,
             }
         })
     }
@@ -36,10 +41,10 @@ class CreateMessage extends React.Component {
                 mutation={CREATE_MESSAGE}
                 onError={err => this.setState({message: err.message})}
                 onCompleted={data => {
-                    this,this.setState({message: "The message has been sent"}); 
+                    this.setState({message: "The message has been sent"}); 
                 }}>
                     {(newMessage, { data }) => {
-                        <div>
+                        return <div>
                             <form onSubmit={e => this.handleSubmit(e, newMessage)}>
                                 <input 
                                     type="text" 
@@ -53,7 +58,24 @@ class CreateMessage extends React.Component {
                                     onChange={this.update("body")}
                                     placeholder="Type your message here"/>
 
-                                
+                              
+                                <div>
+                                    <select value={this.state.receiver} onChange={this.update("receiver")}>
+                                        <option value="" disabled>--Please Select--</option>
+                                        <Query query={FETCH_USERS}>
+                                            {({ loading, error, data }) => {
+                                                if (loading) return <p>Loading...</p>
+                                                if (error) return <p>{error}</p>
+                                                return data.users.map(({ id, name, email }) => {
+                                                    return <option value={id}>
+                                                        {name}
+                                                    </option>
+                                                })
+                                            }}
+                                        </Query>
+                                    </select>
+                                </div>
+                                <button>Send</button>
                             </form>
                         </div>
                     }}
@@ -61,3 +83,5 @@ class CreateMessage extends React.Component {
         )
     }
 }
+
+export default CreateMessage;
