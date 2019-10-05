@@ -7,14 +7,11 @@ body {
   z-index: 1;
 }
 .logo-container {
-  max-width: 50%;
-  max-height: 50%;
-  /* margin: 30px; */
-  /* align-content: center; */
   display: flex;
   animation: fadeIn 3s;
   /* animation-delay: 5s; */
   animation-fill-mode: inherit;
+  
 
   /* visibility: hidden; */
 }
@@ -33,7 +30,14 @@ body {
   font-weight: bold;
 } */
 
-.logo-photo {
-    
+.plutus-logo {
+  width: 70vw;
+  margin-top: 23%;
+  margin-left: 15%;
 
+  /* margin: 0 auto; */
+}
+
+.plutus-logo:hover {
+  cursor: pointer;
 }
