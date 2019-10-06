@@ -5,6 +5,7 @@ import Editor from 'react-medium-editor';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Image } from 'cloudinary-react';
 
 const { FETCH_ITEMS } = queries;
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
@@ -95,10 +96,18 @@ class ItemShow extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
+                    const images = item.champions.map(champion => {
+                        return <li>
+                            <Image cloudName='chinweenie' publicId={champion}/>
+                        </li>
+                    })
                     return (
                         <div>
                             <h1>The item name is: {item.name}</h1>
                             <p>{item.description}</p>
+                            <ul>
+                                {images}
+                            </ul>
                             <Editor
                                 options={{
                                     placeholder: {

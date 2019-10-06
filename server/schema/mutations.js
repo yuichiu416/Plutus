@@ -84,13 +84,14 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                imageURLs: { type: new GraphQLList(GraphQLString) },
-                location: { type: new GraphQLList(GraphQLFloat) }
+                location: { type: new GraphQLList(GraphQLFloat) },
+                champions: { type: new GraphQLList(GraphQLString) }
             },
-            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, imageURLs, location }, context) {
+            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions }, context) {
+                debugger
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location }).save();
+                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, location }).save();
             }
         },
         updateItem: {
@@ -105,13 +106,12 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                imageURLs: { type: new GraphQLList(GraphQLString) },
                 location: { type: new GraphQLList(GraphQLFloat) }
             },
-            async resolve(_, {id, name, description, starting_price, minimum_price, category, sold, appraised, imageURLs, location }, context) {
+            async resolve(_, {id, name, description, starting_price, minimum_price, category, sold, appraised, location }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location };
+                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, location };
                 debugger;
                 return Item.findOneAndUpdate(
                     { _id: id },

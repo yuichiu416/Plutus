@@ -32,6 +32,8 @@ class ChampionUpload extends React.Component {
                         name,
                         publicId: response.data.public_id
                     }
+                }).then(champion => {
+
                 })
             });
         }

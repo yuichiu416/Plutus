@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import axios from 'axios';
-import { CREATE_ITEM, UPDATE_ITEM_IMAGES } from "../../graphql/mutations";
+import { CREATE_ITEM, UPDATE_ITEM_IMAGES, CREATE_CHAMPION } from "../../graphql/mutations";
 
 import { Query } from "react-apollo";
 
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
+
+
+
 
 class CreateItem extends Component {
     constructor(props) {
@@ -60,9 +63,7 @@ class CreateItem extends Component {
             });
         }
     }
-    updateImageURLs(){
-        return e => console.log("upload image url");
-    }
+    
     updateLocation(){
         return e => console.log("current location");
     }
@@ -82,8 +83,27 @@ class CreateItem extends Component {
             }}
         </Query>
     }
-    handleSubmit(e, newItem, updateItemImages) {
+
+    async updateImageURLs() {
+        const publicIdsArray = [];
+
+        for (let i = 0; i < this.files.length; i++) {
+            const formData = new FormData();
+            formData.append('file', this.files[i]);
+            formData.append('upload_preset', 'ml_default');
+            const champion = await axios.post(
+                'https://api.cloudinary.com/v1_1/chinweenie/image/upload',
+                formData
+            )
+            
+            publicIdsArray.push(champion.data.public_id);
+        }
+        return publicIdsArray;
+    }
+
+    async handleSubmit(e, newItem) {
         e.preventDefault();
+        const championsArr = await this.updateImageURLs();
         newItem({
             variables: {
                 name: this.state.name,
@@ -93,33 +113,15 @@ class CreateItem extends Component {
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised,
-                imageURLs: this.state.imageURLs,
-                location: this.state.location
+                location: this.state.location,
+                champions: championsArr
             }
-        }).then(response => {
-            const itemId = response.data.newItem.id;
-            for (let i = 0; i < this.files.length; i++) {
-                const formData = new FormData();
-                formData.append('file', this.files[i]);
-                formData.append('upload_preset', 'ml_default');
-                axios.post(
-                    'https://api.cloudinary.com/v1_1/chinweenie/image/upload',
-                    formData
-                ).then(response => {
-                    return updateItemImages({
-                        variables: {
-                            id: itemId,
-                            publicId: response.data.public_id
-                        }
-                    })
-                });
-            }
-        })
-
-        
-        // Upload file to cloudinary and store publicId to item
+        }).then(item => {
+            debugger
+            console.log(item.data);
+        })  
     }
-
+      
     render() {
         const categories = this.fetchCategories();
         return (
@@ -137,10 +139,10 @@ class CreateItem extends Component {
                     });
                 }}
             >
-                {(newItem, updateItemImages ) => {
+                {(newItem) => {
                     return <div>
-                    
-                        <form onSubmit={e => this.handleSubmit(e, newItem, updateItemImages)}>
+
+                        <form onSubmit={e => this.handleSubmit(e, newItem)}>
                             <input
                                 onChange={this.update("name")}
                                 value={this.state.name}
@@ -153,7 +155,7 @@ class CreateItem extends Component {
                             />
 
                             <label>
-                                Starting Price: 
+                                Starting Price:
                                 <input
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
@@ -173,7 +175,7 @@ class CreateItem extends Component {
                                 Upload Images:
                                 <input type="file" multiple onChange={this.onDrop} />
                             </label>
-                            
+
                             <label>
                                 Sold:
                                 <input
@@ -183,7 +185,7 @@ class CreateItem extends Component {
                                 />
                             </label>
                             <label>
-                                Appraised: 
+                                Appraised:
                                 <input
                                     onChange={this.update("appraised")}
                                     value={this.state.appraised}
@@ -203,6 +205,11 @@ class CreateItem extends Component {
             </Mutation>
         );
     }
+
+        
 }
+
+    
+
 
 export default CreateItem;

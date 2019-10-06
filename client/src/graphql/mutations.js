@@ -28,8 +28,8 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float]) {
-    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String]) {
+    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions) {
       id
       name
       description
@@ -41,7 +41,7 @@ const CREATE_ITEM = gql`
       }
       sold
       appraised
-      imageURLs
+      champions
       location
     }
   }
@@ -61,7 +61,7 @@ const UPDATE_ITEM = gql`
       }
       sold
       appraised
-      imageURLs
+      champions
       location
     }
   }
