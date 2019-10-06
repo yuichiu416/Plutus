@@ -22,8 +22,29 @@ export default {
         }
         sold
         appraised
+        champions
+        location
       }
     }`,
+    FETCH_ITEM: gql`
+    query fetchItem($id: String!){
+      item(id: $id){
+        name
+        seller
+        description
+        starting_price
+        minimum_price
+        category{
+          id
+          name
+        }
+        sold
+        appraised
+        imageURLs
+        location
+      }
+    }
+    `,
     FETCH_CATEGORIES: gql`
       query categories{
         categories{
@@ -38,6 +59,24 @@ export default {
           id
           name
           email
+        }
+      }
+    `,
+    FETCH_CHAMPION: gql`
+      query FetchChampion($id: String!){
+        champion(id: $id){
+          id
+          name
+          publicId
+        }
+      }
+    `,
+    FETCH_CHAMPIONS: gql`
+      query FetchChampions{
+        champions{
+          id
+          name
+          publicId
         }
       }
     `

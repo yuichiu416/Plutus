@@ -16,12 +16,9 @@ const ItemSchema = new Schema({
         type: String,
         required: true
     },
-    // imageURLs: [
-    //     {
-    //         type: String,
-    //         required: true
-    //     }
-    // ],
+    champions: [{
+        type: String,
+    }],
     starting_price:{
         type: Number,
         default: 0
@@ -30,12 +27,11 @@ const ItemSchema = new Schema({
         type: Number,
         default: 0
     },
-    // location: [
-    //     {
-    //         type: Number,
-    //         required: true
-    //     }
-    // ],
+    location: [
+        {
+            type: Number
+        }
+    ],
     category:{
         type: Schema.Types.ObjectId,
         ref: "categories"
@@ -55,6 +51,7 @@ const ItemSchema = new Schema({
 ItemSchema.statics.updateItemCategory = (itemId, categoryId) => {
     const Item = mongoose.model("items");
     const Category = mongoose.model("categories");
+    debugger;
     return Item.findById(itemId).then(item => {
         // if the item already had a category
         if (item.category) {

@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import axios from 'axios';
-import { CREATE_ITEM, UPDATE_ITEM_IMAGES, CREATE_CHAMPION } from "../../graphql/mutations";
-
+import { UPDATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
-
+import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
-const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
+const { FETCH_ITEMS, FETCH_ITEM, FETCH_CATEGORIES } = Queries;
 
-
-
-class CreateItem extends Component {
+class EditItem extends Component {
     constructor(props) {
         super(props);
+        this.id = this.props.match.params.id;
         this.state = {
             message: "",
             name: "",
@@ -24,18 +21,37 @@ class CreateItem extends Component {
             sold: false,
             appraised: false,
             imageURLs: [],
-            location: []
+            location: [],
         };
-        this.files = [];
-        this.onDrop = this.onDrop.bind(this);
+        this.itemDetails = this.setDefaultItemState();
+        this.mapItemToState = this.mapItemToState.bind(this);
+        this.updateCache = this.updateCache.bind(this);
     }
-
-    onDrop(e) {
-        e.preventDefault();
-        const files = Array.from(e.target.files);
-        for (let i = 0; i < files.length; i++) {
-            this.files.push(files[i]);
-        }
+    mapItemToState(item){
+        this.setState({
+            id: this.id,
+            name: item.name,
+            description: item.description,
+            starting_price: item.starting_price,
+            minimum_price: item.minimum_price,
+            category: item.category.id,
+            sold: item.sold,
+            appraised: item.appraised,
+            imageURLs: item.imageURLs,
+            location: item.location
+        });
+    }
+    setDefaultItemState(){
+        return <Query query={FETCH_ITEMS}>
+            {({ loading, error, data }) => {
+                if (loading) return "Loading...";
+                if (error) return `Error! ${error.message}`;
+                const item = data.items.find(obj => obj.id === this.id);
+                if(item)
+                    this.mapItemToState(item);
+                return null;
+            }}
+        </Query>
     }
 
     update(field) {
@@ -46,24 +62,31 @@ class CreateItem extends Component {
     // we need to remember to update our cache directly with our new item
     updateCache(cache, { data }) {
         let items;
+        console.log(cache);
         try {
             // if we've already fetched the items then we can read the
             // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
+            // items = cache.readQuery({ query: FETCH_ITEM, variables: { id: this.id } });
+            console.log(items)
         } catch (err) {
             return;
         }
         // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
-            let newItem = data.newItem;
+            let item = data.updateItem;
+            itemArray.find((obj, idx) => (obj.id === this.id ? itemArray[idx] = item : ""));
+
             cache.writeQuery({
                 query: FETCH_ITEMS,
-                data: { items: itemArray.concat(newItem) }
+                data: { items: itemArray }
             });
         }
     }
-    
+    updateImageURLs(){
+        return e => console.log("upload image url");
+    }
     updateLocation(){
         return e => console.log("current location");
     }
@@ -73,39 +96,23 @@ class CreateItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 return (
-                    <select onChange={this.update("category")} value={this.state.category || "default"}>
-                    <option value="default" disabled>--Please Select--</option>
+                    <select onChange={this.update("category")} value={this.state.category}>
                         {data.categories.map((category) => (
-                            <option value={category.id} key={category.id}>{category.name}</option>
+                            <option value={category.id} key={category.id}>
+                            {category.name}
+                            </option>
                         ))}
                     </select>
                 );
             }}
         </Query>
     }
-
-    async updateImageURLs() {
-        const publicIdsArray = [];
-
-        for (let i = 0; i < this.files.length; i++) {
-            const formData = new FormData();
-            formData.append('file', this.files[i]);
-            formData.append('upload_preset', 'ml_default');
-            const champion = await axios.post(
-                'https://api.cloudinary.com/v1_1/chinweenie/image/upload',
-                formData
-            )
-            
-            publicIdsArray.push(champion.data.public_id);
-        }
-        return publicIdsArray;
-    }
-
-    async handleSubmit(e, newItem) {
+    handleSubmit(e, updateItem) {
         e.preventDefault();
-        const championsArr = await this.updateImageURLs();
-        newItem({
+        updateItem({
             variables: {
+                id: this.id,
+                message: this.state.message,
                 name: this.state.name,
                 description: this.state.description,
                 starting_price: this.state.starting_price,
@@ -113,36 +120,35 @@ class CreateItem extends Component {
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised,
-                location: this.state.location,
-                champions: championsArr
+                imageURLs: this.state.imageURLs,
+                location: this.state.location
             }
-        }).then(item => {
-            debugger
-            console.log(item.data);
-        })  
+        }).then( response => {
+            this.mapItemToState(response.data.updateItem);
+            this.props.history.push(`/${this.id}`);
+        }).catch(err => console.log(err));
     }
-      
     render() {
         const categories = this.fetchCategories();
         return (
             <Mutation
-                mutation={CREATE_ITEM}
+                mutation={UPDATE_ITEM}
                 // if we error out we can set the message here
                 onError={err => this.setState({ message: err.message })}
                 // we need to make sure we update our cache once our new item is created
                 update={(cache, data) => this.updateCache(cache, data)}
                 // when our query is complete we'll display a success message
                 onCompleted={data => {
-                    const { name } = data.newItem;
+                    const { name } = data.updateItem;
                     this.setState({
-                        message: `New item ${name} created successfully`
+                        message: `Item ${name} updated successfully`
                     });
                 }}
             >
-                {(newItem) => {
-                    return <div>
-
-                        <form onSubmit={e => this.handleSubmit(e, newItem)}>
+                {(updateItem, { data }) => (
+                    <div>
+                        {this.itemDetails}
+                        <form onSubmit={e => this.handleSubmit(e, updateItem)}>
                             <input
                                 onChange={this.update("name")}
                                 value={this.state.name}
@@ -153,9 +159,13 @@ class CreateItem extends Component {
                                 value={this.state.description}
                                 placeholder="description"
                             />
-
+                            {/* <input
+                                onChange={this.updateImageURLs()}
+                                value={this.state.imageURLs}
+                                placeholder="Upload image urls"
+                            /> */}
                             <label>
-                                Starting Price:
+                                Starting Price: 
                                 <input
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
@@ -171,11 +181,12 @@ class CreateItem extends Component {
                                     type="number"
                                 />
                             </label>
-                            <label>
-                                Upload Images:
-                                <input type="file" multiple onChange={this.onDrop} />
-                            </label>
-
+                            {/* <input
+                                onChange={this.updateLocation("location")}
+                                value={this.state.location}
+                                placeholder="Location"
+                            /> */}
+                            
                             <label>
                                 Sold:
                                 <input
@@ -185,31 +196,24 @@ class CreateItem extends Component {
                                 />
                             </label>
                             <label>
-                                Appraised:
+                                Appraised: 
                                 <input
                                     onChange={this.update("appraised")}
                                     value={this.state.appraised}
                                 />
                             </label>
-
                             <label>
                                 Category:
                                 {categories}
                             </label>
-
-                            <button type="submit">Create Item</button>
+                            <button type="submit">Update Item</button>
                         </form>
                         <p>{this.state.message}</p>
                     </div>
-                }}
+                )}
             </Mutation>
         );
     }
-
-        
 }
 
-    
-
-
-export default CreateItem;
+export default withRouter(EditItem);

@@ -7,10 +7,12 @@ const UserType = require("./types/user_type");
 const CategoryType = require("./types/category_type");
 const ItemType = require("./types/item_type");
 const MessageType = require('./types/message_type');
+const ChampionType = require('./types/champion_type');
 
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 const Message = mongoose.model("message");
+const Champion = mongoose.model('champion');
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -81,15 +83,44 @@ const mutations = new GraphQLObjectType({
                 minimum_price: {type: GraphQLFloat},
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
-                appraised: { type: GraphQLBoolean }
-                // imageURLs: new GraphQLList({ type: GraphQLString }),
-                // location: new GraphQLList({ type: GraphQLFloat }),
+                appraised: { type: GraphQLBoolean },
+                location: { type: new GraphQLList(GraphQLFloat) },
+                champions: { type: new GraphQLList(GraphQLString) }
             },
-            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised }, context) {
+            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions }, context) {
+                debugger
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = await new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised }).save();
-                return Item.updateItemCategory(item._doc._id, category);
+                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, location }).save();
+            }
+        },
+        updateItem: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+                name: { type: GraphQLString },
+                description: { type: GraphQLString },
+                seller: { type: GraphQLID },
+                starting_price: { type: GraphQLFloat },
+                minimum_price: { type: GraphQLFloat },
+                category: { type: GraphQLString },
+                sold: { type: GraphQLBoolean },
+                appraised: { type: GraphQLBoolean },
+                location: { type: new GraphQLList(GraphQLFloat) }
+            },
+            async resolve(_, {id, name, description, starting_price, minimum_price, category, sold, appraised, location }, context) {
+                const obj = await AuthService.verifyUser({ token: context.token });
+                const seller = obj.id;
+                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, location };
+                debugger;
+                return Item.findOneAndUpdate(
+                    { _id: id },
+                    { $set: item },
+                    { new: true },
+                    (err, item) => {
+                        return item;
+                    }
+                );
             }
         },
         deleteItem: {
@@ -132,6 +163,30 @@ const mutations = new GraphQLObjectType({
                     return Message.addReply(id, reply);
                 }
                 
+            }
+        },
+        createChampion: {
+            type: ChampionType,
+            args: {
+                name: { type: GraphQLString },
+                publicId: { type: GraphQLString },
+                item: { type: GraphQLString }
+            },
+            resolve(_, { name, publicId, item }){
+                return new Champion({name, publicId, item}).save();
+            }
+        },
+        updateItemImages: {
+            type: ItemType,
+            args: {
+                publicId: { type: GraphQLString },
+                id: { type: GraphQLString }
+            },
+            async resolve(_, {publicId, id}){
+                const item = await Item.findById(id);
+                item.champions.push(publicId);
+                item.save();
+                return item;
             }
         }
     }

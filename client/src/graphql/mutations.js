@@ -28,18 +28,41 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!) {
-    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String]) {
+    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions) {
       id
       name
       description
       starting_price
       minimum_price
       category{
+        id
         name
       }
       sold
       appraised
+      champions
+      location
+    }
+  }
+`;
+
+const UPDATE_ITEM = gql`
+  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float]) {
+    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location) {
+      id
+      name
+      description
+      starting_price
+      minimum_price
+      category{
+        id
+        name
+      }
+      sold
+      appraised
+      champions
+      location
     }
   }
 `;
@@ -62,4 +85,21 @@ const CREATE_MESSAGE = gql`
   }
 `
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE };
+const CREATE_CHAMPION = gql`
+  mutation CreateChampion($name: String!, $publicId: String!){
+    createChampion(name: $name, publicId: $publicId){
+      id
+      name
+      publicId
+    }
+  }
+`
+const UPDATE_ITEM_IMAGES = gql`
+  mutation UpdateItemImages($publicId: String!, $id: String!){
+    updateItemImages(publicId: $publicId, id: $id)
+    id
+    champions
+  }
+`
+
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES };

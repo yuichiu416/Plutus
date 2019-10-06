@@ -24,7 +24,12 @@ const ItemType = new GraphQLObjectType({
             }
         },
         sold: { type: GraphQLBoolean },
-        appraised: { type: GraphQLBoolean }
+        appraised: { type: GraphQLBoolean },
+        champions: {
+            type: new GraphQLList(GraphQLString)
+        },
+        imageURLs: { type: new GraphQLList(GraphQLString) },
+        location: { type: new GraphQLList(GraphQLFloat) }
     })
 });
 

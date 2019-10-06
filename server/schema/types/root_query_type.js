@@ -7,11 +7,13 @@ const UserType = require("./user_type");
 const MessageType = require('./message_type');
 const CategoryType = require("./category_type");
 const ItemType = require("./item_type");
+const ChampionType = require('./champion_type');
 
 const User = mongoose.model("user");
 const Message = mongoose.model("message");
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
+const Champion = mongoose.model('champion');
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
@@ -66,6 +68,21 @@ const RootQueryType = new GraphQLObjectType({
             args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
                 return Category.findById(args._id);
+            }
+        },
+        champions: {
+            type: new GraphQLList(ChampionType),
+            resolve(){
+                return Champion.find({});
+            }
+        },
+        champion: {
+            type: ChampionType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) }
+            },
+            resolve(_, args){
+                return Champion.findById(args.id);
             }
         }
     })
