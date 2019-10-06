@@ -8,6 +8,9 @@ const models = require("./models/index");
 const schema = require("./schema/schema.js");
 const app = express();
 const cors = require("cors");
+const graphqlUpload = require('graphql-upload');
+const { graphqlUploadExpress } = graphqlUpload;
+
 
 if (!db) {
     throw new Error("You must provide a string to connect to MongoDB Atlas");
@@ -22,7 +25,11 @@ mongoose
 app.use(bodyParser.json());
 app.use(cors());
 // use the expressGraphQL middleware to connect our GraphQLSchema to Express
-app.use("/graphql", expressGraphQL(req => {
+// use graphqlUploadExpress middleware to upload file
+app.use("/graphql", graphqlUploadExpress({
+    maxFileSize: 10000000,
+    maxFiles: 10
+}), expressGraphQL(req => {
     return {
         schema,
         // we are receiving the request and can check for our
