@@ -16,7 +16,7 @@ class ItemIndex extends React.Component {
                     return (
                         <ul>
                             {data.items.map((item, idx) => (
-                                <Link to={`/${item.id}`} key={`/${item.id}`} ><li key={item.id}>{item.name}: {item.description}</li></Link>
+                                <Link to={`/items/${item.id}`} key={`/${item.id}`} ><li key={item.id}>{item.name}: {item.description}</li></Link>
                             ))}
                         </ul>
                     );

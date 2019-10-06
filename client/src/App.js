@@ -6,13 +6,13 @@ import { Route, Switch } from 'react-router-dom';
 import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
 import Splash from './components/Splash';
-import CreateItem from './components/Items/EditItem';
+import CreateItem from './components/Items/CreateItem';
 import ItemIndex from "./components/Items/ItemIndex";
 import ItemShow from "./components/Items/Itemshow";
+import EditItem from "./components/Items/EditItem";
 import CreateMessage from "./components/Messages/CreateMessage";
 import ChampionUpload from "./components/Champion/ChampionUpload";
 import ChampionDetail from "./components/Champion/ChampionDetail";
-import EditItem from "./components/Items/EditItem";
 
 const App = () => {
   return (

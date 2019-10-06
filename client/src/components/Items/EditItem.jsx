@@ -47,7 +47,8 @@ class EditItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 const item = data.items.find(obj => obj.id === this.id);
-                this.mapItemToState(item);
+                if(item)
+                    this.mapItemToState(item);
                 return null;
             }}
         </Query>

@@ -19,9 +19,9 @@ class CreateItem extends Component {
             minimum_price: 0,
             category: "",
             sold: false,
-            appraised: false
-            // imageURLs: [],
-            // location: [],
+            appraised: false,
+            imageURLs: [],
+            location: []
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
@@ -73,8 +73,8 @@ class CreateItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 return (
-                    <select onChange={this.update("category")}>
-                    <option value="" disabled defaultValue>--Please Select--</option>
+                    <select onChange={this.update("category")} value={this.state.category || "default"}>
+                    <option value="default" disabled>--Please Select--</option>
                         {data.categories.map((category) => (
                             <option value={category.id} key={category.id}>{category.name}</option>
                         ))}
@@ -93,13 +93,13 @@ class CreateItem extends Component {
                 minimum_price: this.state.minimum_price,
                 category: this.state.category,
                 sold: this.state.sold,
-                appraised: this.state.appraised
-                // imageURLs: this.state.imageURLs,
-                // location: this.state.location,
+                appraised: this.state.appraised,
+                imageURLs: this.state.imageURLs,
+                location: this.state.location
             }
         }).then(response => {
-            const itemId = response.data.item.id;
             debugger
+            const itemId = response.data.newItem.id;
             for (let i = 0; i < this.files.length; i++) {
                 const formData = new FormData();
                 formData.append('file', this.files[i]);
@@ -119,9 +119,8 @@ class CreateItem extends Component {
             }
         })
 
-        // Upload file to cloudinary and store publicId to item
         
-
+        // Upload file to cloudinary and store publicId to item
     }
 
     render() {
@@ -141,8 +140,9 @@ class CreateItem extends Component {
                     });
                 }}
             >
-                {(newItem, updateItemImages, { data }) => (
-                    <div>
+                {(newItem, updateItemImages ) => {
+                    return <div>
+                    
                         <form onSubmit={e => this.handleSubmit(e, newItem, updateItemImages)}>
                             <input
                                 onChange={this.update("name")}
@@ -212,7 +212,7 @@ class CreateItem extends Component {
                         </form>
                         <p>{this.state.message}</p>
                     </div>
-                )}
+                }}
             </Mutation>
         );
     }

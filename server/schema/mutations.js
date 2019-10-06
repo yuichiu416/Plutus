@@ -84,14 +84,13 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                // location: new GraphQLList({ type: GraphQLFloat }),
+                imageURLs: { type: new GraphQLList(GraphQLString) },
                 location: { type: new GraphQLList(GraphQLFloat) }
             },
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, imageURLs, location }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = await new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location }).save();
-                return Item.updateItemCategory(item._doc._id, category);
+                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location }).save();
             }
         },
         updateItem: {

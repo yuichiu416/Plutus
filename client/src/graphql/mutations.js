@@ -28,14 +28,15 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!) {
-    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float]) {
+    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location) {
       id
       name
       description
       starting_price
       minimum_price
       category{
+        id
         name
       }
       sold
