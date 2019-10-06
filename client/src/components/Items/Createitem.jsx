@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-
-import { CREATE_ITEM } from "../../graphql/mutations";
+import axios from 'axios';
+import { CREATE_ITEM, UPDATE_ITEM_IMAGES } from "../../graphql/mutations";
 
 import { Query } from "react-apollo";
 
@@ -23,6 +23,17 @@ class CreateItem extends Component {
             // imageURLs: [],
             // location: [],
         };
+        this.files = [];
+        this.onDrop = this.onDrop.bind(this);
+
+    }
+
+    onDrop(e) {
+        e.preventDefault();
+        const files = Array.from(e.target.files);
+        for (let i = 0; i < files.length; i++) {
+            this.files.push(files[i]);
+        }
     }
 
     update(field) {
@@ -72,7 +83,7 @@ class CreateItem extends Component {
             }}
         </Query>
     }
-    handleSubmit(e, newItem) {
+    handleSubmit(e, newItem, updateItemImages) {
         e.preventDefault();
         newItem({
             variables: {
@@ -86,7 +97,31 @@ class CreateItem extends Component {
                 // imageURLs: this.state.imageURLs,
                 // location: this.state.location,
             }
-        });
+        }).then(response => {
+            const itemId = response.data.item.id;
+            debugger
+            for (let i = 0; i < this.files.length; i++) {
+                const formData = new FormData();
+                formData.append('file', this.files[i]);
+                formData.append('upload_preset', 'ml_default');
+                axios.post(
+                    'https://api.cloudinary.com/v1_1/chinweenie/image/upload',
+                    formData
+                ).then(response => {
+                    debugger
+                    return updateItemImages({
+                        variables: {
+                            id: itemId,
+                            publicId: response.data.public_id
+                        }
+                    })
+                });
+            }
+        })
+
+        // Upload file to cloudinary and store publicId to item
+        
+
     }
 
     render() {
@@ -106,9 +141,9 @@ class CreateItem extends Component {
                     });
                 }}
             >
-                {(newItem, { data }) => (
+                {(newItem, updateItemImages, { data }) => (
                     <div>
-                        <form onSubmit={e => this.handleSubmit(e, newItem)}>
+                        <form onSubmit={e => this.handleSubmit(e, newItem, updateItemImages)}>
                             <input
                                 onChange={this.update("name")}
                                 value={this.state.name}
@@ -166,6 +201,12 @@ class CreateItem extends Component {
                                 Category:
                                 {categories}
                             </label>
+
+                            <label>
+                                Upload Images:
+                                <input type="file" multiple onChange={this.onDrop} />
+                            </label>
+
                             <button type="submit">Create Item</button>
                         </form>
                         <p>{this.state.message}</p>

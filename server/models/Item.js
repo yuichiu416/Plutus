@@ -16,12 +16,9 @@ const ItemSchema = new Schema({
         type: String,
         required: true
     },
-    // imageURLs: [
-    //     {
-    //         type: String,
-    //         required: true
-    //     }
-    // ],
+    champions: [{
+        type: String,
+    }],
     starting_price:{
         type: Number,
         default: 0

@@ -22,6 +22,7 @@ export default {
         }
         sold
         appraised
+        champions
       }
     }`,
     FETCH_CATEGORIES: gql`
@@ -38,6 +39,24 @@ export default {
           id
           name
           email
+        }
+      }
+    `,
+    FETCH_CHAMPION: gql`
+      query FetchChampion($id: String!){
+        champion(id: $id){
+          id
+          name
+          publicId
+        }
+      }
+    `,
+    FETCH_CHAMPIONS: gql`
+      query FetchChampions{
+        champions{
+          id
+          name
+          publicId
         }
       }
     `

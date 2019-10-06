@@ -62,4 +62,21 @@ const CREATE_MESSAGE = gql`
   }
 `
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE };
+const CREATE_CHAMPION = gql`
+  mutation CreateChampion($name: String!, $publicId: String!){
+    createChampion(name: $name, publicId: $publicId){
+      id
+      name
+      publicId
+    }
+  }
+`
+const UPDATE_ITEM_IMAGES = gql`
+  mutation UpdateItemImages($publicId: String!, $id: String!){
+    updateItemImages(publicId: $publicId, id: $id)
+    id
+    champions
+  }
+`
+
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES };

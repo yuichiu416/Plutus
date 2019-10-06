@@ -7,10 +7,12 @@ const UserType = require("./types/user_type");
 const CategoryType = require("./types/category_type");
 const ItemType = require("./types/item_type");
 const MessageType = require('./types/message_type');
+const ChampionType = require('./types/champion_type');
 
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 const Message = mongoose.model("message");
+const Champion = mongoose.model('champion');
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -81,8 +83,8 @@ const mutations = new GraphQLObjectType({
                 minimum_price: {type: GraphQLFloat},
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
-                appraised: { type: GraphQLBoolean }
-                // imageURLs: new GraphQLList({ type: GraphQLString }),
+                appraised: { type: GraphQLBoolean },
+                // champions: new GraphQLList({ type: GraphQLString }),
                 // location: new GraphQLList({ type: GraphQLFloat }),
             },
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised }, context) {
@@ -132,6 +134,30 @@ const mutations = new GraphQLObjectType({
                     return Message.addReply(id, reply);
                 }
                 
+            }
+        },
+        createChampion: {
+            type: ChampionType,
+            args: {
+                name: { type: GraphQLString },
+                publicId: { type: GraphQLString },
+                item: { type: GraphQLString }
+            },
+            resolve(_, { name, publicId, item }){
+                return new Champion({name, publicId, item}).save();
+            }
+        },
+        updateItemImages: {
+            type: ItemType,
+            args: {
+                publicId: { type: GraphQLString },
+                id: { type: GraphQLString }
+            },
+            async resolve(_, {publicId, id}){
+                const item = await Item.findById(id);
+                item.champions.push(publicId);
+                item.save();
+                return item;
             }
         }
     }
