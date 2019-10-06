@@ -3,6 +3,9 @@ import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
 import Editor from 'react-medium-editor';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 const { FETCH_ITEMS } = queries;
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 const contentDefaultMessage = "Start writing your document here";
@@ -84,6 +87,8 @@ class ItemShow extends React.Component {
             </div>
         </div>
     )
+        
+    
     render() {
         const { username } = this.state;
         return (
@@ -107,6 +112,7 @@ class ItemShow extends React.Component {
                                 onChange={this.onEditorStateChange}
                             />
                             {username ? this.showEditorSection() : this.showLoginSection()}
+                            <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
                         </div>
                     );
                 }}
@@ -115,4 +121,4 @@ class ItemShow extends React.Component {
     }
 }
 
-export default ItemShow;
+export default withRouter(ItemShow);

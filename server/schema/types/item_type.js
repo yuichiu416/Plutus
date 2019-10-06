@@ -27,7 +27,8 @@ const ItemType = new GraphQLObjectType({
         appraised: { type: GraphQLBoolean },
         champions: {
             type: new GraphQLList(GraphQLString)
-        }
+        },
+        location: { type: new GraphQLList(GraphQLFloat) }
     })
 });
 

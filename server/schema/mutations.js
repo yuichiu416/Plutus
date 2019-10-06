@@ -84,14 +84,45 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                // champions: new GraphQLList({ type: GraphQLString }),
+                champions: new GraphQLList({ type: GraphQLString }),
                 // location: new GraphQLList({ type: GraphQLFloat }),
+                location: { type: new GraphQLList(GraphQLFloat) }
             },
-            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised }, context) {
+            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, imageURLs, location }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = await new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised }).save();
+                const item = await new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location }).save();
                 return Item.updateItemCategory(item._doc._id, category);
+            }
+        },
+        updateItem: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+                name: { type: GraphQLString },
+                description: { type: GraphQLString },
+                seller: { type: GraphQLID },
+                starting_price: { type: GraphQLFloat },
+                minimum_price: { type: GraphQLFloat },
+                category: { type: GraphQLString },
+                sold: { type: GraphQLBoolean },
+                appraised: { type: GraphQLBoolean },
+                imageURLs: { type: new GraphQLList(GraphQLString) },
+                location: { type: new GraphQLList(GraphQLFloat) }
+            },
+            async resolve(_, {id, name, description, starting_price, minimum_price, category, sold, appraised, imageURLs, location }, context) {
+                const obj = await AuthService.verifyUser({ token: context.token });
+                const seller = obj.id;
+                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, imageURLs, location };
+                debugger;
+                return Item.findOneAndUpdate(
+                    { _id: id },
+                    { $set: item },
+                    { new: true },
+                    (err, item) => {
+                        return item;
+                    }
+                );
             }
         },
         deleteItem: {

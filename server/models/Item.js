@@ -27,12 +27,11 @@ const ItemSchema = new Schema({
         type: Number,
         default: 0
     },
-    // location: [
-    //     {
-    //         type: Number,
-    //         required: true
-    //     }
-    // ],
+    location: [
+        {
+            type: Number
+        }
+    ],
     category:{
         type: Schema.Types.ObjectId,
         ref: "categories"
