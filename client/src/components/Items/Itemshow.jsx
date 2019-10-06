@@ -1,10 +1,15 @@
 import React from 'react';
 import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 const { FETCH_ITEMS } = queries;
 
 class ItemShow extends React.Component {
-
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
             <Query query={FETCH_ITEMS}>
@@ -16,6 +21,7 @@ class ItemShow extends React.Component {
                         <div>
                             <h1>The item name is: {item.name}</h1>
                             <p>{item.description}</p>
+                            <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
                         </div>
                     );
                 }}
@@ -24,4 +30,4 @@ class ItemShow extends React.Component {
     }
 }
 
-export default ItemShow;
+export default withRouter(ItemShow);

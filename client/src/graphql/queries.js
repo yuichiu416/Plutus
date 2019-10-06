@@ -22,8 +22,29 @@ export default {
         }
         sold
         appraised
+        imageURLs
+        location
       }
     }`,
+    FETCH_ITEM: gql`
+    query fetchItem($id: String!){
+      item(id: $id){
+        name
+        seller
+        description
+        starting_price
+        minimum_price
+        category{
+          id
+          name
+        }
+        sold
+        appraised
+        imageURLs
+        location
+      }
+    }
+    `,
     FETCH_CATEGORIES: gql`
       query categories{
         categories{

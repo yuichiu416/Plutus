@@ -40,6 +40,28 @@ const CREATE_ITEM = gql`
       }
       sold
       appraised
+      imageURLs
+      location
+    }
+  }
+`;
+
+const UPDATE_ITEM = gql`
+  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float]) {
+    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location) {
+      id
+      name
+      description
+      starting_price
+      minimum_price
+      category{
+        id
+        name
+      }
+      sold
+      appraised
+      imageURLs
+      location
     }
   }
 `;
@@ -62,4 +84,4 @@ const CREATE_MESSAGE = gql`
   }
 `
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE };
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE };
