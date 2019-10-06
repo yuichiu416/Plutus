@@ -84,7 +84,6 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                champions: new GraphQLList({ type: GraphQLString }),
                 // location: new GraphQLList({ type: GraphQLFloat }),
                 location: { type: new GraphQLList(GraphQLFloat) }
             },

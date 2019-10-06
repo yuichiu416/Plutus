@@ -181,6 +181,11 @@ class CreateItem extends Component {
                                 value={this.state.location}
                                 placeholder="Location"
                             /> */}
+
+                            <label>
+                                Upload Images:
+                                <input type="file" multiple onChange={this.onDrop} />
+                            </label>
                             
                             <label>
                                 Sold:
@@ -197,14 +202,10 @@ class CreateItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
+
                             <label>
                                 Category:
                                 {categories}
-                            </label>
-
-                            <label>
-                                Upload Images:
-                                <input type="file" multiple onChange={this.onDrop} />
                             </label>
 
                             <button type="submit">Create Item</button>
