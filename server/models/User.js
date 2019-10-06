@@ -20,7 +20,11 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    messages: [{
+        type: Schema.Types.ObjectId,
+        ref: "message"
+    }]
 });
 
 module.exports = mongoose.model("user", UserSchema);

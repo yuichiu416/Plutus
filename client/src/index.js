@@ -28,19 +28,18 @@ cache.writeData({
     }
 });
 
-
 const httpLink = createHttpLink({
     uri: "http://localhost:5000/graphql",
     headers: {
         // pass our token into the header of each request
-        authorization: localStorage.getItem("auth-token")
+        authorization: token
     }
 });
-
 // make sure we log any additional errors we receive
-const errorLink = onError(({ graphQLErrors }) => {
+onError(({ graphQLErrors }) => {
     if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));
 });
+
 
 const client = new ApolloClient({
     link: httpLink,
@@ -50,7 +49,6 @@ const client = new ApolloClient({
         console.log("networkError", networkError);
     }
 });
-
 // then if we do have a token we'll go through with our mutation
 if (token) {
     client
@@ -60,7 +58,8 @@ if (token) {
         .then(({ data }) => {
             cache.writeData({
                 data: {
-                    isLoggedIn: data.verifyUser.loggedIn
+                    isLoggedIn: data.verifyUser.loggedIn,
+                    id: data.verifyUser.id
                 }
             });
         });

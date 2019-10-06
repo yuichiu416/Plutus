@@ -11,7 +11,14 @@ const UserType = new GraphQLObjectType({
         name: { type: GraphQLString },
         email: { type: GraphQLString },
         token: { type: GraphQLString },
-        loggedIn: { type: GraphQLBoolean }
+        loggedIn: { type: GraphQLBoolean },
+        messages: {
+            type: require('./message_type'),
+            resolve(parentValue){
+                return User.findById(parentValue.id)
+                    .populate("messages");
+            }
+        }
 
     })
 });

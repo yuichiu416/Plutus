@@ -27,15 +27,39 @@ const VERIFY_USER = gql`
   }
 `;
 
-const CREATE_PRODUCT = gql`
-  mutation newProduct($name: String!, $description: String!, $weight: Int!) {
-    newProduct(name: $name, description: $description, weight: $weight) {
+const CREATE_ITEM = gql`
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!) {
+    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised) {
       id
       name
       description
-      weight
+      starting_price
+      minimum_price
+      category{
+        name
+      }
+      sold
+      appraised
     }
   }
 `;
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_PRODUCT };
+const CREATE_MESSAGE = gql`
+  mutation CreateMessage($title: String!, $body: String!, $receiver: String!){
+    newMessage(title: $title, body: $body, receiver: $receiver){
+      id
+      title
+      body
+      receiver{
+        id
+        name
+      }
+      replies{
+        title
+        body
+      }
+    }
+  }
+`
+
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, CREATE_MESSAGE };
