@@ -16,12 +16,11 @@ const ItemSchema = new Schema({
         type: String,
         required: true
     },
-    // imageURLs: [
-    //     {
-    //         type: String,
-    //         required: true
-    //     }
-    // ],
+    imageURLs: [
+        {
+            type: String
+        }
+    ],
     starting_price:{
         type: Number,
         default: 0
@@ -30,12 +29,11 @@ const ItemSchema = new Schema({
         type: Number,
         default: 0
     },
-    // location: [
-    //     {
-    //         type: Number,
-    //         required: true
-    //     }
-    // ],
+    location: [
+        {
+            type: Number
+        }
+    ],
     category:{
         type: Schema.Types.ObjectId,
         ref: "categories"
