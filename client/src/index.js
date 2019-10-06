@@ -5,7 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ApolloClient from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { createHttpLink } from "apollo-link-http";
+// import { createHttpLink } from "apollo-link-http";
+// import { createUploadLink } from 'apo'
 import { ApolloProvider } from "react-apollo";
 import { HashRouter } from 'react-router-dom'
 import { onError } from "apollo-link-error";
