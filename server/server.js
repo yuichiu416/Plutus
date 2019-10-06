@@ -30,16 +30,16 @@ app.use("/graphql", graphqlUploadExpress({
     maxFileSize: 10000000,
     maxFiles: 10
 }), expressGraphQL(req => {
-    return {
-        schema,
-        // we are receiving the request and can check for our
-        // auth token under headers
-        context: {
-            token: req.headers.authorization
-        },
-        graphiql: true
-    };
-})
+        return {
+            schema,
+            // we are receiving the request and can check for our
+            // auth token under headers
+            context: {
+                token: req.headers.authorization
+            },
+            graphiql: true
+        };
+    })
 );
 
 module.exports = app;

@@ -63,7 +63,6 @@ class ItemShow extends React.Component {
             });
         };
     }
-
     showLoginSection = () => (
         <div className="account">
             <div className="account__wrapper">
@@ -87,7 +86,6 @@ class ItemShow extends React.Component {
             </div>
         </div>
     )
-        
     
     render() {
         const { username } = this.state;

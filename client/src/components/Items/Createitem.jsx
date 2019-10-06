@@ -25,7 +25,6 @@ class CreateItem extends Component {
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
-
     }
 
     onDrop(e) {
@@ -98,7 +97,6 @@ class CreateItem extends Component {
                 location: this.state.location
             }
         }).then(response => {
-            debugger
             const itemId = response.data.newItem.id;
             for (let i = 0; i < this.files.length; i++) {
                 const formData = new FormData();
@@ -108,7 +106,6 @@ class CreateItem extends Component {
                     'https://api.cloudinary.com/v1_1/chinweenie/image/upload',
                     formData
                 ).then(response => {
-                    debugger
                     return updateItemImages({
                         variables: {
                             id: itemId,
@@ -154,11 +151,7 @@ class CreateItem extends Component {
                                 value={this.state.description}
                                 placeholder="description"
                             />
-                            {/* <input
-                                onChange={this.updateImageURLs()}
-                                value={this.state.imageURLs}
-                                placeholder="Upload image urls"
-                            /> */}
+
                             <label>
                                 Starting Price: 
                                 <input
@@ -176,12 +169,6 @@ class CreateItem extends Component {
                                     type="number"
                                 />
                             </label>
-                            {/* <input
-                                onChange={this.updateLocation("location")}
-                                value={this.state.location}
-                                placeholder="Location"
-                            /> */}
-
                             <label>
                                 Upload Images:
                                 <input type="file" multiple onChange={this.onDrop} />
