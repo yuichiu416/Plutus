@@ -55,6 +55,7 @@ class CreateItem extends Component {
         }
         // if we had previously fetched items we'll add our new item to our cache
         if (items) {
+            debugger
             let itemArray = items.items;
             let newItem = data.newItem;
             cache.writeQuery({
@@ -104,7 +105,7 @@ class CreateItem extends Component {
     async handleSubmit(e, newItem) {
         e.preventDefault();
         const championsArr = await this.updateImageURLs();
-        newItem({
+        const item = await newItem({
             variables: {
                 name: this.state.name,
                 description: this.state.description,
@@ -116,10 +117,23 @@ class CreateItem extends Component {
                 location: this.state.location,
                 champions: championsArr
             }
-        }).then(item => {
-            debugger
-            console.log(item.data);
-        })  
+        })
+        this.setState({
+            message: "",
+            name: "",
+            description: "",
+            starting_price: 0,
+            minimum_price: 0,
+            category: "",
+            sold: false,
+            appraised: false,
+            imageURLs: [],
+            location: []
+        });
+        this.files = [];
+        debugger
+        this.props.history.push("/");
+        // this.props.history.push(`/items/${item.data.newItem.id}`);
     }
       
     render() {
