@@ -198,13 +198,14 @@ class CreateItem extends Component {
                                 Category: 
                                 {categories}
                             </label>
-
+                            <br/>
                             <label class="top-label">
                                 Upload Images: &nbsp;
                                     
                                 <input type="file" multiple onChange={this.onDrop} />
                             </label>
                             <br/>
+                            
                             {/* <label name="buttom-label">
                                 Sold:
                                 <input
