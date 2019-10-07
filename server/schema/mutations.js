@@ -78,7 +78,6 @@ const mutations = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                seller: { type: GraphQLID },
                 starting_price: {type: GraphQLFloat},
                 minimum_price: {type: GraphQLFloat},
                 category: { type: GraphQLString },
@@ -88,6 +87,7 @@ const mutations = new GraphQLObjectType({
                 champions: { type: new GraphQLList(GraphQLString) }
             },
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions }, context) {
+                debugger
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
                 return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, location }).save();

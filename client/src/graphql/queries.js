@@ -79,5 +79,21 @@ export default {
           publicId
         }
       }
+    `,
+    FETCH_MESSAGES: gql`
+      query FetchMessages{
+        messages{
+          id
+          title
+          body
+          sender{
+            id
+            name
+          }
+          replies{
+            id
+          }
+        }
+      }
     `
 };

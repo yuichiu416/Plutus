@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import axios from 'axios';
-import { CREATE_ITEM, UPDATE_ITEM_IMAGES, CREATE_CHAMPION } from "../../graphql/mutations";
-
+import { CREATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
-
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
-
-
-
 
 class CreateItem extends Component {
     constructor(props) {
@@ -23,11 +18,11 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
-            location: []
+            location: [1,1]
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     onDrop(e) {
@@ -55,7 +50,6 @@ class CreateItem extends Component {
         }
         // if we had previously fetched items we'll add our new item to our cache
         if (items) {
-            debugger
             let itemArray = items.items;
             let newItem = data.newItem;
             cache.writeQuery({
@@ -102,38 +96,45 @@ class CreateItem extends Component {
         return publicIdsArray;
     }
 
-    async handleSubmit(e, newItem) {
+    handleSubmit(e, newItem) {
         e.preventDefault();
-        const championsArr = await this.updateImageURLs();
-        const item = await newItem({
-            variables: {
+        
+        this.updateImageURLs().then(champions => {
+            const variables = {
                 name: this.state.name,
                 description: this.state.description,
-                starting_price: this.state.starting_price,
-                minimum_price: this.state.minimum_price,
+                starting_price: parseFloat(this.state.starting_price),
+                minimum_price: parseFloat(this.state.minimum_price),
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 location: this.state.location,
-                champions: championsArr
-            }
+                champions: champions
+            };
+            debugger
+            newItem({
+                variables
+            }).then(response => {
+                console.log(response);
+                this.setState({
+                    message: "",
+                    name: "",
+                    description: "",
+                    starting_price: 0,
+                    minimum_price: 0,
+                    category: "",
+                    sold: false,
+                    appraised: false,
+                    location: []
+                });
+                this.files = [];
+                this.props.history.push(`/items/${response.data.newItem.id}`);
+            })
         })
-        this.setState({
-            message: "",
-            name: "",
-            description: "",
-            starting_price: 0,
-            minimum_price: 0,
-            category: "",
-            sold: false,
-            appraised: false,
-            imageURLs: [],
-            location: []
-        });
-        this.files = [];
-        debugger
-        this.props.history.push("/");
-        // this.props.history.push(`/items/${item.data.newItem.id}`);
+        
+        
+        
+        // this.props.history.push("/");
     }
       
     render() {
@@ -173,8 +174,9 @@ class CreateItem extends Component {
                                 <input
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
-                                    type="number"
+                                    // type="number"
                                 />
+                            
                             </label>
                             <label>
                                 Minimum Price:
@@ -182,7 +184,7 @@ class CreateItem extends Component {
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
                                     placeholder="Minimum Price"
-                                    type="number"
+                                    // type="number"
                                 />
                             </label>
                             <label>
