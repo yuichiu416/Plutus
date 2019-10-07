@@ -27,7 +27,6 @@ class EditItem extends Component {
         this.itemDetails = this.setDefaultItemState();
         this.mapItemToState = this.mapItemToState.bind(this);
         this.updateCache = this.updateCache.bind(this);
-        this.setEndTime = this.setEndTime.bind(this);
     }
     mapItemToState(item){
         this.setState({
@@ -122,15 +121,6 @@ class EditItem extends Component {
             this.props.history.push(`/items/${this.id}`);
         }).catch(err => console.log(err));
     }
-    setEndTime(e) {
-        const val = parseFloat(e.target.value);
-        if (isNaN(val))
-            return;
-        this.setState({ endTime: val * 60000 + new Date().getTime() })
-    }
-    displayEndTime(time){
-        return (time - new Date().getTime()) / 60000;
-    }
     render() {
         const categories = this.fetchCategories();
         return (
@@ -206,11 +196,6 @@ class EditItem extends Component {
                                 />
                             </label>
                             <br/>
-                            <label>
-                                End in
-                                <input type="text" onChange={this.setEndTime}/>
-                                minutes
-                            </label>
                             <br/>
                             <label>
                                 Category:

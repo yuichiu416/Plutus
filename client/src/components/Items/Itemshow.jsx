@@ -20,6 +20,7 @@ class ItemShow extends React.Component {
             username: null,
             text: ''
         };
+        this.timer = false;
     }
 
     componentWillMount() {
@@ -89,6 +90,7 @@ class ItemShow extends React.Component {
         </div>
     )
     countDown(endTime){
+        const that = this;
         // Update the count down every 1 second
         var x = setInterval(() => {
 
@@ -110,7 +112,7 @@ class ItemShow extends React.Component {
                 + minutes + "m " + seconds + "s ";
 
             // If the count down is finished, write some text
-            if (distance < 0) {
+            if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = "Auction is EXPIRED";
             }
