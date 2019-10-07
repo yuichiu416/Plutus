@@ -22,6 +22,7 @@ class EditItem extends Component {
             appraised: false,
             imageURLs: [],
             location: [],
+            endTime: 3
         };
         this.itemDetails = this.setDefaultItemState();
         this.mapItemToState = this.mapItemToState.bind(this);
@@ -38,7 +39,8 @@ class EditItem extends Component {
             sold: item.sold,
             appraised: item.appraised,
             imageURLs: item.imageURLs,
-            location: item.location
+            location: item.location,
+            endTime: item.endTime
         });
     }
     setDefaultItemState(){
@@ -121,7 +123,8 @@ class EditItem extends Component {
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 imageURLs: this.state.imageURLs,
-                location: this.state.location
+                location: this.state.location,
+                endTime: this.state.endTime
             }
         }).then( response => {
             this.mapItemToState(response.data.updateItem);
@@ -202,6 +205,7 @@ class EditItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
+                            <input type="text" name="end_minutes" value="Set end time in minutes" />
                             <label>
                                 Category:
                                 {categories}

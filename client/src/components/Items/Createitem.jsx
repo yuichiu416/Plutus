@@ -24,10 +24,12 @@ class CreateItem extends Component {
             sold: false,
             appraised: false,
             imageURLs: [],
-            location: []
+            location: [],
+            endTime: 3
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
+        this.setEndTime = this.setEndTime.bind(this);
     }
 
     onDrop(e) {
@@ -55,7 +57,6 @@ class CreateItem extends Component {
         }
         // if we had previously fetched items we'll add our new item to our cache
         if (items) {
-            debugger
             let itemArray = items.items;
             let newItem = data.newItem;
             cache.writeQuery({
@@ -115,7 +116,8 @@ class CreateItem extends Component {
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 location: this.state.location,
-                champions: championsArr
+                champions: championsArr,
+                endTime: this.state.endTime
             }
         })
         this.setState({
@@ -128,12 +130,18 @@ class CreateItem extends Component {
             sold: false,
             appraised: false,
             imageURLs: [],
-            location: []
+            location: [],
+            endTime: 3
         });
         this.files = [];
-        debugger
         this.props.history.push("/");
         // this.props.history.push(`/items/${item.data.newItem.id}`);
+    }
+    setEndTime(e){
+        const val = parseFloat(e.target.value);
+        if(isNaN(val))
+            return;
+        this.setState({endTime: val * 60000 + new Date().getTime()})
     }
       
     render() {
@@ -205,7 +213,13 @@ class CreateItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
-
+                            <br />
+                            <label>
+                                End in 
+                                <input type="text" onChange={this.setEndTime}/>
+                                minutes
+                            </label>
+                            <br/>
                             <label>
                                 Category:
                                 {categories}

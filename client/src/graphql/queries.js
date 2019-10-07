@@ -24,6 +24,7 @@ export default {
         appraised
         champions
         location
+        endTime
       }
     }`,
     FETCH_ITEM: gql`
@@ -42,6 +43,7 @@ export default {
         appraised
         imageURLs
         location
+        endTime
       }
     }
     `,

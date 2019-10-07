@@ -28,8 +28,8 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String]) {
-    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String], $endTime: Float) {
+    newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions, endTime: $endTime) {
       id
       name
       description
@@ -43,13 +43,14 @@ const CREATE_ITEM = gql`
       appraised
       champions
       location
+      endTime
     }
   }
 `;
 
 const UPDATE_ITEM = gql`
-  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float]) {
-    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location) {
+  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $imageURLs: [String], $location: [Float], $endTime: Float) {
+    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, imageURLs: $imageURLs, location: $location, endTime: $endTime) {
       id
       name
       description
@@ -63,6 +64,7 @@ const UPDATE_ITEM = gql`
       appraised
       champions
       location
+      endTime
     }
   }
 `;

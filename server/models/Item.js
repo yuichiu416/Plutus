@@ -45,13 +45,16 @@ const ItemSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    endTime: {
+        type: Number,
+        default: 3
     }
 });
 
 ItemSchema.statics.updateItemCategory = (itemId, categoryId) => {
     const Item = mongoose.model("items");
     const Category = mongoose.model("categories");
-    debugger;
     return Item.findById(itemId).then(item => {
         // if the item already had a category
         if (item.category) {
