@@ -85,13 +85,13 @@ const mutations = new GraphQLObjectType({
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
                 location: { type: new GraphQLList(GraphQLFloat) },
-                champions: { type: new GraphQLList(GraphQLString) }
+                champions: { type: new GraphQLList(GraphQLString) },
+                endTime: { type: GraphQLFloat }
             },
-            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions }, context) {
-                debugger
+            async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, location }).save();
+                return new Item({ name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }).save();
             }
         },
         updateItem: {
@@ -106,13 +106,14 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                location: { type: new GraphQLList(GraphQLFloat) }
+                location: { type: new GraphQLList(GraphQLFloat) },
+                champions: { type: new GraphQLList(GraphQLString) },
+                endTime: { type: GraphQLFloat }
             },
-            async resolve(_, {id, name, description, starting_price, minimum_price, category, sold, appraised, location }, context) {
+            async resolve(_, { id, name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, location };
-                debugger;
+                const item = { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime };
                 return Item.findOneAndUpdate(
                     { _id: id },
                     { $set: item },

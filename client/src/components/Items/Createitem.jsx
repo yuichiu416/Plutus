@@ -8,9 +8,6 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
-
-
-
 class CreateItem extends Component {
     constructor(props) {
         super(props);
@@ -23,11 +20,13 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
-            location: []
+            champions: [],
+            location: [],
+            endTime: 3
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
+        this.setEndTime = this.setEndTime.bind(this);
     }
 
     onDrop(e) {
@@ -47,13 +46,10 @@ class CreateItem extends Component {
     updateCache(cache, { data }) {
         let items;
         try {
-            // if we've already fetched the items then we can read the
-            // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
         } catch (err) {
             return;
         }
-        // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
             let newItem = data.newItem;
@@ -103,8 +99,8 @@ class CreateItem extends Component {
 
     async handleSubmit(e, newItem) {
         e.preventDefault();
-        const championsArr = await this.updateImageURLs();
-        newItem({
+        const championsArr = await this.updateImageURLs() || [];
+        const item = await newItem({
             variables: {
                 name: this.state.name,
                 description: this.state.description,
@@ -114,12 +110,31 @@ class CreateItem extends Component {
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 location: this.state.location,
-                champions: championsArr
+                champions: championsArr,
+                endTime: this.state.endTime
             }
-        }).then(item => {
-            debugger
-            console.log(item.data);
-        })  
+        })
+        this.setState({
+            message: "",
+            name: "",
+            description: "",
+            starting_price: 0,
+            minimum_price: 0,
+            category: "",
+            sold: false,
+            appraised: false,
+            location: [],
+            champions: [],
+            endTime: 3
+        });
+        this.files = [];
+        this.props.history.push("/");
+    }
+    setEndTime(e){
+        const val = parseFloat(e.target.value);
+        if(isNaN(val))
+            return;
+        this.setState({endTime: val * 60000 + new Date().getTime()})
     }
       
     render() {
@@ -191,7 +206,13 @@ class CreateItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
-
+                            <br />
+                            <label>
+                                End in 
+                                <input type="text" onChange={this.setEndTime}/>
+                                minutes
+                            </label>
+                            <br/>
                             <label>
                                 Category:
                                 {categories}
