@@ -177,6 +177,7 @@ class CreateItem extends Component {
                             <label className="top-label">
                                 Starting Price:
                                 <input
+                                    type="number"
                                     className="field1"
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
@@ -186,6 +187,7 @@ class CreateItem extends Component {
                             <label className="top-label">
                                 Minimum Price:
                                 <input
+                                    type="number"
                                     className="field1"
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}

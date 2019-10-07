@@ -18,7 +18,7 @@ padding: 1%;
 .nav-button {
   padding-left: 12px;
   font-family: 'Raleway', sans-serif;
-  font-size: 1.2em;
+  font-size: 1em;
   height: 50vh;
   /* justify-content: center; */
   color: var(--mainColor);
@@ -27,7 +27,7 @@ padding: 1%;
 }
 .nav-button:hover {
   cursor: pointer;
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
   -webkit-text-stroke: 1px var(--mainColor);
 }
 /* @supports not(-webkit-text-stroke: 1px red) {
