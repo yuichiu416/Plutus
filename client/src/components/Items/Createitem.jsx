@@ -58,7 +58,6 @@ class CreateItem extends Component {
                 data: { items: itemArray.concat(newItem) }
             });
         }
-        debugger;
     }
     
     updateLocation(){
