@@ -71,7 +71,7 @@ class ItemShow extends React.Component {
     }
     
     render() {
-        const { username } = this.state;
+        // const { username } = this.state;
         console.log(this.props.coords);
         return (
             <Query query={FETCH_ITEMS}>
@@ -82,15 +82,16 @@ class ItemShow extends React.Component {
                     const countdownMinutes = item.endTime || 3;
                     this.countDown(countdownMinutes);
                     const images = item.champions.map(champion => {
-                        return <li>
+                        return <li key={champion}>
                             <Image cloudName='chinweenie' publicId={champion}/>
                         </li>
-                    })
+                    });
                     return (
                         <div>
+                            <Link to="/">Home</Link>
                             <h1>The item name is: {item.name}</h1>
                             <p>{item.description}</p>
-                            <h3 id="timer"></h3>
+                            <p id="timer"></p>
                             <ul>
                                 {images}
                             </ul>

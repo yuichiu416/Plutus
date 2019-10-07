@@ -25,6 +25,7 @@ export default {
         champions
         location
         endTime
+        nameHash
       }
     }`,
     FETCH_ITEM: gql`
@@ -44,6 +45,7 @@ export default {
         champions
         location
         endTime
+        nameHash
       }
     }
     `,

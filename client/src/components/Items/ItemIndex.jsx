@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 const { FETCH_ITEMS } = queries;
 
 class ItemIndex extends React.Component {
-    constructor(props){
-        super(props);
-    }
     render() {
         return (
             <Query query={FETCH_ITEMS}>
@@ -15,7 +12,7 @@ class ItemIndex extends React.Component {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     if(data.items.length === 0)
-                        return <h1>No items yet</h1>
+                        return <h1>No items yet, <Link to="items/new">Create new item</Link></h1>
                     return (
                         <div>
                             <Link to="items/new">Create new item</Link>

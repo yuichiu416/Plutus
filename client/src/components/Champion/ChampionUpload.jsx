@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Mutation } from "react-apollo";
 import { CREATE_CHAMPION } from '../../graphql/mutations';
 
-class ChampionUpload extends React.Component {
+class ChampionUpload extends Component {
     constructor(props){
         super(props);
         this.state = {
