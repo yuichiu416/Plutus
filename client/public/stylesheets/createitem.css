@@ -97,8 +97,9 @@
 	margin: 4% auto;
 	background: #1abc9c;
 	font-size: 18px;
-	text-align: center;
-	font-style: normal;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+	/* font-style: normal; */
 	width: 100%;
 	border: 1px solid #16a085;
 	/* border-width: 1px 1px 3px; */
