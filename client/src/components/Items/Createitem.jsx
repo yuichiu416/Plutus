@@ -8,9 +8,6 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
-
-
-
 class CreateItem extends Component {
     constructor(props) {
         super(props);
@@ -49,13 +46,10 @@ class CreateItem extends Component {
     updateCache(cache, { data }) {
         let items;
         try {
-            // if we've already fetched the items then we can read the
-            // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
         } catch (err) {
             return;
         }
-        // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
             let newItem = data.newItem;
@@ -64,6 +58,7 @@ class CreateItem extends Component {
                 data: { items: itemArray.concat(newItem) }
             });
         }
+        debugger;
     }
     
     updateLocation(){
@@ -135,7 +130,6 @@ class CreateItem extends Component {
         });
         this.files = [];
         this.props.history.push("/");
-        // this.props.history.push(`/items/${item.data.newItem.id}`);
     }
     setEndTime(e){
         const val = parseFloat(e.target.value);

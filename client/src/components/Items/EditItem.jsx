@@ -65,30 +65,20 @@ class EditItem extends Component {
     // we need to remember to update our cache directly with our new item
     updateCache(cache, { data }) {
         let items;
-        console.log(cache);
         try {
-            // if we've already fetched the items then we can read the
-            // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
-            // items = cache.readQuery({ query: FETCH_ITEM, variables: { id: this.id } });
-            console.log(items)
         } catch (err) {
             return;
         }
-        // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
             let item = data.updateItem;
             itemArray.find((obj, idx) => (obj.id === this.id ? itemArray[idx] = item : ""));
-
             cache.writeQuery({
                 query: FETCH_ITEMS,
                 data: { items: itemArray }
             });
         }
-    }
-    updateImageURLs(){
-        return e => console.log("upload image url");
     }
     updateLocation(){
         return e => console.log("current location");
@@ -129,7 +119,7 @@ class EditItem extends Component {
             }
         }).then( response => {
             this.mapItemToState(response.data.updateItem);
-            this.props.history.push(`/${this.id}`);
+            this.props.history.push(`/items/${this.id}`);
         }).catch(err => console.log(err));
     }
     setEndTime(e) {
@@ -137,6 +127,9 @@ class EditItem extends Component {
         if (isNaN(val))
             return;
         this.setState({ endTime: val * 60000 + new Date().getTime() })
+    }
+    displayEndTime(time){
+        return (time - new Date().getTime()) / 60000;
     }
     render() {
         const categories = this.fetchCategories();
@@ -215,7 +208,7 @@ class EditItem extends Component {
                             <br/>
                             <label>
                                 End in
-                                <input type="text" onChange={this.setEndTime} />
+                                <input type="text" onChange={this.setEndTime}/>
                                 minutes
                             </label>
                             <br/>

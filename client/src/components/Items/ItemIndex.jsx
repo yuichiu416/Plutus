@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 const { FETCH_ITEMS } = queries;
 
 class ItemIndex extends React.Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
             <Query query={FETCH_ITEMS}>
