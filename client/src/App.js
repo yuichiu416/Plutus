@@ -5,7 +5,7 @@ import Register from "./components/Register";
 import { Route, Switch } from 'react-router-dom';
 import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
-import Splash from './components/Splash';
+// import Splash from './components/Splash';
 import ItemIndex from "./components/Items/ItemIndex";
 import ItemShow from "./components/Items/Itemshow";
 import EditItem from "./components/Items/EditItem";
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <div>
       <Nav />
-      <h1>Online Store</h1>
+      {/* <h1>PLUTUS</h1> */}
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />

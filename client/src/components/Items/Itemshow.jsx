@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 import socketIOClient from "socket.io-client";
-
+import Map from './MapContainer';
+import { geolocated } from "react-geolocated";
 
 const { FETCH_ITEMS } = queries;
 
@@ -71,7 +72,7 @@ class ItemShow extends React.Component {
     
     render() {
         const { username } = this.state;
-
+        console.log(this.props.coords);
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -102,6 +103,7 @@ class ItemShow extends React.Component {
                             <label>
                                 Announce: {this.state.announce}
                             </label>
+                            <Map />
                         </div>
                     );
                 }}
@@ -110,4 +112,5 @@ class ItemShow extends React.Component {
     }
 }
 
-export default withRouter(ItemShow);
+export default geolocated()(withRouter(ItemShow));
+// export default withRouter(ItemShow);
