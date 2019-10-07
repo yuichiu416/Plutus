@@ -4,6 +4,9 @@
   margin-left: 15px;
   display: inline;
 }
+:root {
+  --mainColor: #353636;
+}
 .loggedin-navbar, .loggedout-navbar {
 padding-bottom: 2%;
 padding: 1%;
@@ -14,9 +17,94 @@ padding: 1%;
 }
 .nav-button {
   padding-left: 12px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.2em;
+  height: 50vh;
+  /* justify-content: center; */
+  color: var(--mainColor);
+  text-decoration: none;
+
 }
+.nav-button:hover {
+  cursor: pointer;
+  font-size: 1.5em;
+  -webkit-text-stroke: 1px var(--mainColor);
+}
+/* @supports not(-webkit-text-stroke: 1px red) {
+  .nav-button:hover {
+    text-shadow:
+      3px 3px 0 var(--mainColor),
+      -1px -1px 0 var(--mainColor),
+      1px -1px 0 var(--mainColor),
+      -1px 1px 0 var(--mainColor),
+      1px 1px 0 var(--mainColor);
+  }
+} */
 .nav-logout-button {
   
+}
+
+div[class*=box] {
+    height: 33.33%;
+    width: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .box { background-color: #3C3C3C; } */
+.btn {
+    line-height: 28px;
+    height: 25px;
+    text-align: center;
+    width: 100px;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+}
+.logout-btn {
+    color: rgb(78, 78, 78);
+    transition: all 0.5s;
+    position: relative; 
+}
+.logout-btn span {
+    z-index: 2; 
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;   
+}
+.logout-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.5s;
+    border: 1px solid rgba(61, 61, 61, 0.2);
+    background-color: rgba(255,255,255,0.1);
+}
+.logout-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.5s;
+    border: 1px solid rgba(61, 61, 61, 0.2);
+    background-color: rgba(255,255,255,0.1);
+    color: rgba(231, 232, 233, 0);
+}
+.logout-btn:hover::before {
+  transform: rotate(-45deg);
+  background-color: rgba(255,255,255,0);
+}
+.logout-btn:hover::after {
+  transform: rotate(45deg);
+  background-color: rgba(255,255,255,0);
+  /* color: rgba(231, 232, 233, 0); */
 }
 .nav-shadow {
   position: relative;
