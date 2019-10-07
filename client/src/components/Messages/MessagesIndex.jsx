@@ -9,7 +9,6 @@ class MessagesIndex extends React.Component {
         super(props);
     }
 
-
     render() {
         return (
             <Query query={FETCH_MESSAGES}>
@@ -18,11 +17,15 @@ class MessagesIndex extends React.Component {
                     if (error) return <p>{error}</p>
 
                     const messages = data.messages.map(message => {
-                        return <li key={message.id}>
-                            <h3>{message.title}</h3>
-                            <p>Sent by {message.sender.name}</p>
-                            <p>{message.replies.length} replies</p>
-                        </li>
+                        return (
+                            <Link to={`/messages/${message.id}`}>
+                                <li key={message.id}>
+                                    <h3>{message.title}</h3>
+                                    <p>Sent by {message.sender.name}</p>
+                                    <p>{message.replies.length} replies</p>
+                                </li>
+                            </Link>
+                        )
                     })
 
                     return (
