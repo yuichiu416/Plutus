@@ -45,6 +45,10 @@ const ItemSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    endTime: {
+        type: Number,
+        default: 3
     }
 });
 

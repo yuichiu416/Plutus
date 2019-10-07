@@ -20,8 +20,9 @@ class EditItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
+            champions: [],
             location: [],
+            endTime: 3
         };
         this.itemDetails = this.setDefaultItemState();
         this.mapItemToState = this.mapItemToState.bind(this);
@@ -37,8 +38,9 @@ class EditItem extends Component {
             category: item.category.id,
             sold: item.sold,
             appraised: item.appraised,
-            imageURLs: item.imageURLs,
-            location: item.location
+            champions: item.champions,
+            location: item.location,
+            endTime: item.endTime
         });
     }
     setDefaultItemState(){
@@ -62,30 +64,20 @@ class EditItem extends Component {
     // we need to remember to update our cache directly with our new item
     updateCache(cache, { data }) {
         let items;
-        console.log(cache);
         try {
-            // if we've already fetched the items then we can read the
-            // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
-            // items = cache.readQuery({ query: FETCH_ITEM, variables: { id: this.id } });
-            console.log(items)
         } catch (err) {
             return;
         }
-        // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
             let item = data.updateItem;
             itemArray.find((obj, idx) => (obj.id === this.id ? itemArray[idx] = item : ""));
-
             cache.writeQuery({
                 query: FETCH_ITEMS,
                 data: { items: itemArray }
             });
         }
-    }
-    updateImageURLs(){
-        return e => console.log("upload image url");
     }
     updateLocation(){
         return e => console.log("current location");
@@ -120,12 +112,13 @@ class EditItem extends Component {
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised,
-                imageURLs: this.state.imageURLs,
-                location: this.state.location
+                champions: this.state.champions,
+                location: this.state.location,
+                endTime: this.state.endTime
             }
         }).then( response => {
             this.mapItemToState(response.data.updateItem);
-            this.props.history.push(`/${this.id}`);
+            this.props.history.push(`/items/${this.id}`);
         }).catch(err => console.log(err));
     }
     render() {
@@ -161,7 +154,7 @@ class EditItem extends Component {
                             />
                             {/* <input
                                 onChange={this.updateImageURLs()}
-                                value={this.state.imageURLs}
+                                value={this.state.champions}
                                 placeholder="Upload image urls"
                             /> */}
                             <label>
@@ -202,6 +195,8 @@ class EditItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
+                            <br/>
+                            <br/>
                             <label>
                                 Category:
                                 {categories}

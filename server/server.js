@@ -11,7 +11,6 @@ const cors = require("cors");
 const graphqlUpload = require('graphql-upload');
 const { graphqlUploadExpress } = graphqlUpload;
 
-
 if (!db) {
     throw new Error("You must provide a string to connect to MongoDB Atlas");
 }

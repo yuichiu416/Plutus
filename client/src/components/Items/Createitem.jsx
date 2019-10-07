@@ -42,13 +42,10 @@ class CreateItem extends Component {
     updateCache(cache, { data }) {
         let items;
         try {
-            // if we've already fetched the items then we can read the
-            // query here
             items = cache.readQuery({ query: FETCH_ITEMS });
         } catch (err) {
             return;
         }
-        // if we had previously fetched items we'll add our new item to our cache
         if (items) {
             let itemArray = items.items;
             let newItem = data.newItem;
@@ -98,9 +95,15 @@ class CreateItem extends Component {
 
     handleSubmit(e, newItem) {
         e.preventDefault();
+<<<<<<< HEAD
         
         this.updateImageURLs().then(champions => {
             const variables = {
+=======
+        const championsArr = await this.updateImageURLs() || [];
+        const item = await newItem({
+            variables: {
+>>>>>>> a885083e19b814c5f9e449fa43a9b3994213902f
                 name: this.state.name,
                 description: this.state.description,
                 starting_price: parseFloat(this.state.starting_price),
@@ -109,6 +112,7 @@ class CreateItem extends Component {
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 location: this.state.location,
+<<<<<<< HEAD
                 champions: champions
             };
             debugger
@@ -135,6 +139,33 @@ class CreateItem extends Component {
         
         
         // this.props.history.push("/");
+=======
+                champions: championsArr,
+                endTime: this.state.endTime
+            }
+        })
+        this.setState({
+            message: "",
+            name: "",
+            description: "",
+            starting_price: 0,
+            minimum_price: 0,
+            category: "",
+            sold: false,
+            appraised: false,
+            location: [],
+            champions: [],
+            endTime: 3
+        });
+        this.files = [];
+        this.props.history.push("/");
+    }
+    setEndTime(e){
+        const val = parseFloat(e.target.value);
+        if(isNaN(val))
+            return;
+        this.setState({endTime: val * 60000 + new Date().getTime()})
+>>>>>>> a885083e19b814c5f9e449fa43a9b3994213902f
     }
       
     render() {
@@ -207,7 +238,13 @@ class CreateItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
-
+                            <br />
+                            <label>
+                                End in 
+                                <input type="text" onChange={this.setEndTime}/>
+                                minutes
+                            </label>
+                            <br/>
                             <label>
                                 Category:
                                 {categories}

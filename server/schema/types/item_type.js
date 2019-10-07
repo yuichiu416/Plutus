@@ -28,8 +28,9 @@ const ItemType = new GraphQLObjectType({
         champions: {
             type: new GraphQLList(GraphQLString)
         },
-        imageURLs: { type: new GraphQLList(GraphQLString) },
-        location: { type: new GraphQLList(GraphQLFloat) }
+        champions: { type: new GraphQLList(GraphQLString) },
+        location: { type: new GraphQLList(GraphQLFloat) },
+        endTime: {type: GraphQLFloat }
     })
 });
 
