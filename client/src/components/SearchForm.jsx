@@ -30,17 +30,17 @@ class SearchForm extends React.Component {
         const matches = [];
         if (this.state.inputVal.length === 0)
             return [];
-        const input = this.state.inputVal;
+        const input = this.state.inputVal.replace(/\s/g, '').toLowerCase();
         if (input === "*all*") {
-            // return Object.keys(this.hashesToCompare);
+            return Object.keys(this.nameHashes);
         }
-        // Object.keys(this.hashesToCompare).forEach(name => {
-        //     for (let i = 0; i < input.length; i++) {
-        //         if (!this.hashesToCompare[name][input[i]])
-        //             return [];
-        //     }
-        //     matches.push(name);
-        // });
+        Object.keys(this.nameHashes).forEach(name => {
+            for (let i = 0; i < input.length; i++) {
+                if (!this.nameHashes[name][input[i]])
+                    return [];
+            }
+            matches.push(name);
+        });
         return matches;
     }
 
@@ -61,11 +61,12 @@ class SearchForm extends React.Component {
     render() {
         let searchResults = this.matches().map((result, i) => {
             const handledResult = this.handleBoldText(result);
-            const id = this.findStoryIdByTitle(result);
-            return <li key={i} onClick={this.selectName} className={i === this.state.index ? "search-selected" : ""}><Link to={`/stories/${id}`} id={`match-${i}`}>{handledResult}</Link></li>
+            // const id = this.findStoryIdByTitle(result);
+            // return <li key={i} onClick={this.selectName} className={i === this.state.index ? "search-selected" : ""}><Link to={`/stories/${id}`} id={`match-${i}`}>{handledResult}</Link></li>
         });
         searchResults = <ul className="search-ul">{searchResults}</ul>
-        
+        console.log(this.nameHashes);
+        console.log(this.matches());
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -76,7 +77,6 @@ class SearchForm extends React.Component {
                     data.items.forEach(item => {
                         this.nameHashes[item.name] = JSON.parse(item.nameHash);
                     })
-                    console.log(this.nameHashes);
                     return (
                         <form className="search-form" id="search-form">
                             <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder="Search for stories..." value={this.state.inputVal} />

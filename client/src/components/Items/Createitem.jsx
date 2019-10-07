@@ -95,6 +95,13 @@ class CreateItem extends Component {
         }
         return publicIdsArray;
     }
+    setEndTime(e) {
+        const val = parseFloat(e.target.value);
+        if (isNaN(val)) {
+            return;
+        }
+        this.setState({ endTime: val * 60000 + new Date().getTime() });
+    }
 
     handleSubmit(e, newItem) {
         e.preventDefault();
