@@ -13,23 +13,34 @@ const Nav = props => {
                     {({ data }) => {
                         if (data.isLoggedIn) {
                             return (
-                                <button
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        localStorage.removeItem("auth-token");
-                                        client.writeData({ data: { isLoggedIn: false } });
-                                        props.history.push("/");
-                                    }}
-                                >
-                                    Logout
-                                </button>
+                                <div class="loggedin-navbar">
+                                    <img src="Logo5.png" alt="plutus-logo" class="plutus-logo-nav"/>
+                                <div class="nav-logout-div">
+                                    <button
+                                        class="nav-logout-button"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            localStorage.removeItem("auth-token");
+                                            client.writeData({ data: { isLoggedIn: false } });
+                                            props.history.push("/");
+                                        }}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                                </div>
                             );
                         } else {
                             return (
-                                <div>
-                                    <Link to="/login">Login</Link>
-                                    <Link to="/register">Sign Up</Link>
+                                <div class="loggedout-navbar">
+                                    <img src="Logo5.png" alt="plutus-logo-nav" class="plutus-logo-nav" />
+                                    <div class="nav-button-duo">
+                                        <Link to="/login" class="nav-button">Login</Link>
+                                        <Link to="/register" class="nav-button">Sign Up</Link>
+                                    </div>
+                                    <div class="nav-shadow"></div>
                                 </div>
+                                
                             );
                         }
                     }}

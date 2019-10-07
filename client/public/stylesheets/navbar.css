@@ -1,0 +1,26 @@
+.plutus-logo-nav {
+  width: 40vw;
+  max-width: 300px;;
+  margin-left: 15px;
+  display: inline;
+}
+.loggedin-navbar, .loggedout-navbar {
+padding-bottom: 2%;
+padding: 1%;
+}
+.nav-button-duo, .nav-logout-div {
+  float: right;
+  padding: 2%;
+}
+.nav-button {
+  padding-left: 12px;
+}
+.nav-logout-button {
+  
+}
+.nav-shadow {
+  position: relative;
+  height: 13px;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.05);
+  bottom: 10px
+}

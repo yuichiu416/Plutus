@@ -1,0 +1,112 @@
+
+.create-form{
+  /* width: 400vw; */
+	max-width: 500px;
+	/* padding: 10px 20px; */
+  background: #f3f5f5f0;
+	margin: 10px auto;
+	padding: 20px;
+	/* background: #f4f7f8; */
+  border-radius: 6px;
+  font-family: 'Raleway', sans-serif;
+  /* transform: translate(-50%, -50%); */
+  box-shadow: 0px 2px 10px 0px silver;
+  /* background-repeat: no-repeat;
+  background-size: 100%; */
+	/* font-family: Georgia, "Times New Roman", Times, serif;  */
+}
+.create-form fieldset{
+	border: none;
+}
+.create-form label {
+  display: block;
+	/* margin-bottom: 8px; */
+}
+.create-form input[type="name"],
+.create-form input[type="number"],
+.create-form input[type="time"],
+.create-form textarea,
+.create-form select {
+  font-family: 'Raleway', sans-serif;
+	background: rgba(255,255,255,.1);
+	border: none;
+	border-radius: 4px;
+	font-size: 15px;
+	margin: 0;
+	outline: 0;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;  
+	background-color: #e8eeef;
+	color:#959ea5;
+	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset; 
+	margin-bottom: 20px;
+}
+.create-form input[type="name"]:focus,
+.create-form input[type="number"]:focus,
+.create-form input[type="time"]:focus,
+.create-form textarea:focus,
+.create-form select:focus{
+	background: #d2d9dd;
+}
+.create-form input[type="file"]:hover {
+  /* cursor: pointer; */
+}
+/* .create-form button{
+  margin: 15px 12px;
+  display: inline-flex;
+} */
+
+.category:hover {
+  cursor: pointer;
+}
+.bottom-label {
+  margin-top: 10px;
+}
+.bottom-entry {
+  background-color: #f4f7f8;
+  border-radius: 2px;
+}
+.create-form select{
+	-webkit-appearance: menulist-button;
+	height:35px;
+}
+/* .create-form .number {
+	background: #1abc9c;
+	color: #fff;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	font-size: 0.8em;
+	margin-right: 4px;
+	line-height: 30px;
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	border-radius: 15px 15px 15px 0px;
+} */
+
+.create-form input[type="submit"],
+.create-form button {
+	position: relative;
+	display: block;
+	padding: 19px 39px 18px 39px;
+	color: #FFF;
+	margin: 4% auto;
+	background: #1abc9c;
+	font-size: 18px;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+	/* font-style: normal; */
+	width: 100%;
+	border: 1px solid #16a085;
+	/* border-width: 1px 1px 3px; */
+	margin-bottom: 10px;
+}
+.create-form button:hover {
+  color: black;
+  cursor: pointer;
+  border: 1px solid #504f4f;
+}
