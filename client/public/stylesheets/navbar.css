@@ -50,13 +50,15 @@ div[class*=box] {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  
 }
 /* .box { background-color: #3C3C3C; } */
 .btn {
     line-height: 28px;
     height: 25px;
     text-align: center;
-    width: 100px;
+    width: 85px;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
 }

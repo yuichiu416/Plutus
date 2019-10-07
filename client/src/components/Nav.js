@@ -15,31 +15,32 @@ const Nav = props => {
                             return (
                                 <div class="loggedin-navbar">
                                     <img src="Logo5.png" alt="plutus-logo" class="plutus-logo-nav"/>
-                                <div class="nav-logout-div">
-                                    {/* <button
-                                        class="nav-logout-button"
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            localStorage.removeItem("auth-token");
-                                            client.writeData({ data: { isLoggedIn: false } });
-                                            props.history.push("/");
-                                        }}
-                                    >
-                                        Logout
-                                    </button> */}
-                                <div class="box">
-                                    <div class="btn logout-btn">
-                                        <span
-                                                onClick={e => {
-                                                    e.preventDefault();
-                                                    localStorage.removeItem("auth-token");
-                                                    client.writeData({ data: { isLoggedIn: false } });
-                                                    props.history.push("/");
-                                                }}
-                                        >Logout</span>
+                                    <div class="nav-logout-div">
+                                        {/* <button
+                                            class="nav-logout-button"
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                localStorage.removeItem("auth-token");
+                                                client.writeData({ data: { isLoggedIn: false } });
+                                                props.history.push("/");
+                                            }}
+                                        >
+                                            Logout
+                                        </button> */}
+                                        <div class="box">
+                                            <div class="btn logout-btn">
+                                                <span
+                                                        onClick={e => {
+                                                            e.preventDefault();
+                                                            localStorage.removeItem("auth-token");
+                                                            client.writeData({ data: { isLoggedIn: false } });
+                                                            props.history.push("/");
+                                                        }}
+                                                >Logout</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                </div>
+                                     <div class="nav-shadow"></div>
                                 </div>
                             );
                         } else {
