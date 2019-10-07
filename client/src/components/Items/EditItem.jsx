@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
 
-const { FETCH_ITEMS, FETCH_ITEM, FETCH_CATEGORIES } = Queries;
+const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
 class EditItem extends Component {
     constructor(props) {

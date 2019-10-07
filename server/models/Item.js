@@ -8,6 +8,9 @@ const ItemSchema = new Schema({
         type: String,
         required: true
     },
+    nameHash: {
+        type: Map,
+    },
     seller:{
         type: Schema.Types.ObjectId,
         ref: "user"

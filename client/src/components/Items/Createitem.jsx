@@ -18,13 +18,14 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
+            champions: [],
             location: [],
-            endTime: 0
+            endTime: 3
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.setEndTime = this.setEndTime.bind(this)
+        this.setEndTime = this.setEndTime.bind(this);
     }
 
     onDrop(e) {
@@ -94,27 +95,30 @@ class CreateItem extends Component {
         }
         return publicIdsArray;
     }
+    setEndTime(e) {
+        const val = parseFloat(e.target.value);
+        if (isNaN(val)) {
+            return;
+        }
+        this.setState({ endTime: val * 60000 + new Date().getTime() });
+    }
 
     handleSubmit(e, newItem) {
         e.preventDefault();
-        
         this.updateImageURLs().then(champions => {
-            const variables = {
-                name: this.state.name,
-                description: this.state.description,
-                starting_price: parseFloat(this.state.starting_price),
-                minimum_price: parseFloat(this.state.minimum_price),
-                category: this.state.category,
-                sold: this.state.sold,
-                appraised: this.state.appraised,
-                location: this.state.location,
-                endTime: this.state.endTime,
-                champions: champions
-            };
             newItem({
-                variables
+                variables: {
+                    name: this.state.name,
+                    description: this.state.description,
+                    starting_price: parseFloat(this.state.starting_price),
+                    minimum_price: parseFloat(this.state.minimum_price),
+                    category: this.state.category,
+                    sold: this.state.sold,
+                    appraised: this.state.appraised,
+                    location: this.state.location,
+                    champions: champions
+                }
             }).then(response => {
-                console.log(response);
                 this.setState({
                     message: "",
                     name: "",
@@ -125,21 +129,13 @@ class CreateItem extends Component {
                     sold: false,
                     appraised: false,
                     location: [],
-                    endTime: 0
+                    champions: [],
+                    endTime: 3
                 });
                 this.files = [];
-                this.props.history.push(`/items/${response.data.newItem.id}`);
+                this.props.history.push(`/`);
             })
         })
-
-    }
-
-    setEndTime(e){
-        const val = parseFloat(e.target.value);
-        if(isNaN(val)){
-            return;
-        }
-        this.setState({endTime: val * 60000 + new Date().getTime()});
     }
       
     render() {
@@ -184,7 +180,6 @@ class CreateItem extends Component {
                                     class="field1"
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
-                                    // type="number"
                                 />
                             
                             </label>
@@ -195,7 +190,6 @@ class CreateItem extends Component {
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
                                     placeholder="Minimum Price"
-                                    // type="number"
                                 />
                             </label>
 
@@ -242,16 +236,10 @@ class CreateItem extends Component {
                         </form>
                         <p>{this.state.message}</p>
                     </div>
-                
                 }}
             </Mutation>
         );
     }
-
-        
 }
-
-    
-
 
 export default CreateItem;

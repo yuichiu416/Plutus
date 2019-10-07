@@ -10,8 +10,8 @@ import ItemIndex from "./components/Items/ItemIndex";
 import ItemShow from "./components/Items/Itemshow";
 import EditItem from "./components/Items/EditItem";
 import CreateMessage from "./components/Messages/CreateMessage";
-import ChampionUpload from "./components/Champion/ChampionUpload";
-import ChampionDetail from "./components/Champion/ChampionDetail";
+// import ChampionUpload from "./components/Champion/ChampionUpload";
+// import ChampionDetail from "./components/Champion/ChampionDetail";
 import CreateItem from './components/Items/Createitem';
 
 const App = () => {

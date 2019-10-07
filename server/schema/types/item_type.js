@@ -11,6 +11,14 @@ const ItemType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
+        nameHash: { 
+            type: GraphQLString,
+            resolve(parentValue){
+                if (parentValue.nameHash) {
+                    return JSON.stringify(parentValue.nameHash.toJSON());
+                }
+            } 
+        },
         description: { type: GraphQLString },
         seller: { type: GraphQLID },
         starting_price: { type: GraphQLFloat },
@@ -25,9 +33,6 @@ const ItemType = new GraphQLObjectType({
         },
         sold: { type: GraphQLBoolean },
         appraised: { type: GraphQLBoolean },
-        champions: {
-            type: new GraphQLList(GraphQLString)
-        },
         champions: { type: new GraphQLList(GraphQLString) },
         location: { type: new GraphQLList(GraphQLFloat) },
         endTime: {type: GraphQLFloat }
