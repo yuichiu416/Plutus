@@ -163,7 +163,7 @@ class CreateItem extends Component {
                                 type="name"
                                 onChange={this.update("name")}
                                 value={this.state.name}
-                                placeholder="Name"
+                                placeholder="Item Name"
                                 class="field1"
                             />
                             <textarea

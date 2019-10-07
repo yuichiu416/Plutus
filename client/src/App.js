@@ -18,7 +18,7 @@ const App = () => {
   return (
     <div>
       <Nav />
-      <h1>Online Store</h1>
+      {/* <h1>PLUTUS</h1> */}
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
