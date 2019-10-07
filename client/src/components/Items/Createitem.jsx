@@ -69,7 +69,7 @@ class CreateItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 return (
-                    <select onChange={this.update("category")} value={this.state.category || "default"}>
+                    <select class="category" onChange={this.update("category")} value={this.state.category || "default"}>
                     <option value="default" disabled>--Please Select--</option>
                         {data.categories.map((category) => (
                             <option value={category.id} key={category.id}>{category.name}</option>
@@ -155,73 +155,89 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <div>
+                    return <div class="create-form">
 
                         <form onSubmit={e => this.handleSubmit(e, newItem)}>
+                            <fieldset>
                             <input
+                                type="name"
                                 onChange={this.update("name")}
                                 value={this.state.name}
                                 placeholder="Name"
+                                class="field1"
                             />
                             <textarea
                                 onChange={this.update("description")}
                                 value={this.state.description}
-                                placeholder="description"
+                                placeholder="Description"
+                                class="field2"
                             />
 
-                            <label>
+                            <label class="top-label">
                                 Starting Price:
                                 <input
+                                    class="field1"
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
                                     type="number"
+                                    // placeholder="Starting Price"
                                 />
                             </label>
-                            <label>
+                            <label class="top-label">
                                 Minimum Price:
                                 <input
+                                    class="field1"
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
-                                    placeholder="Minimum Price"
+                                    // placeholder="Minimum Price"
                                     type="number"
                                 />
                             </label>
-                            <label>
-                                Upload Images:
-                                <input type="file" multiple onChange={this.onDrop} />
-                            </label>
 
-                            <label>
-                                Sold:
-                                <input
-                                    onChange={this.update("sold")}
-                                    value={this.state.sold}
-                                    placeholder="Sold"
-                                />
-                            </label>
-                            <label>
-                                Appraised:
-                                <input
-                                    onChange={this.update("appraised")}
-                                    value={this.state.appraised}
-                                />
-                            </label>
-                            <br />
-                            <label>
-                                End in 
-                                <input type="text" onChange={this.setEndTime}/>
-                                minutes
-                            </label>
-                            <br/>
-                            <label>
-                                Category:
+                            <label class="top-label">
+                                Category: 
                                 {categories}
                             </label>
 
+                            <label class="top-label">
+                                Upload Images: &nbsp;
+                                    
+                                <input type="file" multiple onChange={this.onDrop} />
+                            </label>
+                            <br/>
+                            {/* <label name="buttom-label">
+                                Sold:
+                                <input
+                                    name="bottom-entry"
+                                    onChange={this.update("sold")}
+                                    value={this.state.sold}
+                                    // placeholder="Sold"
+                                />
+                            </label> */}
+                            <label class="buttom-label">
+                                Appraised: &nbsp;
+                                <input
+                                    type="text"
+                                    class="bottom-entry"
+                                    onChange={this.update("appraised")}
+                                    value={this.state.appraised}
+                                    // placeholder=" "
+                                />
+                            </label>
+                            
+                            <label class="bottom-label">
+                                End in &nbsp;
+                                <input type="text" class="bottom-entry" onChange={this.setEndTime}/>
+                                &nbsp; minutes
+                            </label>
+                            
+                            
+                            </fieldset>
                             <button type="submit">Create Item</button>
                         </form>
                         <p>{this.state.message}</p>
                     </div>
+                
                 }}
             </Mutation>
         );
