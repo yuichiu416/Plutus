@@ -20,13 +20,14 @@ class EditItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
+            champions: [],
             location: [],
             endTime: 3
         };
         this.itemDetails = this.setDefaultItemState();
         this.mapItemToState = this.mapItemToState.bind(this);
         this.updateCache = this.updateCache.bind(this);
+        this.setEndTime = this.setEndTime.bind(this);
     }
     mapItemToState(item){
         this.setState({
@@ -38,7 +39,7 @@ class EditItem extends Component {
             category: item.category.id,
             sold: item.sold,
             appraised: item.appraised,
-            imageURLs: item.imageURLs,
+            champions: item.champions,
             location: item.location,
             endTime: item.endTime
         });
@@ -122,7 +123,7 @@ class EditItem extends Component {
                 category: this.state.category,
                 sold: this.state.sold,
                 appraised: this.state.appraised,
-                imageURLs: this.state.imageURLs,
+                champions: this.state.champions,
                 location: this.state.location,
                 endTime: this.state.endTime
             }
@@ -130,6 +131,12 @@ class EditItem extends Component {
             this.mapItemToState(response.data.updateItem);
             this.props.history.push(`/${this.id}`);
         }).catch(err => console.log(err));
+    }
+    setEndTime(e) {
+        const val = parseFloat(e.target.value);
+        if (isNaN(val))
+            return;
+        this.setState({ endTime: val * 60000 + new Date().getTime() })
     }
     render() {
         const categories = this.fetchCategories();
@@ -164,7 +171,7 @@ class EditItem extends Component {
                             />
                             {/* <input
                                 onChange={this.updateImageURLs()}
-                                value={this.state.imageURLs}
+                                value={this.state.champions}
                                 placeholder="Upload image urls"
                             /> */}
                             <label>
@@ -205,7 +212,13 @@ class EditItem extends Component {
                                     value={this.state.appraised}
                                 />
                             </label>
-                            <input type="text" name="end_minutes" value="Set end time in minutes" />
+                            <br/>
+                            <label>
+                                End in
+                                <input type="text" onChange={this.setEndTime} />
+                                minutes
+                            </label>
+                            <br/>
                             <label>
                                 Category:
                                 {categories}

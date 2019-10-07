@@ -23,7 +23,7 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
+            champions: [],
             location: [],
             endTime: 3
         };
@@ -105,7 +105,7 @@ class CreateItem extends Component {
 
     async handleSubmit(e, newItem) {
         e.preventDefault();
-        const championsArr = await this.updateImageURLs();
+        const championsArr = await this.updateImageURLs() || [];
         const item = await newItem({
             variables: {
                 name: this.state.name,
@@ -129,8 +129,8 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            imageURLs: [],
             location: [],
+            champions: [],
             endTime: 3
         });
         this.files = [];

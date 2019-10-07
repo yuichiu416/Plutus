@@ -41,7 +41,7 @@ export default {
         }
         sold
         appraised
-        imageURLs
+        champions
         location
         endTime
       }
