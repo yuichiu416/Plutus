@@ -25,6 +25,7 @@ export default {
         champions
         location
         endTime
+        nameHash
       }
     }`,
     FETCH_ITEM: gql`
@@ -44,6 +45,7 @@ export default {
         champions
         location
         endTime
+        nameHash
       }
     }
     `,
@@ -79,6 +81,22 @@ export default {
           id
           name
           publicId
+        }
+      }
+    `,
+    FETCH_MESSAGES: gql`
+      query FetchMessages{
+        messages{
+          id
+          title
+          body
+          sender{
+            id
+            name
+          }
+          replies{
+            id
+          }
         }
       }
     `

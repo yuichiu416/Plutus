@@ -3,6 +3,8 @@ import React from 'react';
 import { Query, ApolloConsumer } from "react-apollo";
 import Queries from "../graphql/queries";
 import { Link, withRouter } from 'react-router-dom';
+import SearchForm from './SearchForm';
+
 const { IS_LOGGED_IN } = Queries;
 
 const Nav = props => {
@@ -45,13 +47,13 @@ const Nav = props => {
                             );
                         } else {
                             return (
-                                <div class="loggedout-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo-nav" class="plutus-logo-nav" />
-                                    <div class="nav-button-duo">
-                                        <Link to="/login" class="nav-button">Login</Link>
-                                        <Link to="/register" class="nav-button">Sign Up</Link>
+                                <div className="loggedout-navbar">
+                                    <img src="Logo5.png" alt="plutus-logo-nav" className="plutus-logo-nav" />
+                                    <div className="nav-button-duo">
+                                        <Link to="/login" className="nav-button">Login</Link>
+                                        <Link to="/register" className="nav-button">Sign Up</Link>
                                     </div>
-                                    <div class="nav-shadow"></div>
+                                    <div className="nav-shadow"></div>
                                 </div>
                                 
                             );

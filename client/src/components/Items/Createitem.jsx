@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import axios from 'axios';
-import { CREATE_ITEM, UPDATE_ITEM_IMAGES, CREATE_CHAMPION } from "../../graphql/mutations";
-
+import { CREATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
-
 import Queries from "../../graphql/queries";
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
@@ -26,6 +24,7 @@ class CreateItem extends Component {
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.setEndTime = this.setEndTime.bind(this);
     }
 
@@ -69,7 +68,7 @@ class CreateItem extends Component {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
                 return (
-                    <select class="category" onChange={this.update("category")} value={this.state.category || "default"}>
+                    <select className="category" onChange={this.update("category")} value={this.state.category || "default"}>
                     <option value="default" disabled>--Please Select--</option>
                         {data.categories.map((category) => (
                             <option value={category.id} key={category.id}>{category.name}</option>
@@ -96,45 +95,47 @@ class CreateItem extends Component {
         }
         return publicIdsArray;
     }
-
-    async handleSubmit(e, newItem) {
-        e.preventDefault();
-        const championsArr = await this.updateImageURLs() || [];
-        const item = await newItem({
-            variables: {
-                name: this.state.name,
-                description: this.state.description,
-                starting_price: this.state.starting_price,
-                minimum_price: this.state.minimum_price,
-                category: this.state.category,
-                sold: this.state.sold,
-                appraised: this.state.appraised,
-                location: this.state.location,
-                champions: championsArr,
-                endTime: this.state.endTime
-            }
-        })
-        this.setState({
-            message: "",
-            name: "",
-            description: "",
-            starting_price: 0,
-            minimum_price: 0,
-            category: "",
-            sold: false,
-            appraised: false,
-            location: [],
-            champions: [],
-            endTime: 3
-        });
-        this.files = [];
-        this.props.history.push("/");
-    }
-    setEndTime(e){
+    setEndTime(e) {
         const val = parseFloat(e.target.value);
-        if(isNaN(val))
+        if (isNaN(val)) {
             return;
-        this.setState({endTime: val * 60000 + new Date().getTime()})
+        }
+        this.setState({ endTime: val * 60000 + new Date().getTime() });
+    }
+
+    handleSubmit(e, newItem) {
+        e.preventDefault();
+        this.updateImageURLs().then(champions => {
+            newItem({
+                variables: {
+                    name: this.state.name,
+                    description: this.state.description,
+                    starting_price: parseFloat(this.state.starting_price),
+                    minimum_price: parseFloat(this.state.minimum_price),
+                    category: this.state.category,
+                    sold: this.state.sold,
+                    appraised: this.state.appraised,
+                    location: this.state.location,
+                    champions: champions
+                }
+            }).then(response => {
+                this.setState({
+                    message: "",
+                    name: "",
+                    description: "",
+                    starting_price: 0,
+                    minimum_price: 0,
+                    category: "",
+                    sold: false,
+                    appraised: false,
+                    location: [],
+                    champions: [],
+                    endTime: 3
+                });
+                this.files = [];
+                this.props.history.push(`/`);
+            })
+        })
     }
       
     render() {
@@ -155,7 +156,7 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <div class="create-form">
+                    return <div className="create-form">
 
                         <form onSubmit={e => this.handleSubmit(e, newItem)}>
                             <fieldset>
@@ -164,42 +165,40 @@ class CreateItem extends Component {
                                 onChange={this.update("name")}
                                 value={this.state.name}
                                 placeholder="Item Name"
-                                class="field1"
+                                className="field1"
                             />
                             <textarea
                                 onChange={this.update("description")}
                                 value={this.state.description}
                                 placeholder="Description"
-                                class="field2"
+                                className="field2"
                             />
 
-                            <label class="top-label">
+                            <label className="top-label">
                                 Starting Price:
                                 <input
-                                    class="field1"
+                                    className="field1"
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
-                                    type="number"
-                                    // placeholder="Starting Price"
                                 />
+                            
                             </label>
-                            <label class="top-label">
+                            <label className="top-label">
                                 Minimum Price:
                                 <input
-                                    class="field1"
+                                    className="field1"
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
-                                    // placeholder="Minimum Price"
-                                    type="number"
+                                    placeholder="Minimum Price"
                                 />
                             </label>
 
-                            <label class="top-label">
+                            <label className="top-label">
                                 Category: 
                                 {categories}
                             </label>
                             <br/>
-                            <label class="top-label">
+                            <label className="top-label">
                                 Upload Images: &nbsp;
                                     
                                 <input type="file" multiple onChange={this.onDrop} />
@@ -215,20 +214,20 @@ class CreateItem extends Component {
                                     // placeholder="Sold"
                                 />
                             </label> */}
-                            <label class="buttom-label">
+                            <label className="buttom-label">
                                 Appraised: &nbsp;
                                 <input
                                     type="text"
-                                    class="bottom-entry"
+                                    className="bottom-entry"
                                     onChange={this.update("appraised")}
                                     value={this.state.appraised}
                                     // placeholder=" "
                                 />
                             </label>
                             
-                            <label class="bottom-label">
+                            <label className="bottom-label">
                                 End in &nbsp;
-                                <input type="text" class="bottom-entry" onChange={this.setEndTime}/>
+                                <input type="text" className="bottom-entry" onChange={this.setEndTime}/>
                                 &nbsp; minutes
                             </label>
                             
@@ -238,16 +237,10 @@ class CreateItem extends Component {
                         </form>
                         <p>{this.state.message}</p>
                     </div>
-                
                 }}
             </Mutation>
         );
     }
-
-        
 }
-
-    
-
 
 export default CreateItem;
