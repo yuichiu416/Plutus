@@ -88,10 +88,16 @@ const mutations = new GraphQLObjectType({
                 endTime: { type: GraphQLFloat }
             },
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
-                debugger
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                return new Item({ name, description, starting_price, minimum_price, seller, category, sold, appraised, location, champions, endTime }).save();
+                const nameHash = {};
+                const str = name.replace(/\s/g, '').toLowerCase();
+                for (let i = 0; i < str.length; i++) {
+                    const char = str[i];
+                    nameHash[char] = nameHash[char] || 0;
+                    nameHash[char]++;
+                }
+                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, location, champions, endTime, nameHash }).save();
             }
         },
         updateItem: {
@@ -100,7 +106,6 @@ const mutations = new GraphQLObjectType({
                 id: { type: GraphQLID },
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                seller: { type: GraphQLID },
                 starting_price: { type: GraphQLFloat },
                 minimum_price: { type: GraphQLFloat },
                 category: { type: GraphQLString },
@@ -113,7 +118,7 @@ const mutations = new GraphQLObjectType({
             async resolve(_, { id, name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime };
+                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, location, champions, endTime };
                 return Item.findOneAndUpdate(
                     { _id: id },
                     { $set: item },
