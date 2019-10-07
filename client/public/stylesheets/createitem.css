@@ -20,6 +20,7 @@
 }
 .create-form label {
   display: block;
+  color: #5c5b5b;
 	/* margin-bottom: 8px; */
 }
 .create-form input[type="name"],
@@ -52,9 +53,7 @@
 .create-form select:focus{
 	background: #d2d9dd;
 }
-.create-form input[type="file"]:hover {
-  /* cursor: pointer; */
-}
+
 /* .create-form button{
   margin: 15px 12px;
   display: inline-flex;
@@ -64,7 +63,7 @@
   cursor: pointer;
 }
 .bottom-label {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 .bottom-entry {
   background-color: #f4f7f8;
