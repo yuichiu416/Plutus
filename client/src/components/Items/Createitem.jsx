@@ -18,11 +18,13 @@ class CreateItem extends Component {
             category: "",
             sold: false,
             appraised: false,
-            location: [1,1]
+            location: [],
+            endTime: 0
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.setEndTime = this.setEndTime.bind(this)
     }
 
     onDrop(e) {
@@ -106,9 +108,9 @@ class CreateItem extends Component {
                 sold: this.state.sold,
                 appraised: this.state.appraised,
                 location: this.state.location,
+                endTime: this.state.endTime,
                 champions: champions
             };
-            debugger
             newItem({
                 variables
             }).then(response => {
@@ -122,16 +124,22 @@ class CreateItem extends Component {
                     category: "",
                     sold: false,
                     appraised: false,
-                    location: []
+                    location: [],
+                    endTime: 0
                 });
                 this.files = [];
                 this.props.history.push(`/items/${response.data.newItem.id}`);
             })
         })
-        
-        
-        
-        // this.props.history.push("/");
+
+    }
+
+    setEndTime(e){
+        const val = parseFloat(e.target.value);
+        if(isNaN(val)){
+            return;
+        }
+        this.setState({endTime: val * 60000 + new Date().getTime()});
     }
       
     render() {
