@@ -13,6 +13,7 @@ const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 const Message = mongoose.model("message");
 const Champion = mongoose.model('champion');
+const User = mongoose.model("user");
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -148,7 +149,11 @@ const mutations = new GraphQLObjectType({
 
                 if (validUser.loggedIn){
                     const sender = validUser.id;
-                    return new Message({ title, body, sender, receiver, sender }).save();
+                    const message = await new Message({ title, body, sender, receiver }).save();
+                    const user = await User.findById(sender);
+                    user.messages.push(message);
+                    user.save();
+                    return message;
                 }
             }
         },
@@ -195,6 +200,26 @@ const mutations = new GraphQLObjectType({
                 item.champions.push(publicId);
                 item.save();
                 return item;
+            }
+        },
+        updateUser: {
+            type: UserType,
+            args: {
+                id: { type: GraphQLID },
+                name: { type: GraphQLString },
+                email:  { type: GraphQLString }
+            },
+            async resolve(_, {id, name, email}){
+                const updateObject = {};
+                updateObject.id = id;
+                if (name) updateObject.name = name;
+                if (email) updateObject.email = email;
+                const user = await User.findOneAndUpdate(
+                    {_id: id},
+                    {$set: updateObject},
+                    {new: true},
+                )
+                return user;
             }
         }
     }

@@ -121,4 +121,16 @@ const ADD_REPLY = gql`
   }
 `
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY };
+const UPDATE_USER = gql`
+  mutation UpdateUser($id: ID!, $name: String!, $email: String!){
+    updateUser(id: $id, name: $name, email: $email){
+      id
+      name
+      email
+    }
+  }
+`
+
+
+
+export { UPDATE_USER, LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY };

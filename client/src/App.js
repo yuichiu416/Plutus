@@ -13,6 +13,7 @@ import CreateMessage from "./components/Messages/CreateMessage";
 import CreateItem from './components/Items/Createitem';
 import MessagesIndex from "./components/Messages/MessagesIndex";
 import MessageDetail from "./components/Messages/MessageDetail";
+import UserProfile from './components/Users/UserProfile';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path="/messages/new" component={CreateMessage} />
         <Route exact path="/messages/:messageId" component={MessageDetail}/>
         <Route exact path="/messages" component={MessagesIndex}/>
+        <Route exact path="/users/:userId" component={UserProfile}/>
       </Switch>
     </div>
   );

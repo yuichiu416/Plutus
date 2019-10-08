@@ -26,9 +26,9 @@ const RootQueryType = new GraphQLObjectType({
         },
         user: {
             type: UserType,
-            args: { _id: { type: new GraphQLNonNull(GraphQLID) } },
+            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(_, args) {
-                return User.findById(args._id);
+                return User.findById(args.id);
             }
         },
         message: {
