@@ -34,7 +34,14 @@ const ItemType = new GraphQLObjectType({
         sold: { type: GraphQLBoolean },
         appraised: { type: GraphQLBoolean },
         champions: { type: new GraphQLList(GraphQLString) },
-        location: { type: new GraphQLList(GraphQLFloat) },
+        location: {
+            type: GraphQLString,
+            resolve(parentValue) {
+                if (parentValue.location) {
+                    return JSON.stringify(parentValue.location.toJSON());
+                }
+            }
+        },
         endTime: {type: GraphQLFloat }
     })
 });

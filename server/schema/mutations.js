@@ -83,7 +83,7 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                location: { type: new GraphQLList(GraphQLFloat) },
+                location: { type: GraphQLString },
                 champions: { type: new GraphQLList(GraphQLString) },
                 endTime: { type: GraphQLFloat }
             },
@@ -92,6 +92,7 @@ const mutations = new GraphQLObjectType({
                 const seller = obj.id;
                 const nameHash = {};
                 const str = name.replace(/\s/g, '').toLowerCase();
+                location = JSON.parse(location);
                 for (let i = 0; i < str.length; i++) {
                     const char = str[i];
                     nameHash[char] = nameHash[char] || 0;
@@ -111,14 +112,13 @@ const mutations = new GraphQLObjectType({
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
-                location: { type: new GraphQLList(GraphQLFloat) },
                 champions: { type: new GraphQLList(GraphQLString) },
                 endTime: { type: GraphQLFloat }
             },
-            async resolve(_, { id, name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
+            async resolve(_, { id, name, description, starting_price, minimum_price, category, sold, appraised, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, location, champions, endTime };
+                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, endTime };
                 return Item.findOneAndUpdate(
                     { _id: id },
                     { $set: item },
@@ -156,14 +156,16 @@ const mutations = new GraphQLObjectType({
             type: MessageType,
             args: {
                 id: { type: GraphQLString },
-                title: { type: GraphQLString },
                 body: { type: GraphQLString },
-                receiver: { type: GraphQLString },
             },
-            async resolve(_, { id, title, body, receiver }, context) {
+            async resolve(_, { id, body }, context) {
                 const validUser = await AuthService.verifyUser({ token: context.token });
+                
 
                 if (validUser.loggedIn){
+                    const message = await Message.findById(id);
+                    const receiver = message.receiver;
+                    const title = message.title;
                     const sender = validUser.id;
                     const reply = await new Message({ title, body, receiver, sender }).save();
                     return Message.addReply(id, reply);

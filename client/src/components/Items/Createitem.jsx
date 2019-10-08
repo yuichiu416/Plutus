@@ -4,6 +4,9 @@ import axios from 'axios';
 import { CREATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
+import { withRouter } from 'react-router-dom';
+import { geolocated } from "react-geolocated";
+
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
 class CreateItem extends Component {
@@ -19,8 +22,7 @@ class CreateItem extends Component {
             sold: false,
             appraised: false,
             champions: [],
-            location: [],
-            endTime: 3
+            endTime: new Date().getTime() + 180000
         };
         this.files = [];
         this.onDrop = this.onDrop.bind(this);
@@ -59,9 +61,6 @@ class CreateItem extends Component {
         }
     }
     
-    updateLocation(){
-        return e => console.log("current location");
-    }
     fetchCategories(){
         return <Query query={FETCH_CATEGORIES}>
             {({ loading, error, data }) => {
@@ -105,7 +104,13 @@ class CreateItem extends Component {
 
     handleSubmit(e, newItem) {
         e.preventDefault();
+        const coords = this.props.coords;
+        const location = JSON.stringify({
+            lat: coords.latitude,
+            lon: coords.longitude
+        });
         this.updateImageURLs().then(champions => {
+            
             newItem({
                 variables: {
                     name: this.state.name,
@@ -115,7 +120,7 @@ class CreateItem extends Component {
                     category: this.state.category,
                     sold: this.state.sold,
                     appraised: this.state.appraised,
-                    location: this.state.location,
+                    location: location,
                     champions: champions
                 }
             }).then(response => {
@@ -128,7 +133,6 @@ class CreateItem extends Component {
                     category: "",
                     sold: false,
                     appraised: false,
-                    location: [],
                     champions: [],
                     endTime: 3
                 });
@@ -221,7 +225,6 @@ class CreateItem extends Component {
                                     className="bottom-entry"
                                     onChange={this.update("appraised")}
                                     value={this.state.appraised}
-                                    // placeholder=" "
                                 />
                             </label>
                             
@@ -243,4 +246,4 @@ class CreateItem extends Component {
     }
 }
 
-export default CreateItem;
+export default geolocated()(withRouter(CreateItem));

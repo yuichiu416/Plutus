@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Query } from "react-apollo";
+import { Link } from "react-router-dom";
 import queries from "../../graphql/queries";
 const { FETCH_MESSAGES } = queries;
-import { Link } from "react-router-dom";
 
 class MessagesIndex extends React.Component {
     constructor(props) {
@@ -15,7 +15,6 @@ class MessagesIndex extends React.Component {
                 {({loading, error, data}) => {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error}</p>
-
                     const messages = data.messages.map(message => {
                         return (
                             <Link to={`/messages/${message.id}`}>

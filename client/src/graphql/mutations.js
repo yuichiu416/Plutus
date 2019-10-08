@@ -28,7 +28,7 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String], $endTime: Float) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: String!, $champions: [String], $endTime: Float) {
     newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions, endTime: $endTime) {
       id
       name
@@ -49,8 +49,8 @@ const CREATE_ITEM = gql`
 `;
 
 const UPDATE_ITEM = gql`
-  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: [Float], $champions: [String], $endTime: Float) {
-    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions, endTime: $endTime){
+  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $champions: [String], $endTime: Float) {
+    updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, champions: $champions, endTime: $endTime){
       id
       name
       description
@@ -103,5 +103,22 @@ const UPDATE_ITEM_IMAGES = gql`
     champions
   }
 `
+const ADD_REPLY = gql`
+  mutation AddReply($id: String!, $body: String!){
+    addReply(id: $id , body: $body){
+      id
+      title
+      body
+      sender{
+        id
+        name
+      }
+      receiver{
+        id
+        name
+      }
+    }
+  }
+`
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES };
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY };

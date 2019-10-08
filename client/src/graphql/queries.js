@@ -96,12 +96,18 @@ export default {
           }
           replies{
             id
+            title
+            body
+            sender{
+              id
+              name
+            }
           }
         }
       }
     `,
     FETCH_MESSAGE: gql`
-      query FetchMessage($id: String!){
+      query FetchMessage($id: ID!){
         message(id: $id){
           id
           title
@@ -112,10 +118,15 @@ export default {
           }
           replies{
             id
-            title
             body
+            sender{
+              id
+              name
+            }
           }
+         
         }
       }
-    `
+    `,
+      
 };
