@@ -15,32 +15,57 @@ const Nav = props => {
                     {({ data }) => {
                         if (data.isLoggedIn) {
                             return (
-                                <div class="loggedin-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo" class="plutus-logo-nav"/>
-                                    <div class="nav-logout-div">
-                                        {/* <button
-                                            class="nav-logout-button"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                localStorage.removeItem("auth-token");
-                                                client.writeData({ data: { isLoggedIn: false } });
-                                                props.history.push("/");
-                                            }}
-                                        >
-                                            Logout
-                                        </button> */}
-                                        <div class="box">
-                                            <div class="btn logout-btn">
-                                                <span
-                                                        onClick={e => {
-                                                            e.preventDefault();
-                                                            localStorage.removeItem("auth-token");
-                                                            client.writeData({ data: { isLoggedIn: false } });
-                                                            props.history.push("/");
-                                                        }}
-                                                >Logout</span>
-                                            </div>
-                                        </div>
+                                // <div class="loggedin-navbar">
+                                //     <img src="Logo5.png" alt="plutus-logo" class="plutus-logo-nav"/>
+                                //     <div class="nav-logout-div">
+                                //         {/* <button
+                                //             class="nav-logout-button"
+                                //             onClick={e => {
+                                //                 e.preventDefault();
+                                //                 localStorage.removeItem("auth-token");
+                                //                 client.writeData({ data: { isLoggedIn: false } });
+                                //                 props.history.push("/");
+                                //             }}
+                                //         >
+                                //             Logout
+                                //         </button> */}
+                                //         <div class="box">
+                                //             <div class="btn logout-btn">
+                                //                 <span
+                                //                         onClick={e => {
+                                //                             e.preventDefault();
+                                //                             localStorage.removeItem("auth-token");
+                                //                             client.writeData({ data: { isLoggedIn: false } });
+                                //                             props.history.push("/");
+                                //                         }}
+                                //                 >Logout</span>
+                                //             </div>
+                                //         </div>
+                                <div className="loggedin-navbar">
+                                    <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav"/>
+                                    <SearchForm />
+                                <div className="nav-logout-div">
+                                    {/* <button
+                                        className="nav-logout-button"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            localStorage.removeItem("auth-token");
+                                            client.writeData({ data: { isLoggedIn: false } });
+                                            props.history.push("/");
+                                        }}
+                                    >
+                                        Logout
+                                    </button> */}
+                                <div className="box">
+                                    <div className="btn logout-btn">
+                                        <span
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    localStorage.removeItem("auth-token");
+                                                    client.writeData({ data: { isLoggedIn: false } });
+                                                    props.history.push("/");
+                                                }}
+                                        >Logout</span>
                                     </div>
                                      <div class="nav-shadow"></div>
                                 </div>
