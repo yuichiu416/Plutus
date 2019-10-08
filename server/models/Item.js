@@ -30,11 +30,9 @@ const ItemSchema = new Schema({
         type: Number,
         default: 0
     },
-    location: [
-        {
-            type: Number
-        }
-    ],
+    location: {
+        type: Map,
+    },
     category:{
         type: Schema.Types.ObjectId,
         ref: "categories"

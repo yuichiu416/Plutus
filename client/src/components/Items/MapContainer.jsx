@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Query } from "react-apollo";
+import queries from "../../graphql/queries";
+import { withRouter } from 'react-router-dom';
+import { geolocated } from "react-geolocated";
+
+const { FETCH_ITEMS } = queries;
 
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            stores: [{ lat: 47.49855629475769, lng: -122.14184416996333 },
-            { latitude: 47.359423, longitude: -122.021071 },
-            { latitude: 47.2052192687988, longitude: -121.988426208496 },
-            { latitude: 47.6307081, longitude: -122.1434325 },
-            { latitude: 47.3084488, longitude: -122.2140121 },
-            { latitude: 47.5524695, longitude: -122.0425407 }]
-        }
+        this.stores = {};
     }
 
     displayMarkers = () => {
-        return this.state.stores.map((store, index) => {
+        return Object.values(this.stores).map((store, index) => {
             return <Marker key={index} id={index} position={{
-                lat: store.latitude,
-                lng: store.longitude
+                lat: store.lat,
+                lng: store.lon
             }}
                 onClick={() => console.log("You clicked me!")} />
         })
@@ -31,17 +29,31 @@ export class MapContainer extends Component {
             height: '100%',
         };
         return (
-            <Map
-                google={this.props.google}
-                zoom={8}
-                style={mapStyles}
-                initialCenter={{ lat: 47.444, lng: -122.176 }}
-            >
-                {this.displayMarkers()}
-            </Map>
+            <Query query={FETCH_ITEMS}>
+                {({ loading, error, data }) => {
+                    if (loading) return "Loading...";
+                    if (error) return `Error! ${error.message}`;
+                    if (data.items.length === 0)
+                        return <h1>No items yet</h1>
+                    data.items.forEach(item => {
+                        this.stores[item.name] = JSON.parse(item.location);
+                    })
+                    return (
+                        <Map
+                            google={this.props.google}
+                            zoom={12}
+                            style={mapStyles}
+                            initialCenter={{ lat: this.props.coords.latitude, lng: this.props.coords.longitude }}
+                        >
+                            {this.displayMarkers()}
+                        </Map>
+                    );
+                }}
+            </Query>
         );
     }
 }
-export default GoogleApiWrapper({
-    apiKey: 'AIzaSyDM9z1mv9d6Smdi3Z3vdDlUdabGYObzSvo'
-})(MapContainer);
+export default 
+    geolocated()(withRouter(GoogleApiWrapper({
+        apiKey: 'AIzaSyDM9z1mv9d6Smdi3Z3vdDlUdabGYObzSvo'
+    })(MapContainer)));

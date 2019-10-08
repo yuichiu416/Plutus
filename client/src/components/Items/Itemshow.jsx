@@ -72,12 +72,13 @@ class ItemShow extends React.Component {
     
     render() {
         // const { username } = this.state;
-        console.log(this.props.coords);
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
+                    if (data.items.length === 0)
+                        return <h1>No items yet, <Link to="/items/new" > Create one</Link></h1>
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     const countdownMinutes = item.endTime || 3;
                     this.countDown(countdownMinutes);
@@ -114,4 +115,3 @@ class ItemShow extends React.Component {
 }
 
 export default geolocated()(withRouter(ItemShow));
-// export default withRouter(ItemShow);
