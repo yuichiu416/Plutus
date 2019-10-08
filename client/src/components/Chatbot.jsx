@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
 import { Query } from "react-apollo";
 import queries from "../graphql/queries";
 import { withRouter } from 'react-router-dom';
@@ -36,13 +35,13 @@ class Chatbot extends React.Component {
         let questionText;
         switch (this.state.option) {
             case "":
-                questionText = "Greetings! How can I help you?\n" + "Type 1 to search an item\n" + "Type 2 to exit\n"
+                questionText = "Greetings! How can I help you?\n" + "Type 1 to search an item\n" + "Type 2 to exit\n";
                 break;
             case "1":
-                questionText = "Please input the item name or some of the characters to search."
+                questionText = "Please input the item name or some of the characters to search.";
                 break;
             case "2":
-                questionText = "Thanks for using our app. If you need anything, let me know."
+                questionText = "Thanks for using our app. If you need anything, let me know.";
                 break;
             default:
                 questionText = "Unknown option, please select again."
@@ -52,8 +51,6 @@ class Chatbot extends React.Component {
     }
     async handleFirstOption() {
         if(this.state.waitingForAnswer){
-            const val = this.state.answer;
-
             await this.setState({waitingForAnswer: false, option: ""});
             this.handleQreetingText();
             document.getElementById("search-results").classList.toggle("hidden");
@@ -69,27 +66,29 @@ class Chatbot extends React.Component {
     }
     submitForm(e){
         e.preventDefault();
-        switch(this.state.option){
-            case "1":
-                this.handleQreetingText();
-                this.handleFirstOption();
-                this.toggleInputFields();
-                break;
-            case "2":
-                this.handleSecionOption();
-                break;
-            default:
-                this.setState( this.defaultState );
-                document.getElementById("search-results").classList.add("hidden");
-                document.getElementById("option").classList.remove("hidden");
-                document.getElementById("answer").classList.add("hidden");
-                document.getElementById("option").value = "";
-                document.getElementById("answer").value = "";
-                this.handleQreetingText();
-                break;
-        }
-        document.getElementById("option").value="";
-        document.getElementById("answer").value="";
+        setTimeout(() => {
+            switch (this.state.option) {
+                case "1":
+                    this.handleQreetingText();
+                    this.handleFirstOption();
+                    this.toggleInputFields();
+                    break;
+                case "2":
+                    this.handleSecionOption();
+                    break;
+                default:
+                    this.setState(this.defaultState);
+                    document.getElementById("search-results").classList.add("hidden");
+                    document.getElementById("option").classList.remove("hidden");
+                    document.getElementById("answer").classList.add("hidden");
+                    document.getElementById("option").value = "";
+                    document.getElementById("answer").value = "";
+                    this.handleQreetingText();
+                    break;
+            }
+            document.getElementById("option").value = "";
+            document.getElementById("answer").value = "";
+        }, 1000);
     }
     matches() {
         const matches = [];

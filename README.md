@@ -6,7 +6,7 @@ products they like, or sell products for other users to bid.
 
 ## Functionaliy and MVP
 In this web app, users will be able to:
-* make bid based on location (A google map will be used to show users where
+* Make bid based on location (A google map will be used to show users where
   the bidding location is) or sell products for others to bid
 * Inbox for enquiry where users can send or receive messages from other users
 * A chatbot
@@ -39,4 +39,5 @@ Our team consists of three members:
 
 ## Usage
 ``npm install`` in the root directory AND in the client directory
+
 ``npm run dev`` 

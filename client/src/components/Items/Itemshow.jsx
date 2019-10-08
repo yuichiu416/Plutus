@@ -4,7 +4,7 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-// import socketIOClient from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 
@@ -23,23 +23,23 @@ class ItemShow extends React.Component {
         };
         this.update = this.update.bind(this);
     }
-    // send = () => {
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     socket.emit('send announce', this.state.announce);
-    //     const input = document.getElementById("announce-input");
-    //     if(input)
-    //         input.value = "";
-    // }
+    send = () => {
+        const socket = socketIOClient(this.state.endpoint);
+        socket.emit('send announce', this.state.announce);
+        const input = document.getElementById("announce-input");
+        if(input)
+            input.value = "";
+    }
+    componentDidMount(){
+        const socket = socketIOClient(this.state.endpoint);
+        setInterval(this.send(), 1000)
+        socket.on('send announce', (announce) => {
+                this.setState({ announce: announce })
+            });
+    }
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
-    // componentDidMount = () => {
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     setInterval(this.send(), 1000)
-    //     socket.on('send announce', (announce) => {
-    //         this.setState({ announce: announce })
-    //     });
-    // }
     countDown(endTime){
         const that = this;
         // Update the count down every 1 second
