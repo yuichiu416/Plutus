@@ -3,7 +3,22 @@ import { Link } from 'react-router-dom';
 import { Query } from "react-apollo";
 import queries from "../graphql/queries";
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
+import {
+    setTranslations,
+    setDefaultLanguage,
+    setLanguageCookie,
+    setLanguage,
+    translate,
+} from 'react-switch-lang';
+
+import en from '../translations/en.json';
+import zh from '../translations/zh.json';
+
+setTranslations({ en, zh });
+setDefaultLanguage('en');
+setLanguageCookie();
 
 const { FETCH_ITEMS } = queries;
 
@@ -14,7 +29,8 @@ class Chatbot extends React.Component {
             option: "",
             questionText: "",
             answer: "",
-            waitingForAnswer: false
+            waitingForAnswer: false,
+            language: "en"
         };
         this.state = this.defaultState;
         this.nameHashes = {};
@@ -24,6 +40,11 @@ class Chatbot extends React.Component {
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
         this.handleQreetingText = this.handleQreetingText.bind(this);
+        this.handleSetLanguage = this.handleSetLanguage.bind(this);
+
+    }
+    handleSetLanguage(key){
+        return () => setLanguage(key);
     }
     componentDidMount(){
         this.handleQreetingText();
@@ -33,18 +54,19 @@ class Chatbot extends React.Component {
     }
     handleQreetingText(){
         let questionText;
+        const { t } = this.props;
         switch (this.state.option) {
             case "":
-                questionText = "Greetings! How can I help you?\n" + "Type 1 to search an item\n" + "Type 2 to exit\n";
+                questionText = t("p.option.empty");
                 break;
             case "1":
-                questionText = "Please input the item name or some of the characters to search.";
+                questionText = t("p.option.first");
                 break;
             case "2":
-                questionText = "Thanks for using our app. If you need anything, let me know.";
+                questionText = t("p.option.second");
                 break;
             default:
-                questionText = "Unknown option, please select again."
+                questionText = t("p.option.default");
                 break;
         }
         this.setState({ questionText: questionText});
@@ -58,7 +80,7 @@ class Chatbot extends React.Component {
         this.setState({ waitingForAnswer: true })
     }
     handleSecionOption(){
-        alert("We are Plutus, thanks for using our app");
+        
     }
     toggleInputFields(){
         document.getElementById("option").classList.toggle("hidden");
@@ -108,6 +130,7 @@ class Chatbot extends React.Component {
         return matches;
     }
     render() {
+        const { t } = this.props;
         let searchResults = this.matches().map((result, i) => {
             const id = this.ids[result];
             return <li key={i} onClick={this.selectName} className={i === this.state.index ? "search-selected" : ""}><Link to={`/items/${id}`} id={`match-${i}`}>{result}</Link></li>
@@ -116,7 +139,7 @@ class Chatbot extends React.Component {
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
-                    if (loading) return "Loading...";
+                    if (loading) return t("p.loading");
                     if (error) return `Error! ${error.message}`;
                     if (data.items.length === 0)
                         return <h1>No items yet</h1>
@@ -126,6 +149,9 @@ class Chatbot extends React.Component {
                     })
                     return (
                         <div id="chatbot">
+                            <button type="button" onClick={this.handleSetLanguage('zh')}>
+                                Switch language
+                            </button>
                             <label>
                                 {this.state.questionText}
                                 <form onSubmit={this.submitForm}>
@@ -146,4 +172,7 @@ class Chatbot extends React.Component {
 }
 
 
-export default withRouter(Chatbot);
+Chatbot.propTypes = {
+    t: PropTypes.func.isRequired,
+};
+export default translate(withRouter(Chatbot));

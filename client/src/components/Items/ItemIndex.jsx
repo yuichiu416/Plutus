@@ -2,10 +2,14 @@ import React from 'react';
 import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
 import { Link } from "react-router-dom";
+
+import { translate } from 'react-switch-lang';
+
 const { FETCH_ITEMS } = queries;
 
 class ItemIndex extends React.Component {
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -15,7 +19,7 @@ class ItemIndex extends React.Component {
                         return <h1>No items yet, <Link to="items/new">Create new item</Link></h1>
                     return (
                         <div>
-                            <Link to="items/new">Create new item</Link>
+                            <Link to="items/new">{t("button.createNewItem")}</Link>
                             <ul>
                                 {data.items.map((item, idx) => (
                                     <Link to={`/items/${item.id}`} key={`/${item.id}`} ><li key={item.id}>{item.name}: {item.description}</li></Link>
@@ -29,4 +33,4 @@ class ItemIndex extends React.Component {
     }
 }
 
-export default ItemIndex;
+export default translate(ItemIndex);
