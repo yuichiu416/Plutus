@@ -30,29 +30,25 @@ class Chatbot extends React.Component {
             questionText: "",
             answer: "",
             waitingForAnswer: false,
-            language: "en"
+            language: "en",
         };
         this.state = this.defaultState;
         this.nameHashes = {};
         this.ids = {};
         this.handleFirstOption = this.handleFirstOption.bind(this);
-        this.handleSecionOption = this.handleSecionOption.bind(this);
+        this.selectLanguageByInput = this.selectLanguageByInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
-        this.handleQreetingText = this.handleQreetingText.bind(this);
-        this.handleSetLanguage = this.handleSetLanguage.bind(this);
+        this.handleGreetingText = this.handleGreetingText.bind(this);
 
     }
-    handleSetLanguage(key){
-        return () => setLanguage(key);
-    }
     componentDidMount(){
-        this.handleQreetingText();
+        this.handleGreetingText();
     }
     update(field){
         return e => this.setState({[field]: e.target.value});
     }
-    handleQreetingText(){
+    handleGreetingText(){
         let questionText;
         const { t } = this.props;
         switch (this.state.option) {
@@ -74,29 +70,55 @@ class Chatbot extends React.Component {
     async handleFirstOption() {
         if(this.state.waitingForAnswer){
             await this.setState({waitingForAnswer: false, option: ""});
-            this.handleQreetingText();
+            this.handleGreetingText();
             document.getElementById("search-results").classList.toggle("hidden");
         }
         this.setState({ waitingForAnswer: true })
     }
-    handleSecionOption(){
-        
+    async handleSecondOption() {
+        if (this.state.waitingForAnswer) {
+            await this.setState({ waitingForAnswer: false, option: "" });
+            this.handleGreetingText();
+        }
+        this.setState({ waitingForAnswer: true })
+    }
+    selectLanguageByInput(input){
+        console.log(input);
+        switch(input){
+            case "Chinese":
+                setLanguage("zh");
+                console.log("change to Chinese");
+                break;
+            case "English":
+                console.log("change to english");
+                setLanguage("en");
+            default:
+                break;
+        }
     }
     toggleInputFields(){
         document.getElementById("option").classList.toggle("hidden");
         document.getElementById("answer").classList.toggle("hidden");
     }
+    handleSwitchLanguageText(){
+        const { t } = this.props;
+        this.setState({ questionText: t("p.option.language") });
+    }
     submitForm(e){
         e.preventDefault();
-        setTimeout(() => {
+        // setTimeout(() => {   // set a thinking time of the chatbog
             switch (this.state.option) {
                 case "1":
-                    this.handleQreetingText();
+                    this.handleGreetingText();
                     this.handleFirstOption();
                     this.toggleInputFields();
                     break;
                 case "2":
-                    this.handleSecionOption();
+                    this.handleSwitchLanguageText();
+                    this.handleSecondOption();
+                    this.toggleInputFields();
+                    this.selectLanguageByInput(this.state.answer);
+                    this.handleSwitchLanguageText(); // after we changed the input, need to change the language
                     break;
                 default:
                     this.setState(this.defaultState);
@@ -105,12 +127,12 @@ class Chatbot extends React.Component {
                     document.getElementById("answer").classList.add("hidden");
                     document.getElementById("option").value = "";
                     document.getElementById("answer").value = "";
-                    this.handleQreetingText();
+                    this.handleGreetingText();
                     break;
             }
             document.getElementById("option").value = "";
             document.getElementById("answer").value = "";
-        }, 1000);
+        // }, 1000);
     }
     matches() {
         const matches = [];
@@ -149,9 +171,6 @@ class Chatbot extends React.Component {
                     })
                     return (
                         <div id="chatbot">
-                            <button type="button" onClick={this.handleSetLanguage('zh')}>
-                                Switch language
-                            </button>
                             <label>
                                 {this.state.questionText}
                                 <form onSubmit={this.submitForm}>

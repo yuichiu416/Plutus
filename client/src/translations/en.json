@@ -4,7 +4,8 @@
             "empty": "Greetings! How can I help you?\nType 1 to search an item\nType 2 to change the language\n",
             "first": "Please input the item name or some of the characters to search.",
             "second": "Switching to Chinese",
-            "default": "Unknown option, please select again."
+            "default": "Unknown option, please select again.",
+            "language": "Please input the languages you want to change to.\nOptions: English, Chinese"
         },
         "loading": "Loading..."
     },
