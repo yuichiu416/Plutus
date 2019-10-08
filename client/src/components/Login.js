@@ -37,7 +37,7 @@ class Login extends Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {loginUser => (
-                    <div classname="create-form">
+                    <div className="create-form">
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
