@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { LOGIN_USER } from "../graphql/mutations";
 
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -36,7 +37,7 @@ class Login extends Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {loginUser => (
-                    <div>
+                    <div className="create-form">
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
@@ -48,17 +49,22 @@ class Login extends Component {
                                 });
                             }}
                         >
-                            <input
-                                value={this.state.email}
-                                onChange={this.update("email")}
-                                placeholder="Email"
-                            />
-                            <input
-                                value={this.state.password}
-                                onChange={this.update("password")}
-                                type="password"
-                                placeholder="Password"
-                            />
+                            <fieldset>
+                                <input
+                                    type="email"
+                                    value={this.state.email}
+                                    onChange={this.update("email")}
+                                    placeholder="Email"
+                                    className="field1"
+                                />
+                                <input
+                                    value={this.state.password}
+                                    onChange={this.update("password")}
+                                    type="password"
+                                    placeholder="Password"
+                                    className="field1"
+                                />
+                            </fieldset>
                             <button type="submit">Log In</button>
                         </form>
                     </div>

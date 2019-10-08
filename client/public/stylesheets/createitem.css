@@ -24,8 +24,11 @@
 	/* margin-bottom: 8px; */
 }
 .create-form input[type="name"],
+.create-form input[type="email"],
+.create-form input[type="password"],
 .create-form input[type="number"],
 .create-form input[type="time"],
+/* .field1, */
 .create-form textarea,
 .create-form select {
   font-family: 'Raleway', sans-serif;
@@ -47,6 +50,8 @@
 	margin-bottom: 20px;
 }
 .create-form input[type="name"]:focus,
+.create-form input[type="email"],
+.create-form input[type="password"],
 .create-form input[type="number"]:focus,
 .create-form input[type="time"]:focus,
 .create-form textarea:focus,
