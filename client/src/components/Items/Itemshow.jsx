@@ -7,6 +7,7 @@ import { Image } from 'cloudinary-react';
 import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
+import { translate } from 'react-switch-lang';
 
 const { FETCH_ITEMS } = queries;
 
@@ -72,13 +73,14 @@ class ItemShow extends React.Component {
     
     render() {
         // const { username } = this.state;
+        const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     if (data.items.length === 0)
-                        return <h1>No items yet, <Link to="/items/new" > Create one</Link></h1>
+                        return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     const countdownMinutes = item.endTime || 3;
                     this.countDown(countdownMinutes);
@@ -90,20 +92,20 @@ class ItemShow extends React.Component {
                     return (
                         <div>
                             <Link to="/">Home</Link>
-                            <h1>The item name is: {item.name}</h1>
+                            <h1>{t("h1.itemName")} {item.name}</h1>
                             <p>{item.description}</p>
                             <p id="timer"></p>
                             <ul>
                                 {images}
                             </ul>
                             <label>
-                                Send your bid here:
+                                {t("label.sendYourBidHere")}
                                 <input type="text" onChange={this.update("announce")} id="announce-input"/>
-                                <button onClick={this.send}>Bid!</button>
+                                <button onClick={this.send}>{t("button.bid")}</button>
                             </label>
-                            <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
+                            <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             <label>
-                                Current price: {this.state.announce}
+                                {t("label.currentPrice")} {this.state.announce}
                             </label>
                             <Map />
                         </div>
@@ -114,4 +116,4 @@ class ItemShow extends React.Component {
     }
 }
 
-export default geolocated()(withRouter(ItemShow));
+export default translate(geolocated()(withRouter(ItemShow)));
