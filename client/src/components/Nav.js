@@ -17,6 +17,7 @@ const Nav = props => {
                             return (
                                 <div className="loggedin-navbar">
                                     <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav"/>
+                                    <SearchForm />
                                 <div className="nav-logout-div">
                                     {/* <button
                                         className="nav-logout-button"
