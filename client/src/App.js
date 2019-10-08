@@ -10,9 +10,9 @@ import ItemIndex from "./components/Items/ItemIndex";
 import ItemShow from "./components/Items/Itemshow";
 import EditItem from "./components/Items/EditItem";
 import CreateMessage from "./components/Messages/CreateMessage";
-// import ChampionUpload from "./components/Champion/ChampionUpload";
-// import ChampionDetail from "./components/Champion/ChampionDetail";
 import CreateItem from './components/Items/Createitem';
+import MessagesIndex from "./components/Messages/MessagesIndex";
+import MessageDetail from "./components/Messages/MessageDetail";
 
 const App = () => {
   return (
@@ -27,8 +27,8 @@ const App = () => {
         <Route exact path="/items/:id" component={ItemShow} />
         <Route exact path="/" component={ItemIndex} />
         <Route exact path="/messages/new" component={CreateMessage} />
-        {/* <Route exact path="/champions/new" component={ChampionUpload}/>
-        <Route exact path="/champions" component={ChampionDetail}/> */}
+        <Route exact path="/messages/:messageId" component={MessageDetail}/>
+        <Route exact path="/messages" component={MessagesIndex}/>
       </Switch>
     </div>
   );

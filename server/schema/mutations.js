@@ -156,14 +156,16 @@ const mutations = new GraphQLObjectType({
             type: MessageType,
             args: {
                 id: { type: GraphQLString },
-                title: { type: GraphQLString },
                 body: { type: GraphQLString },
-                receiver: { type: GraphQLString },
             },
-            async resolve(_, { id, title, body, receiver }, context) {
+            async resolve(_, { id, body }, context) {
                 const validUser = await AuthService.verifyUser({ token: context.token });
+                
 
                 if (validUser.loggedIn){
+                    const message = await Message.findById(id);
+                    const receiver = message.receiver;
+                    const title = message.title;
                     const sender = validUser.id;
                     const reply = await new Message({ title, body, receiver, sender }).save();
                     return Message.addReply(id, reply);

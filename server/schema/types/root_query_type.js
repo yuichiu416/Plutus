@@ -33,9 +33,9 @@ const RootQueryType = new GraphQLObjectType({
         },
         message: {
             type: MessageType,
-            args: { _id: { type: new GraphQLNonNull(GraphQLID) }},
+            args: { id: { type: new GraphQLNonNull(GraphQLID) }},
             resolve(_, args){
-                return Message.findById(args._id);
+                return Message.findById(args.id);
             }
         },
         messages: {
@@ -70,21 +70,21 @@ const RootQueryType = new GraphQLObjectType({
                 return Category.findById(args._id);
             }
         },
-        champions: {
-            type: new GraphQLList(ChampionType),
-            resolve(){
-                return Champion.find({});
-            }
-        },
-        champion: {
-            type: ChampionType,
-            args: {
-                id: { type: new GraphQLNonNull(GraphQLID) }
-            },
-            resolve(_, args){
-                return Champion.findById(args.id);
-            }
-        }
+        // champions: {
+        //     type: new GraphQLList(ChampionType),
+        //     resolve(){
+        //         return Champion.find({});
+        //     }
+        // },
+        // champion: {
+        //     type: ChampionType,
+        //     args: {
+        //         id: { type: new GraphQLNonNull(GraphQLID) }
+        //     },
+        //     resolve(_, args){
+        //         return Champion.findById(args.id);
+        //     }
+        // }
     })
 });
 

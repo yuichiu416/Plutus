@@ -103,5 +103,22 @@ const UPDATE_ITEM_IMAGES = gql`
     champions
   }
 `
+const ADD_REPLY = gql`
+  mutation AddReply($id: String!, $body: String!){
+    addReply(id: $id , body: $body){
+      id
+      title
+      body
+      sender{
+        id
+        name
+      }
+      receiver{
+        id
+        name
+      }
+    }
+  }
+`
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES };
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY };

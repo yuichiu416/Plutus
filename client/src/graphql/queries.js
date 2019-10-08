@@ -96,8 +96,37 @@ export default {
           }
           replies{
             id
+            title
+            body
+            sender{
+              id
+              name
+            }
           }
         }
       }
-    `
+    `,
+    FETCH_MESSAGE: gql`
+      query FetchMessage($id: ID!){
+        message(id: $id){
+          id
+          title
+          body
+          sender{
+            id
+            name
+          }
+          replies{
+            id
+            body
+            sender{
+              id
+              name
+            }
+          }
+         
+        }
+      }
+    `,
+      
 };
