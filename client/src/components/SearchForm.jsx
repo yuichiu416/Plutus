@@ -85,7 +85,6 @@ class SearchForm extends React.Component {
                     );
                 }}
             </Query>
-            
         )
     }
 }

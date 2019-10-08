@@ -14,11 +14,13 @@ import CreateItem from './components/Items/Createitem';
 import MessagesIndex from "./components/Messages/MessagesIndex";
 import MessageDetail from "./components/Messages/MessageDetail";
 import UserProfile from './components/Users/UserProfile';
+import Chatbot from './components/Chatbot';
 
 const App = () => {
   return (
     <div>
       <Nav />
+      <Chatbot />
       {/* <h1>PLUTUS</h1> */}
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />

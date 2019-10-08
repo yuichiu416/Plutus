@@ -30,15 +30,15 @@ class ItemShow extends React.Component {
         if(input)
             input.value = "";
     }
-    update(field) {
-        return e => this.setState({ [field]: e.target.value });
-    }
-    componentDidMount = () => {
+    componentDidMount(){
         const socket = socketIOClient(this.state.endpoint);
         setInterval(this.send(), 1000)
         socket.on('send announce', (announce) => {
-            this.setState({ announce: announce })
-        });
+                this.setState({ announce: announce })
+            });
+    }
+    update(field) {
+        return e => this.setState({ [field]: e.target.value });
     }
     countDown(endTime){
         const that = this;
@@ -97,13 +97,13 @@ class ItemShow extends React.Component {
                                 {images}
                             </ul>
                             <label>
-                                Send your messages here:
+                                Send your bid here:
                                 <input type="text" onChange={this.update("announce")} id="announce-input"/>
-                                <button onClick={this.send}>Send</button>
+                                <button onClick={this.send}>Bid!</button>
                             </label>
                             <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
                             <label>
-                                Announce: {this.state.announce}
+                                Current price: {this.state.announce}
                             </label>
                             <Map />
                         </div>
