@@ -80,9 +80,12 @@ class Chatbot extends React.Component {
                 break;
             default:
                 this.setState( this.defaultState );
-                this.handleQreetingText();
                 document.getElementById("search-results").classList.add("hidden");
-
+                document.getElementById("option").classList.remove("hidden");
+                document.getElementById("answer").classList.add("hidden");
+                document.getElementById("option").value = "";
+                document.getElementById("answer").value = "";
+                this.handleQreetingText();
                 break;
         }
         document.getElementById("option").value="";
