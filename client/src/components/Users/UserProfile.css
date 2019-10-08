@@ -1,0 +1,15 @@
+.hidden {
+    display: none
+}
+
+.nav-item {
+    cursor: pointer;
+}
+.nav-tabs {
+    margin-left: 100px;
+}
+
+.user-tab{
+    width: 75%;
+    margin: 100px auto;
+}

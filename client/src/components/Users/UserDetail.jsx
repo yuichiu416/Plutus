@@ -7,7 +7,7 @@ const { FETCH_USERS } = queries;
 export default class UserDetail extends React.Component {
     constructor(props) {
         super(props)  
-        this.state = props.user;
+        this.state = this.props.user;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.update = this.update.bind(this);
     };
