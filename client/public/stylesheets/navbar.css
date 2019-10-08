@@ -114,3 +114,33 @@ div[class*=box] {
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.05);
   bottom: 10px
 }
+.search-div {
+  align-items: center;
+  position: absolute;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 80vw;
+  width: 100px;
+  /* padding-left: 2em; */
+  padding-right: 1em;
+  padding-bottom: 5px;
+  /* margin-left: 50px; */
+  float: right;
+  margin-top: 3.5%;
+  /* overflow: hidden; */
+
+}
+@media screen and (min-width: 400px) {
+  .search-div {
+    padding-left: 1em;
+    /* padding-right: 1%; */
+  }
+}
+@media screen and (min-width: 900px) {
+  .search-div {
+    padding-left: 20em;
+    padding-bottom: 10px;
+    /* padding-right: 1%; */
+  }
+}
