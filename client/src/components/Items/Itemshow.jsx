@@ -4,7 +4,7 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 
@@ -23,23 +23,23 @@ class ItemShow extends React.Component {
         };
         this.update = this.update.bind(this);
     }
-    send = () => {
-        const socket = socketIOClient(this.state.endpoint);
-        socket.emit('send announce', this.state.announce);
-        const input = document.getElementById("announce-input");
-        if(input)
-            input.value = "";
-    }
+    // send = () => {
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     socket.emit('send announce', this.state.announce);
+    //     const input = document.getElementById("announce-input");
+    //     if(input)
+    //         input.value = "";
+    // }
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
-    componentDidMount = () => {
-        const socket = socketIOClient(this.state.endpoint);
-        setInterval(this.send(), 1000)
-        socket.on('send announce', (announce) => {
-            this.setState({ announce: announce })
-        });
-    }
+    // componentDidMount = () => {
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     setInterval(this.send(), 1000)
+    //     socket.on('send announce', (announce) => {
+    //         this.setState({ announce: announce })
+    //     });
+    // }
     countDown(endTime){
         const that = this;
         // Update the count down every 1 second
@@ -97,13 +97,13 @@ class ItemShow extends React.Component {
                                 {images}
                             </ul>
                             <label>
-                                Send your messages here:
+                                Send your bid here:
                                 <input type="text" onChange={this.update("announce")} id="announce-input"/>
-                                <button onClick={this.send}>Send</button>
+                                <button onClick={this.send}>Bid!</button>
                             </label>
                             <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
                             <label>
-                                Announce: {this.state.announce}
+                                Current price: {this.state.announce}
                             </label>
                             <Map />
                         </div>
