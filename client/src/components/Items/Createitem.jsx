@@ -122,7 +122,8 @@ class CreateItem extends Component {
                     sold: this.state.sold,
                     appraised: this.state.appraised,
                     location: location,
-                    champions: champions
+                    champions: champions,
+                    endTime: this.state.endTime
                 }
             }).then(response => {
                 this.setState({
