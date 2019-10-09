@@ -93,8 +93,8 @@ const mutations = new GraphQLObjectType({
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                const notification = await new Notification({body: `Item ${name} has been posted!`}).save();
                 const user = await User.findById(seller);
+                const notification = await new Notification({body: `Item ${name} has been posted!`, user}).save();
                 user.notifications.push(notification);
                 user.save();
                 const nameHash = {};
@@ -152,8 +152,8 @@ const mutations = new GraphQLObjectType({
             },
             async resolve(_, { id, current_price, highestBidder }, context) {
                 const item = await Item.findById(id);
-                const notification = await new Notification({body: `Item ${item.name}'s current price is ${current_price}`}).save();
                 const seller = await User.findById(item.seller);
+                const notification = await new Notification({ body: `Item ${item.name}'s current price is ${current_price}`, user: seller}).save();
                 seller.notifications.push(notification);
                 seller.save();
                 const highestBidder = User.findById(highestBidder);
@@ -180,7 +180,7 @@ const mutations = new GraphQLObjectType({
                     const message = await new Message({ title, body, sender, receiver }).save();
                     const user = await User.findById(sender);
                     const receiverUser = await User.findById(receiver);
-                    const notification = await new Notification({ body: `You have a new message from ${user.name}`})
+                    const notification = await new Notification({ body: `You have a new message from ${user.name}`, user: receiverUser}).save();
                     user.messages.push(message);
                     user.save();
                     receiverUser.messages.push(message);
@@ -206,7 +206,7 @@ const mutations = new GraphQLObjectType({
                     const title = message.title;
                     const sender = await User.findById(validUser.id);
                     const reply = await new Message({ title, body, receiver, sender }).save();
-                    const notification = await new Notification({ body: `You received a reply from ${sender.name}`}).save();
+                    const notification = await new Notification({ body: `You received a reply from ${sender.name}`, user: receiver}).save();
                     receiver.notifications.push(notification);
                     receiver.save();
                     return Message.addReply(id, reply);
@@ -262,9 +262,11 @@ const mutations = new GraphQLObjectType({
             type: NotificationType,
             args: {
                 body: { type: GraphQLString },
+                user: { type: GraphQLID }
             },
-            async resolve(_, { body }){
-                const notification = await new Notification({ body }).save();
+            async resolve(_, { body, user }){
+                const user = await User.findById(user);
+                const notification = await new Notification({ body, user }).save();
                 return notification;
             }
         },
@@ -286,26 +288,28 @@ const mutations = new GraphQLObjectType({
                 id: { type: GraphQLID }
             },
             async resolve(_, { id }){
-                debugger
                 const item = await Item.findById(id);
-                item.sold = true;
-                item.save();
-                const buyer = await User.findById(item.highestBidder);
-                let sellerNotification;
-                const seller = await User.findById(item.seller);
-                debugger
-                if (buyer){
-                    const buyerNotification = await new Notification({ body: `You won item ${item.name}!`}).save();
-                    buyer.notifications.push(buyerNotification);
-                    buyer.save();
-                    
-                    sellerNotification = await new Notification({ body: `Item ${item.name} has been sold!`}).save();
-                    seller.notifications.push(sellerNotification);
-                    seller.save()
-                } else {
-                    sellerNotification = await new Notification({ body: 'Your item has expired but there is no buyer'}).save();
-                    seller.notifications.push(sellerNotification);
-                    seller.save();
+
+                if (!item.sold){
+                    item.sold = true;
+                    item.save();
+                    const buyer = await User.findById(item.highestBidder);
+                    let sellerNotification;
+                    const seller = await User.findById(item.seller);
+
+                    if (buyer) {
+                        const buyerNotification = await new Notification({ body: `You won item ${item.name}!`, user: buyer }).save();
+                        buyer.notifications.push(buyerNotification);
+                        buyer.save();
+
+                        sellerNotification = await new Notification({ body: `Item ${item.name} has been sold!`, user: seller }).save();
+                        seller.notifications.push(sellerNotification);
+                        seller.save()
+                    } else {
+                        sellerNotification = await new Notification({ body: 'Your item has expired but there is no buyer', user: seller }).save();
+                        seller.notifications.push(sellerNotification);
+                        seller.save();
+                    }
                 }
                 return item;
             }

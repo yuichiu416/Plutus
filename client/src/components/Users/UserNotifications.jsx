@@ -6,11 +6,10 @@ import React, { Component } from 'react'
 export default class UserNotifications extends React.Component {
     constructor(props) {
         super(props)
-    
-        
     }
     
     render() {
+        
         return (
             <div>
                 

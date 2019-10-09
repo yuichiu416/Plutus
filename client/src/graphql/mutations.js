@@ -167,6 +167,11 @@ const UPDATE_NOTIFICATION_STATUS = gql`
       id
       body
       read
+      user{
+        id
+        name
+        email
+      }
     }
   }
 `

@@ -11,6 +11,7 @@ import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
 import { MAKE_BID, TOGGLE_SOLD } from '../../graphql/mutations';
 import { withApollo } from 'react-apollo';
+import CreateMessage from '../Messages/CreateMessage';
 
 const { FETCH_ITEMS } = queries;
 
@@ -55,7 +56,6 @@ class ItemShow extends React.Component {
     countDown(endTime){
         const that = this;
         const { t } = this.props;
-        debugger;
         // Update the count down every 1 second
         var x = setInterval(() => {
             
@@ -85,7 +85,6 @@ class ItemShow extends React.Component {
                     mutation: TOGGLE_SOLD,
                     variables: { id: this.props.match.params.id},
                 }).then(response => {
-                    debugger;
                     console.log(response);
                 })
             }
@@ -151,6 +150,7 @@ class ItemShow extends React.Component {
                             <ul>
                                 {images}
                             </ul>
+                            
                             <Mutation
                                 mutation={MAKE_BID}
                                 // if we error out we can set the message here
@@ -173,6 +173,7 @@ class ItemShow extends React.Component {
                                 }}
                             </Mutation>
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
+                            <CreateMessage userId={item.seller}/>
                             <label>
                                 {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
                             </label>

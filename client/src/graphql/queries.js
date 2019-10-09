@@ -66,11 +66,6 @@ export default {
           name
           email
         }
-        notifications{
-          id
-          body
-          read
-        }
       }
     `,
     FETCH_CHAMPION: gql`
@@ -151,6 +146,11 @@ export default {
           body
           read
           date
+          user{
+            id
+            name
+            email
+          }
         }
       }
     `
