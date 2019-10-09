@@ -18,13 +18,14 @@ const cache = new InMemoryCache({
 
 // if we have a token we want to verify the user is actually logged in
 const token = localStorage.getItem("auth-token");
-
+const currentUser = localStorage.getItem("currentUser");
 // to avoid components async problems where
 // a component would try to read the cache's value of isLoggedIn
 // before our mutation goes through we can set it up here
 cache.writeData({
     data: {
-        isLoggedIn: Boolean(token)
+        isLoggedIn: Boolean(token),
+        currentUser: currentUser
     }
 });
 
@@ -59,7 +60,8 @@ if (token) {
             cache.writeData({
                 data: {
                     isLoggedIn: data.verifyUser.loggedIn,
-                    id: data.verifyUser.id
+                    id: data.verifyUser.id,
+                    currentUser: data.verifyUser.id
                 }
             });
         });

@@ -21,7 +21,10 @@ class Login extends Component {
     updateCache(client, { data }) {
         // here we can write directly to our cache with our returned mutation data
         client.writeData({
-            data: { isLoggedIn: data.login.loggedIn }
+            data: { 
+                isLoggedIn: data.login.loggedIn,
+                currentUser: data.login.id
+             }
         });
     }
 
@@ -30,7 +33,9 @@ class Login extends Component {
             <Mutation
                 mutation={LOGIN_USER}
                 onCompleted={data => {
-                    const { token } = data.login;
+                    debugger
+                    const { token, id } = data.login;
+                    localStorage.setItem("currentUser", id);
                     localStorage.setItem("auth-token", token);
                     this.props.history.push("/");
                 }}

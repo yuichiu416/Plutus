@@ -25,7 +25,7 @@ const Nav = props => {
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         localStorage.removeItem("auth-token");
-                                                        client.writeData({ data: { isLoggedIn: false } });
+                                                        client.writeData({ data: { isLoggedIn: false, currentUser: null } });
                                                         props.history.push("/");
                                                     }}
                                                 >Logout</span>

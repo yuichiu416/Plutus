@@ -6,6 +6,7 @@ const LOGIN_USER = gql`
     login(email: $email, password: $password) {
       token
       loggedIn
+      id
     }
   }
 `;
@@ -15,6 +16,7 @@ const REGISTER_USER = gql`
     register(name: $name, email: $email, password: $password) {
       token
       loggedIn
+      id
     }
   }
 `;
