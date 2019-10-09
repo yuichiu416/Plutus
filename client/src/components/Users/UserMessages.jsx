@@ -29,6 +29,7 @@ export default class UserMessages extends React.Component {
                     })
                     return (
                         <div>
+                            
                             <ul className="user-messages-ul list-group">
                                 {messagesLi}
                             </ul>

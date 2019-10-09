@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Query } from "react-apollo";
+import { Query, useApolloClient } from "react-apollo";
 import queries from "../../graphql/queries";
 import { Mutation } from "react-apollo";
 import { ADD_REPLY } from '../../graphql/mutations';
+import './MessageDetail.css';
 const { FETCH_MESSAGE } = queries;
 
 export default class MessageDetail extends React.Component {
@@ -68,30 +69,38 @@ export default class MessageDetail extends React.Component {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error.message}</p>
                     const { title, body, sender, replies } = data.message;
-                    const repliesLi = replies.map(reply => {
-                        if (reply.sender.id === localStorage.getItem("currentUser")) {
-                            debugger
-                            return (
-                                <li key={reply.id} className="left-message">
-                                    <h3>Sent by {reply.sender.name}</h3>
-                                    <p>{reply.body}</p>
-                                </li>
-                            )
-                        } else {
-                            return (
-                                <li key={reply.id} className="right-message">
-                                    <h3>Sent by {reply.sender.name}</h3>
-                                    <p>{reply.body}</p>
-                                </li>
-                            )
-                        }
-                    })
+                    let repliesLi;
+                    if (replies.length === 0){
+                        repliesLi = <p>No replies yet</p>
+                    } else {
+                        repliesLi = replies.map(reply => {
+                            if (reply.sender.id === localStorage.getItem("currentUser")) {
+                                return (
+                                    <li key={reply.id} className="left-message">
+                                        <div className="arrow-left"></div>
+                                        <h3>{reply.sender.name}</h3>
+                                        <p>{reply.body}</p>
+                                    </li>
+                                )
+                            } else {
+                                return (
+                                    <li key={reply.id} className="right-message">
+                                        <div className="arrow-right"></div>
+                                        <h3>{reply.sender.name}</h3>
+                                        <p>{reply.body}</p>
+                                    </li>
+                                )
+                            }
+                        })
+                    }
+                    
                     return (
-                        <div>
+                        <div className="message-detail">
                             <h1>{title}</h1>
                             <h3>Sent by {sender.name}</h3>
                             <p>{body}</p>
-                            <ul>
+                            <h2>Replies</h2>
+                            <ul className="replies-ul" >
                                 {repliesLi}
                             </ul>
                             <Mutation
