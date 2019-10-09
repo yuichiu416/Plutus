@@ -138,6 +138,16 @@ export default {
           email
         }
       }
+    `,
+    FETCH_NOTIFICATIONS: gql`
+      query FetchNotifications{
+        notifications{
+          id
+          body
+          read
+          date
+        }
+      }
     `
      
 };

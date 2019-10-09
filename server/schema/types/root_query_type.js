@@ -8,12 +8,14 @@ const MessageType = require('./message_type');
 const CategoryType = require("./category_type");
 const ItemType = require("./item_type");
 const ChampionType = require('./champion_type');
+const NotificationType = require('./notification_type');
 
 const User = mongoose.model("user");
 const Message = mongoose.model("message");
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 const Champion = mongoose.model('champion');
+const Notification = mongoose.model("notification");
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
@@ -70,6 +72,19 @@ const RootQueryType = new GraphQLObjectType({
                 return Category.findById(args._id);
             }
         },
+        notification: {
+            type: NotificationType,
+            args: { id: { type: new GraphQLNonNull(GraphQLID)} },
+            resolve(_, { id }){
+                return Notification.findById(id);
+            }
+        },
+        notifications: {
+            type: new GraphQLList(NotificationType),
+            resolve(){
+                return Notification.find({});
+            }
+        }
         // champions: {
         //     type: new GraphQLList(ChampionType),
         //     resolve(){

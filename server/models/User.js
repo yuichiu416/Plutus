@@ -24,6 +24,10 @@ const UserSchema = new Schema({
     messages: [{
         type: Schema.Types.ObjectId,
         ref: "message"
+    }],
+    notifications: [{
+        type: Schema.Types.ObjectId,
+        ref: 'notification'
     }]
    
 });

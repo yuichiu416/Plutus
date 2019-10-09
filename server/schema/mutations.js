@@ -151,8 +151,11 @@ const mutations = new GraphQLObjectType({
                     const sender = validUser.id;
                     const message = await new Message({ title, body, sender, receiver }).save();
                     const user = await User.findById(sender);
+                    const receiverUser = await User.findById(receiver);
                     user.messages.push(message);
                     user.save();
+                    receiverUser.messages.push(message);
+                    receiverUser.save();
                     return message;
                 }
             }
@@ -221,9 +224,37 @@ const mutations = new GraphQLObjectType({
                 )
                 return user;
             }
-        }
+        },
+        newNotification: {
+            type: NotificationType,
+            args: {
+                body: { type: GraphQLString },
+            },
+            async resolve(_, { body }){
+                const notification = await new Notification({ body }).save();
+                return notification;
+            }
+        },
+        updateNotificationStatus: {
+            type: NotificationType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            async resolve(_, { id }){
+                const notification = await notification.findById(id);
+                notification.read = true;
+                notification.save();
+                return notification;
+            }
+        }   
     }
     
 });
 
 module.exports = mutations;
+
+// Notifications 
+// 1. When user posts an auction item, notify seller
+// 2. When an item has expired, notify seller and buyer
+// 3. When user receives a new message
+// 4. 
