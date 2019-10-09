@@ -178,12 +178,12 @@ class CreateItem extends Component {
                             <textarea
                                 onChange={this.update("description")}
                                 value={this.state.description}
-                                placeholder={t("input.desctiption")}
+                                placeholder={t("input.description")}
                                 className="field2"
                             />
 
                             <label className="top-label">
-                                Starting Price:
+                                {t("label.startingPrice")}
                                 <input
                                     type="number"
                                     className="field1"
@@ -193,7 +193,7 @@ class CreateItem extends Component {
                             
                             </label>
                             <label className="top-label">
-                                Minimum Price:
+                                {t("label.minimumPrice")}
                                 <input
                                     type="number"
                                     className="field1"
@@ -204,7 +204,7 @@ class CreateItem extends Component {
                             </label>
 
                             <label className="top-label">
-                                Category: 
+                                {t("label.category")}
                                 {categories}
                             </label>
                             <br/>

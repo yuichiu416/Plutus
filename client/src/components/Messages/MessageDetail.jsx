@@ -4,9 +4,11 @@ import queries from "../../graphql/queries";
 import { Mutation } from "react-apollo";
 import { ADD_REPLY } from '../../graphql/mutations';
 import './MessageDetail.css';
+import { translate } from 'react-switch-lang';
+
 const { FETCH_MESSAGE } = queries;
 
-export default class MessageDetail extends Component {
+class MessageDetail extends Component {
     constructor(props) {
         super(props)
     
@@ -63,6 +65,7 @@ export default class MessageDetail extends Component {
     // }
     
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_MESSAGE} variables={{id: this.props.match.params.messageId}}>
                 {({loading, error, data}) => {
@@ -97,9 +100,9 @@ export default class MessageDetail extends Component {
                     return (
                         <div className="message-detail">
                             <h1>{title}</h1>
-                            <h3>Sent by {sender.name}</h3>
+                            <h3>{t("h3.sentBy")} {sender.name}</h3>
                             <p>{body}</p>
-                            <h2>Replies</h2>
+                            <h2>{t("h2.replies")}</h2>
                             <ul className="replies-ul" >
                                 {repliesLi}
                             </ul>
@@ -120,7 +123,7 @@ export default class MessageDetail extends Component {
                                 {(addReply, data) => (
                                     <form onSubmit={(e) => this.handleSubmit(e, addReply)}>
                                         <textarea value={this.state.body} onChange={this.update} cols="30" rows="10"></textarea>
-                                        <button>Reply</button>
+                                        <button>{t("button.reply")}</button>
                                     </form>
                                 )}
                             </Mutation>
@@ -132,3 +135,4 @@ export default class MessageDetail extends Component {
         )
     }
 }
+export default translate(MessageDetail);

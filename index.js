@@ -6,11 +6,11 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 io.on('connection', socket => {
 
-    socket.on('send announce', (announce) => {
-        // once we get a 'send announce' event from one of our clients, we will send it to the rest of the clients
+    socket.on('bid', (currentPrice) => {
+        // once we get a 'bid' event from one of our clients, we will send it to the rest of the clients
         // we make use of the socket.emit method again with the argument given to use from the callback function above
-        console.log('Announce is: ', announce)
-        io.sockets.emit('send announce', announce);
+        console.log('Announce is: ', currentPrice)
+        io.sockets.emit('bid', currentPrice);
     });
 })
 

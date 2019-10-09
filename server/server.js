@@ -19,7 +19,7 @@ mongoose
     .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch(err => console.log(err));
-
+mongoose.set('useFindAndModify', false);
 // remember we use bodyParser to parse requests into json
 app.use(bodyParser.json());
 app.use(cors());

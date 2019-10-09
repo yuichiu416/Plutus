@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
 import queries from "../../graphql/queries";
+import { translate } from 'react-switch-lang';
+
 const { FETCH_MESSAGES } = queries;
 
 class MessagesIndex extends Component {
@@ -10,18 +12,19 @@ class MessagesIndex extends Component {
     }
 
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_MESSAGES}>
                 {({loading, error, data}) => {
-                    if (loading) return <p>Loading...</p>
+                    if (loading) return <p>{t("p.loading")}</p>
                     if (error) return <p>{error}</p>
                     const messages = data.messages.map(message => {
                         return (
                             <Link to={`/messages/${message.id}`}>
                                 <li key={message.id}>
                                     <h3>{message.title}</h3>
-                                    <p>Sent by {message.sender.name}</p>
-                                    <p>{message.replies.length} replies</p>
+                                    <p>{t("p.sentBy")} {message.sender.name}</p>
+                                    <p>{message.replies.length} {t("p.replies")}</p>
                                 </li>
                             </Link>
                         )
@@ -38,5 +41,5 @@ class MessagesIndex extends Component {
     }
 }
 
-export default MessagesIndex
+export default translate(MessagesIndex);
 

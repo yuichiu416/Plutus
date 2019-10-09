@@ -7,7 +7,9 @@
             "default": "Unknown option, please select again.",
             "language": "Please input the languages you want to change to.\nOptions: English, Chinese"
         },
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "sentBy": "Sent by",
+        "replies": "replies"
     },
     "button": {
         "switchLanguage": "Switch Language",
@@ -15,7 +17,8 @@
         "logout": "Logout",
         "send": "Send",
         "editItem": "Edit Item",
-        "bid": "Bid!"
+        "bid": "Bid!",
+        "reply": "Reply"
     },
     "input": {
         "searchForItems": "Search for items...",
@@ -23,23 +26,32 @@
         "answer": "answer",
         "itemName": "Item Name",
         "description": "Description",
-        "startingPrice": "Starting Price",
-        "minimumPrice": "Minimum Price",
-        "category": "Category",
         "pleaseSelect": "Please Select",
         "uploadImages": "Upload Images"
     },
-    "label":{
+    "label": {
         "appraised": "Appraised",
         "endIn": "End in",
         "minutes": "minutes",
         "sendYourBidHere": "Send your bid here:",
         "currentPrice": "Current Price: ",
         "auctionIsDueIn": "Auction is due in: ",
-        "auctionEnded": "Auction for this item is ENDED!!"
+        "auctionEnded": "Auction for this item is ENDED!!",
+        "startingPrice": "Starting Price",
+        "minimumPrice": "Minimum Price",
+        "category": "Category: "
     },
     "h1": {
         "noItems": "No items yet",
         "itemName": "The item name is:"
+    },
+    "h2": {
+        "replies": "Replies"
+    },
+    "h3": {
+        "sentBy": "Sent by"
+    },
+    "option": {
+        "pleaseSelect": "--Please Select--"
     }
 }

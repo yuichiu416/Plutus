@@ -3,6 +3,8 @@ import { Query } from 'react-apollo';
 import { Mutation } from "react-apollo";
 import { CREATE_MESSAGE } from '../../graphql/mutations';
 import Queries from '../../graphql/queries';
+import { translate } from 'react-switch-lang';
+
 const { FETCH_USERS } = Queries;
 
 class CreateMessage extends React.Component {
@@ -34,8 +36,8 @@ class CreateMessage extends React.Component {
         })
     }
 
-
     render() {
+        const { t } = this.props;
         return (
             <Mutation
                 mutation={CREATE_MESSAGE}
@@ -61,10 +63,10 @@ class CreateMessage extends React.Component {
                               
                                 <div>
                                     <select value={this.state.receiver} onChange={this.update("receiver")}>
-                                        <option value="" disabled>--Please Select--</option>
+                                        <option value="" disabled>{t("option.pleaseSelect")}</option>
                                         <Query query={FETCH_USERS}>
                                             {({ loading, error, data }) => {
-                                                if (loading) return <p>Loading...</p>
+                                                if (loading) return <p>{t("p.loading")}</p>
                                                 if (error) return <p>{error}</p>
                                                 return data.users.map(({ id, name, email }) => {
                                                     return <option value={id}>
@@ -75,7 +77,7 @@ class CreateMessage extends React.Component {
                                         </Query>
                                     </select>
                                 </div>
-                                <button>Send</button>
+                                <button>{t("button.send")}</button>
                             </form>
                         </div>
                     }}
@@ -84,4 +86,4 @@ class CreateMessage extends React.Component {
     }
 }
 
-export default CreateMessage;
+export default translate(CreateMessage);

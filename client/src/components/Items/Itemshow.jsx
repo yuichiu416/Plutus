@@ -110,7 +110,6 @@ class ItemShow extends React.Component {
     }
     
     render() {
-        // const { username } = this.state;
         const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
