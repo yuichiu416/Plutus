@@ -49,7 +49,11 @@ const ItemSchema = new Schema({
     },
     endTime: {
         type: Number,
-        default: 3
+        default: 0
+    },
+    current_price: {
+        type: Number,
+        default: 0
     }
 });
 

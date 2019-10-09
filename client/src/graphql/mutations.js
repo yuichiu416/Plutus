@@ -75,7 +75,7 @@ const UPDATE_ITEM = gql`
 const MAKE_BID = gql`
   mutation makeBid($id: ID!, $current_price: Float!){
     makeBid(id: $id, current_price: $current_price){
-            id
+      id
       name
       description
       starting_price

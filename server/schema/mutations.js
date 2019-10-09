@@ -137,6 +137,20 @@ const mutations = new GraphQLObjectType({
                 return Item.remove({ _id: id });
             }
         },
+        makeBid: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+                current_price: { type: GraphQLFloat }
+            },
+            async resolve(_, { id, current_price }, context) {
+                return Item.findByIdAndUpdate(id, { current_price: current_price },
+                    (err, item) => {
+                        return item;
+                    }
+                );
+            }
+        },
         newMessage: {
             type: MessageType,
             args: {

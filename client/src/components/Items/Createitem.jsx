@@ -162,88 +162,88 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <body className="create-form-body">
+                    return <div className="create-form-body">
                       
-                        {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
-                        <div className="create-form">
-                        <form onSubmit={e => this.handleSubmit(e, newItem)}>
-                            <fieldset>
-                            <input
-                                type="name"
-                                onChange={this.update("name")}
-                                value={this.state.name}
-                                placeholder={t("input.itemName")}
-                                className="field1"
-                            />
-                            <textarea
-                                onChange={this.update("description")}
-                                value={this.state.description}
-                                placeholder={t("input.desctiption")}
-                                className="field2"
-                            />
-
-                            <label className="top-label">
-                                Starting Price:
+                            {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                            <div className="create-form">
+                            <form onSubmit={e => this.handleSubmit(e, newItem)}>
+                                <fieldset>
                                 <input
-                                    type="number"
+                                    type="name"
+                                    onChange={this.update("name")}
+                                    value={this.state.name}
+                                    placeholder={t("input.itemName")}
                                     className="field1"
-                                    onChange={this.update("starting_price")}
-                                    value={this.state.starting_price}
                                 />
-                            
-                            </label>
-                            <label className="top-label">
-                                Minimum Price:
-                                <input
-                                    type="number"
-                                    className="field1"
-                                    onChange={this.update("minimum_price")}
-                                    value={this.state.minimum_price}
-                                    placeholder={t("input.minimumPrice")}
+                                <textarea
+                                    onChange={this.update("description")}
+                                    value={this.state.description}
+                                    placeholder={t("input.description")}
+                                    className="field2"
                                 />
-                            </label>
 
-                            <label className="top-label">
-                                Category: 
-                                {categories}
-                            </label>
-                            <br/>
-                            <label className="top-label">
-                                {t("input.uploadImages")} &nbsp;
-                                <input type="file" multiple onChange={this.onDrop} />
-                            </label>
-                            <br/>
-                            
-                            {/* <label name="buttom-label">
-                                Sold:
-                                <input
-                                    name="bottom-entry"
-                                    onChange={this.update("sold")}
-                                    value={this.state.sold}
-                                    // placeholder="Sold"
-                                />
-                            </label> */}
-                            <label className="buttom-label">
-                                    {t("label.appraised")} &nbsp;
-                                <input
-                                    type="text"
-                                    className="bottom-entry"
-                                    onChange={this.update("appraised")}
-                                    value={this.state.appraised}
-                                />
-                            </label>
-                            
-                            <label className="bottom-label">
-                                {t("label.endIn")} &nbsp;
-                                <input type="text" className="bottom-entry" onChange={this.setEndTime}/>
-                                    &nbsp; {t("label.minutes")}
-                            </label>
-                            </fieldset>
-                            <button type="submit">{t("button.createNewItem")}</button>
-                        </form>
-                        <p>{this.state.message}</p>
+                                <label className="top-label">
+                                    {t("label.startingPrice")}
+                                    <input
+                                        type="number"
+                                        className="field1"
+                                        onChange={this.update("starting_price")}
+                                        value={this.state.starting_price}
+                                    />
+                                
+                                </label>
+                                <label className="top-label">
+                                    {t("label.minimumPrice")}
+                                    <input
+                                        type="number"
+                                        className="field1"
+                                        onChange={this.update("minimum_price")}
+                                        value={this.state.minimum_price}
+                                        placeholder={t("input.minimumPrice")}
+                                    />
+                                </label>
+
+                                <label className="top-label">
+                                    {t("label.category")}
+                                    {categories}
+                                </label>
+                                <br/>
+                                <label className="top-label">
+                                    {t("input.uploadImages")} &nbsp;
+                                    <input type="file" multiple onChange={this.onDrop} />
+                                </label>
+                                <br/>
+                                
+                                {/* <label name="buttom-label">
+                                    Sold:
+                                    <input
+                                        name="bottom-entry"
+                                        onChange={this.update("sold")}
+                                        value={this.state.sold}
+                                        // placeholder="Sold"
+                                    />
+                                </label> */}
+                                <label className="buttom-label">
+                                        {t("label.appraised")} &nbsp;
+                                    <input
+                                        type="text"
+                                        className="bottom-entry"
+                                        onChange={this.update("appraised")}
+                                        value={this.state.appraised}
+                                    />
+                                </label>
+                                
+                                <label className="bottom-label">
+                                    {t("label.endIn")} &nbsp;
+                                    <input type="text" className="bottom-entry" onChange={this.setEndTime}/>
+                                        &nbsp; {t("label.minutes")}
+                                </label>
+                                </fieldset>
+                                <button type="submit">{t("button.createNewItem")}</button>
+                            </form>
+                            <p>{this.state.message}</p>
+                        </div>
                     </div>
-                    </body>
                 }}
             </Mutation>
         );

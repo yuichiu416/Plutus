@@ -10,6 +10,7 @@ import { geolocated } from "react-geolocated";
 import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
 import { MAKE_BID } from '../../graphql/mutations';
+import { withApollo } from 'react-apollo';
 
 const { FETCH_ITEMS } = queries;
 
@@ -22,13 +23,14 @@ class ItemShow extends React.Component {
             username: null,
             text: '',
             endpoint: "localhost:5000",
-            currentPrice: 0,
+            currentPrice: null,
             mybid: 0
         };
         this.update = this.update.bind(this);
         // this.send = this.send.bind(this);
         this.handlebid = this.handlebid.bind(this);
         this.id = this.props.match.params.id;
+        this.currentPrice = 0;
     }
     // send(){
     //     console.log(this.state.mybid);
@@ -110,7 +112,6 @@ class ItemShow extends React.Component {
     }
     
     render() {
-        // const { username } = this.state;
         const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
@@ -122,7 +123,7 @@ class ItemShow extends React.Component {
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     const countdownMinutes = item.endTime || 0;
                     this.countDown(countdownMinutes);
-                    this.state = Object.assign({}, this.state, { current_price: Math.max(item.starting_price, this.state.currentPrice)});
+                    this.currentPrice = Math.max(item.starting_price, item.current_price);
                     const images = item.champions.map(champion => {
                         return <li key={champion}>
                             <Image cloudName='chinweenie' publicId={champion}/>
@@ -158,10 +159,9 @@ class ItemShow extends React.Component {
                                     </form>
                                 }}
                             </Mutation>
-                            {console.log(this.state)}
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             <label>
-                                {t("label.currentPrice")} {this.state.currentPrice}
+                                {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
                             </label>
                             <Map />
                         </div>
@@ -172,4 +172,4 @@ class ItemShow extends React.Component {
     }
 }
 
-export default translate(geolocated()(withRouter(ItemShow)));
+export default withApollo(translate(geolocated()(withRouter(ItemShow))));

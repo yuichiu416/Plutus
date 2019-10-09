@@ -42,7 +42,8 @@ const ItemType = new GraphQLObjectType({
                 }
             }
         },
-        endTime: {type: GraphQLFloat }
+        endTime: { type: GraphQLFloat },
+        current_price: { type: GraphQLFloat }
     })
 });
 
