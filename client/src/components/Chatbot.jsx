@@ -40,8 +40,11 @@ class Chatbot extends React.Component {
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
         this.handleGreetingText = this.handleGreetingText.bind(this);
+        this.openForm = this.openForm.bind(this);
+        this.closeForm = this.closeForm.bind(this);
 
     }
+    
     componentDidMount(){
         this.handleGreetingText();
     }
@@ -105,6 +108,7 @@ class Chatbot extends React.Component {
         const { t } = this.props;
         this.setState({ questionText: t("p.option.language") });
     }
+    
     submitForm(e){
         e.preventDefault();
         // setTimeout(() => {   // set a thinking time of the chatbog
@@ -152,7 +156,18 @@ class Chatbot extends React.Component {
         });
         return matches;
     }
+    openForm() {
+        document.getElementById("chatbot").classList.remove("hidden");
+        document.getElementById("open-chat-btn").classList.add("hidden");
+    }
+
+    closeForm() {
+        document.getElementById("open-chat-btn").classList.remove("hidden");
+        document.getElementById("chatbot").classList.add("hidden");
+    }
+    
     render() {
+        
         const { t } = this.props;
         let searchResults = this.matches().map((result, i) => {
             const id = this.ids[result];
@@ -170,19 +185,27 @@ class Chatbot extends React.Component {
                         this.nameHashes[item.name] = JSON.parse(item.nameHash);
                         this.ids[item.name] = item.id;
                     })
+                    
                     return (
-                        <div id="chatbot">
-                            <label>
-                                {this.state.questionText}
-                                <form onSubmit={this.submitForm}>
-                                    <input type="text" id="option" placeholder="option" onChange={this.update("option")} />
+                        
+                        <div className="chat-popup">
+                            {/* <label> */}
+                                {/* {this.state.questionText} */}
+                            <button type="submit" class="open-button" id="open-chat-btn" onClick={this.openForm}>Chat</button>
+                            <form onSubmit={this.submitForm} action="/action_page.php" id="chatbot" className="form-container hidden">
+                                    <h1>Chat</h1>
+                                    <label for="msg"><b>Message</b>{this.state.questionText}</label>
+                                    {/* <input type="text" id="option" placeholder="option" onChange={this.update("option")} /> */}
+                                    <textarea type="text" id="option" placeholder="Type message.." name="msg" onChange={this.update("option")} required></textarea>
                                     <input type="text" id="answer" placeholder="answer" onChange={this.update("answer")} className="hidden" />
-                                    <input type="submit" id="submit" value="Send" />
+                                    {/* <input type="submit" id="submit" value="Send" /> */}
+                                    <button type="submit" className="btn" id="submit" value="Send">Send</button>
+                                    <button type="button" className="btn cancel" onClick={this.closeForm}>Close</button>
                                 </form>
                                 <div>
                                     {searchResults}
                                 </div>
-                            </label>
+                            {/* </label> */}
                         </div>
                     );
                 }}
