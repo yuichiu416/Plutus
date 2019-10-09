@@ -68,12 +68,24 @@ export default class MessageDetail extends React.Component {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error.message}</p>
                     const { title, body, sender, replies } = data.message;
-                    const repliesLi = replies.map(reply => (
-                        <li key={reply.id}>
-                            <h3>Sent by {reply.sender.name}</h3>
-                            <p>{reply.body}</p>
-                        </li>
-                    ))
+                    const repliesLi = replies.map(reply => {
+                        if (reply.sender.id === localStorage.getItem("currentUser")) {
+                            debugger
+                            return (
+                                <li key={reply.id} className="left-message">
+                                    <h3>Sent by {reply.sender.name}</h3>
+                                    <p>{reply.body}</p>
+                                </li>
+                            )
+                        } else {
+                            return (
+                                <li key={reply.id} className="right-message">
+                                    <h3>Sent by {reply.sender.name}</h3>
+                                    <p>{reply.body}</p>
+                                </li>
+                            )
+                        }
+                    })
                     return (
                         <div>
                             <h1>{title}</h1>
