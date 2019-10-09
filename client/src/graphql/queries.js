@@ -145,11 +145,8 @@ export default {
           id
           body
           read
-          date
           user{
             id
-            name
-            email
           }
         }
       }
