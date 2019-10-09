@@ -27,6 +27,7 @@ class Login extends Component {
 
     render() {
         return (
+            <body className="login-body">
             <Mutation
                 mutation={LOGIN_USER}
                 onCompleted={data => {
@@ -70,6 +71,7 @@ class Login extends Component {
                     </div>
                 )}
             </Mutation>
+            </body>
         );
     }
 }

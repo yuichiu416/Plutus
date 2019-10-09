@@ -28,6 +28,7 @@ class Register extends Component {
 
     render() {
         return (
+            <body className="register-body">
             <Mutation
                 mutation={REGISTER_USER}
                 onCompleted={data => {
@@ -38,6 +39,7 @@ class Register extends Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {registerUser => (
+                // <body className="register-body">
                     <div className="create-form">
                         <form
                             onSubmit={e => {
@@ -77,8 +79,10 @@ class Register extends Component {
                             <button type="submit">Sign up</button>
                         </form>
                     </div>
+                // </body>
                 )}
             </Mutation>
+            </body>
         );
     }
 }

@@ -78,7 +78,7 @@ class SearchForm extends React.Component {
                         this.ids[item.name] = item.id;
                     })
                     return (
-                        <div class="search-div">
+                        <div class="search-div" >
                             <form className="search-form" id="search-form">
                                 <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder="Search" value={this.state.inputVal} />
                                 {searchResults}

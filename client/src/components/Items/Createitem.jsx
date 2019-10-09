@@ -160,8 +160,10 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <div className="create-form">
-
+                    return <body className="create-form-body">
+                      
+                        {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                        <div className="create-form">
                         <form onSubmit={e => this.handleSubmit(e, newItem)}>
                             <fieldset>
                             <input
@@ -242,6 +244,7 @@ class CreateItem extends Component {
                         </form>
                         <p>{this.state.message}</p>
                     </div>
+                    </body>
                 }}
             </Mutation>
         );
