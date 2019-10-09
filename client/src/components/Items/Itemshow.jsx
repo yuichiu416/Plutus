@@ -4,7 +4,7 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-// import socketIOClient from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 import { translate } from 'react-switch-lang';
@@ -27,28 +27,28 @@ class ItemShow extends React.Component {
             mybid: 0
         };
         this.update = this.update.bind(this);
-        // this.send = this.send.bind(this);
+        this.send = this.send.bind(this);
         this.handlebid = this.handlebid.bind(this);
         this.id = this.props.match.params.id;
         this.currentPrice = 0;
     }
-    // send(){
-    //     console.log(this.state.mybid);
-    //     if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
-    //         return alert("Bid too low, please make a higher bid");
+    send(){
+        console.log(this.state.mybid);
+        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
+            return alert("Bid too low, please make a higher bid");
 
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     socket.emit('bid', this.state.mybid);
-    //     const input = document.getElementById("mybid-input");
-    //     if(input)
-    //         input.value = "";
-    // }
-    // componentDidMount(){
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     socket.on('bid', (currentPrice) => {
-    //             this.setState({ currentPrice: currentPrice })
-    //         });
-    // }
+        const socket = socketIOClient(this.state.endpoint);
+        socket.emit('bid', this.state.mybid);
+        const input = document.getElementById("mybid-input");
+        if(input)
+            input.value = "";
+    }
+    componentDidMount(){
+        const socket = socketIOClient(this.state.endpoint);
+        socket.on('bid', (currentPrice) => {
+                this.setState({ currentPrice: currentPrice })
+            });
+    }
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
