@@ -4,6 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { Query } from "react-apollo";
 import queries from "../graphql/queries";
 import { withRouter } from 'react-router-dom';
+import { translate } from 'react-switch-lang';
 
 
 const { FETCH_ITEMS } = queries;
@@ -60,6 +61,7 @@ class SearchForm extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
         let searchResults = this.matches().map((result, i) => {
             const handledResult = this.handleBoldText(result);
             const id = this.ids[result];
@@ -69,18 +71,18 @@ class SearchForm extends React.Component {
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
-                    if (loading) return "Loading...";
+                    if (loading) return t("p.loading");
                     if (error) return `Error! ${error.message}`;
                     if (data.items.length === 0)
-                        return <h1>No items yet</h1>
+                        return t("h1.noItems")
                     data.items.forEach(item => {
                         this.nameHashes[item.name] = JSON.parse(item.nameHash);
                         this.ids[item.name] = item.id;
                     })
                     return (
-                        <div className="search-div">
+                        <div className="search-div" >
                             <form className="search-form" id="search-form">
-                                <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder="Search" value={this.state.inputVal} />
+                                <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder={t("input.searchForItems")}  value={this.state.inputVal} />
                                 {searchResults}
                             </form>
                         </div>
@@ -92,4 +94,4 @@ class SearchForm extends React.Component {
 }
 
 
-export default withRouter(SearchForm);
+export default translate(withRouter(SearchForm));

@@ -4,9 +4,12 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
+import { translate } from 'react-switch-lang';
+import { Mutation } from "react-apollo";
+import { MAKE_BID } from '../../graphql/mutations';
 
 const { FETCH_ITEMS } = queries;
 
@@ -19,32 +22,40 @@ class ItemShow extends React.Component {
             username: null,
             text: '',
             endpoint: "localhost:5000",
-            announce: ""
+            currentPrice: 0,
+            mybid: 0
         };
         this.update = this.update.bind(this);
+        // this.send = this.send.bind(this);
+        this.handlebid = this.handlebid.bind(this);
+        this.id = this.props.match.params.id;
     }
-    send = () => {
-        const socket = socketIOClient(this.state.endpoint);
-        socket.emit('send announce', this.state.announce);
-        const input = document.getElementById("announce-input");
-        if(input)
-            input.value = "";
-    }
-    componentDidMount(){
-        const socket = socketIOClient(this.state.endpoint);
-        setInterval(this.send(), 1000)
-        socket.on('send announce', (announce) => {
-                this.setState({ announce: announce })
-            });
-    }
+    // send(){
+    //     console.log(this.state.mybid);
+    //     if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
+    //         return alert("Bid too low, please make a higher bid");
+
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     socket.emit('bid', this.state.mybid);
+    //     const input = document.getElementById("mybid-input");
+    //     if(input)
+    //         input.value = "";
+    // }
+    // componentDidMount(){
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     socket.on('bid', (currentPrice) => {
+    //             this.setState({ currentPrice: currentPrice })
+    //         });
+    // }
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
     countDown(endTime){
         const that = this;
+        const { t } = this.props;
         // Update the count down every 1 second
         var x = setInterval(() => {
-
+            
             // Get today's date and time
             var now = new Date().getTime();
             // Find the distance between now and the count down date
@@ -59,29 +70,59 @@ class ItemShow extends React.Component {
             const timer = document.getElementById("timer");
             if(!timer)
                 return;
-            timer.innerHTML = "Auction is due in: " + days + "d " + hours + "h "
+            timer.innerHTML = t("label.auctionIsDUeIn") + days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
 
-            // If the count down is finished, write some text
             if (that.timer || distance < 0) {
                 clearInterval(x);
-                timer.innerHTML = "Auction is EXPIRED";
+                timer.innerHTML = t("label.auctionEnded");
             }
         }, 1000);
+    }
+    updateCache(cache, { data }) {
+        let items;
+        try {
+            items = cache.readQuery({ query: FETCH_ITEMS });
+        } catch (err) {
+            return;
+        }
+        if (items) {
+            let itemArray = items.items;
+            let item = data.makeBid;
+            itemArray.find((obj, idx) => (obj.id === this.id ? itemArray[idx] = item : ""));
+            cache.writeQuery({
+                query: FETCH_ITEMS,
+                data: { items: itemArray }
+            });
+        }
+    }
+    handlebid(e, makeBid){
+        e.preventDefault();
+        makeBid({
+            variables: {
+                id: this.id,
+                current_price: parseFloat(this.state.mybid)
+            }
+        }).then( response => {
+            this.setState({ currentPrice: response.data.current_price})
+        }).catch( err => console.log(err));
+        document.getElementById("mybid-input").value="";
     }
     
     render() {
         // const { username } = this.state;
+        const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
                     if (loading) return "Loading...";
                     if (error) return `Error! ${error.message}`;
                     if (data.items.length === 0)
-                        return <h1>No items yet, <Link to="/items/new" > Create one</Link></h1>
+                        return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
-                    const countdownMinutes = item.endTime || 3;
+                    const countdownMinutes = item.endTime || 0;
                     this.countDown(countdownMinutes);
+                    this.state = Object.assign({}, this.state, { current_price: Math.max(item.starting_price, this.state.currentPrice)});
                     const images = item.champions.map(champion => {
                         return <li key={champion}>
                             <Image cloudName='chinweenie' publicId={champion}/>
@@ -90,20 +131,37 @@ class ItemShow extends React.Component {
                     return (
                         <div>
                             <Link to="/">Home</Link>
-                            <h1>The item name is: {item.name}</h1>
+                            <h1>{t("h1.itemName")} {item.name}</h1>
                             <p>{item.description}</p>
                             <p id="timer"></p>
                             <ul>
                                 {images}
                             </ul>
+                            <Mutation
+                                mutation={MAKE_BID}
+                                // if we error out we can set the message here
+                                onError={err => this.setState({ message: err.message })}
+                                // we need to make sure we update our cache once our new item is created
+                                update={(cache, data) => this.updateCache(cache, data)}
+                                // when our query is complete we'll display a success message
+                                onCompleted={data => {
+                                    this.setState({
+                                        message: `Made bid created successfully`
+                                    });
+                                }}
+                            >
+                                {(makeBid) => {
+                                    return <form onSubmit={e => this.handlebid(e, makeBid)}>
+                                        {t("label.sendYourBidHere")}
+                                        <input type="text" onChange={this.update("mybid")} id="mybid-input" />
+                                        <button type="submit" onClick={this.send}>{t("button.bid")}</button>
+                                    </form>
+                                }}
+                            </Mutation>
+                            {console.log(this.state)}
+                            <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             <label>
-                                Send your bid here:
-                                <input type="text" onChange={this.update("announce")} id="announce-input"/>
-                                <button onClick={this.send}>Bid!</button>
-                            </label>
-                            <Link to={`${this.props.match.params.id}/edit`} > Edit Item</Link>
-                            <label>
-                                Current price: {this.state.announce}
+                                {t("label.currentPrice")} {this.state.currentPrice}
                             </label>
                             <Map />
                         </div>
@@ -114,4 +172,4 @@ class ItemShow extends React.Component {
     }
 }
 
-export default geolocated()(withRouter(ItemShow));
+export default translate(geolocated()(withRouter(ItemShow)));

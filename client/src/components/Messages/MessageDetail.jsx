@@ -6,7 +6,7 @@ import { ADD_REPLY } from '../../graphql/mutations';
 import './MessageDetail.css';
 const { FETCH_MESSAGE } = queries;
 
-export default class MessageDetail extends React.Component {
+export default class MessageDetail extends Component {
     constructor(props) {
         super(props)
     

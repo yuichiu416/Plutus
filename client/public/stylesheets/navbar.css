@@ -116,7 +116,10 @@ div[class*=box] {
 }
 .hidden{
   display: none;
+}
+
 .search-div {
+  
   align-items: center;
   position: absolute;
   display: inline-flex;
@@ -133,16 +136,32 @@ div[class*=box] {
   /* overflow: hidden; */
 
 }
-@media screen and (min-width: 400px) {
+
+@media screen and (min-width: 500px) {
   .search-div {
-    padding-left: 1em;
-    /* padding-right: 1%; */
+    padding-left: 2em;
+    /* margin-top: 5%; */
+  }
+}
+@media screen and (min-width: 700px) {
+  .search-div {
+    padding-left: 10em;
+    /* margin-top: 5%; */
   }
 }
 @media screen and (min-width: 900px) {
   .search-div {
     padding-left: 20em;
-    padding-bottom: 10px;
-    /* padding-right: 1%; */
+    /* padding-bottom: 15px; */
+    
   }
 }
+}
+@media screen and (min-width: 1500px) {
+  .search-div {
+    padding-left: 25em;
+    margin-top: -0.1px;
+    padding-top: 1.5em;
+  }
+}
+

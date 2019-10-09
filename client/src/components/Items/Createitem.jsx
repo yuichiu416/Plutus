@@ -6,6 +6,7 @@ import { Query } from "react-apollo";
 import Queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { geolocated } from "react-geolocated";
+import { translate } from 'react-switch-lang';
 
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
@@ -144,6 +145,7 @@ class CreateItem extends Component {
       
     render() {
         const categories = this.fetchCategories();
+        const { t } = this.props;
         return (
             <Mutation
                 mutation={CREATE_ITEM}
@@ -160,21 +162,23 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <div className="create-form">
-
+                    return <body className="create-form-body">
+                      
+                        {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                        <div className="create-form">
                         <form onSubmit={e => this.handleSubmit(e, newItem)}>
                             <fieldset>
                             <input
                                 type="name"
                                 onChange={this.update("name")}
                                 value={this.state.name}
-                                placeholder="Item Name"
+                                placeholder={t("input.itemName")}
                                 className="field1"
                             />
                             <textarea
                                 onChange={this.update("description")}
                                 value={this.state.description}
-                                placeholder="Description"
+                                placeholder={t("input.desctiption")}
                                 className="field2"
                             />
 
@@ -195,7 +199,7 @@ class CreateItem extends Component {
                                     className="field1"
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
-                                    placeholder="Minimum Price"
+                                    placeholder={t("input.minimumPrice")}
                                 />
                             </label>
 
@@ -205,8 +209,7 @@ class CreateItem extends Component {
                             </label>
                             <br/>
                             <label className="top-label">
-                                Upload Images: &nbsp;
-                                    
+                                {t("input.uploadImages")} &nbsp;
                                 <input type="file" multiple onChange={this.onDrop} />
                             </label>
                             <br/>
@@ -221,7 +224,7 @@ class CreateItem extends Component {
                                 />
                             </label> */}
                             <label className="buttom-label">
-                                Appraised: &nbsp;
+                                    {t("label.appraised")} &nbsp;
                                 <input
                                     type="text"
                                     className="bottom-entry"
@@ -231,21 +234,20 @@ class CreateItem extends Component {
                             </label>
                             
                             <label className="bottom-label">
-                                End in &nbsp;
+                                {t("label.endIn")} &nbsp;
                                 <input type="text" className="bottom-entry" onChange={this.setEndTime}/>
-                                &nbsp; minutes
+                                    &nbsp; {t("label.minutes")}
                             </label>
-                            
-                            
                             </fieldset>
-                            <button type="submit">Create Item</button>
+                            <button type="submit">{t("button.createNewItem")}</button>
                         </form>
                         <p>{this.state.message}</p>
                     </div>
+                    </body>
                 }}
             </Mutation>
         );
     }
 }
 
-export default geolocated()(withRouter(CreateItem));
+export default translate(geolocated()(withRouter(CreateItem)));

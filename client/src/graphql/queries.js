@@ -26,6 +26,7 @@ export default {
         location
         endTime
         nameHash
+        current_price
       }
     }`,
     FETCH_ITEM: gql`
@@ -46,6 +47,7 @@ export default {
         location
         endTime
         nameHash
+        current_price
       }
     }
     `,
