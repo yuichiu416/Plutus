@@ -5,7 +5,7 @@ import { Mutation } from "react-apollo";
 import { ADD_REPLY } from '../../graphql/mutations';
 const { FETCH_MESSAGE } = queries;
 
-export default class MessageDetail extends React.Component {
+export default class MessageDetail extends Component {
     constructor(props) {
         super(props)
     

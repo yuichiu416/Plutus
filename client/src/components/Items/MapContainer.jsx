@@ -4,7 +4,7 @@ import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { geolocated } from "react-geolocated";
-import { Link } from 'react-router-dom';
+
 const { FETCH_ITEMS } = queries;
 
 export class MapContainer extends Component {

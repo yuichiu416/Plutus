@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import queries from "../../graphql/queries";
 const { FETCH_MESSAGES } = queries;
 
-class MessagesIndex extends React.Component {
+class MessagesIndex extends Component {
     constructor(props) {
         super(props);
     }

@@ -15,12 +15,12 @@ const Nav = props => {
                     {({ data }) => {
                         if (data.isLoggedIn) {
                             return (
-                                <div class="loggedin-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo" class="plutus-logo-nav" />
+                                <div className="loggedin-navbar">
+                                    <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" />
                                     <SearchForm />
-                                    <div class="nav-logout-div">
-                                        <div class="box">
-                                            <div class="btn logout-btn">
+                                    <div className="nav-logout-div">
+                                        <div className="box">
+                                            <div className="btn logout-btn">
                                                 <span
                                                     onClick={e => {
                                                         e.preventDefault();
