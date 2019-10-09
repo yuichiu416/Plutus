@@ -3,9 +3,9 @@
         "option": {
             "empty": "哈囉，我能為你提供什麼服務呢?\n輸入 \"1\" 搜尋物品\n輸入 \"2\" 切換語言\n",
             "first": "請輸入想搜尋物品的名稱 或是其中的幾個單字",
-            "second": "正在將語言切換成英文",
+            "second": "請輸入你想更換的語言，選項: English, Chinese",
             "default": "錯誤的選項，請重新選擇",
-            "language": "請輸入你想更換的語言，選項: English, Chinese"
+            "language": "語言已切換成 "
         },
         "Loading": "讀取中..."
     },

@@ -232,7 +232,7 @@ function Splash() {
   return (
 
     // <div id="jsi-hex-container" class="container"></div>
-
+    <body className="splash-body">
     <div className="Splash">
       <div className="logo-container">
         {/* <div className="splash-logo"></div> */}
@@ -245,6 +245,7 @@ function Splash() {
            }} />
       </div>
     </div>
+    </body>
   );
 }
 

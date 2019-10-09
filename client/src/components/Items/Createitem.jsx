@@ -108,7 +108,7 @@ class CreateItem extends Component {
         const coords = this.props.coords;
         const location = JSON.stringify({
             lat: coords.latitude,
-            lon: coords.longitude
+            lng: coords.longitude
         });
         this.updateImageURLs().then(champions => {
             
