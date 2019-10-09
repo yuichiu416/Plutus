@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Query, useApolloClient } from "react-apollo";
+import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
 import { Mutation } from "react-apollo";
 import { ADD_REPLY } from '../../graphql/mutations';

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Mutation } from "react-apollo";
 import { UPDATE_USER } from '../../graphql/mutations';
-import queries from '../../graphql/queries';
-const { FETCH_USERS } = queries;
+// import queries from '../../graphql/queries';
 
-export default class UserDetail extends React.Component {
+// const { FETCH_USERS } = queries;
+
+export default class UserDetail extends Component {
     constructor(props) {
         super(props)  
         this.state = this.props.user;

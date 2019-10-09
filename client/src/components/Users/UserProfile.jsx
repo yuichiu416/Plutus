@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Query } from "react-apollo";
 import queries from "../../graphql/queries";
-import { Mutation } from "react-apollo";
 import UserDetail from './UserDetail';
 import UserItems from './UserItems';
 import UserMessages from './UserMessages';
 import './UserProfile.css';
+
+// import { Mutation } from "react-apollo";
 const { FETCH_USERS } = queries; 
 
-export default class UserProfile extends React.Component {
+export default class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.openTab = this.openTab.bind(this);
@@ -50,13 +51,13 @@ export default class UserProfile extends React.Component {
                             <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
                             <ul className="nav nav-tabs" onClick={this.showDetail}>
                                 <li className="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>Setting</a>
+                                    <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>Setting</p>
                                 </li>
                                 <li className="nav-item">
-                                    <a class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>Items</a>
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>Items</p>
                                 </li>
                                 <li className="nav-item">
-                                    <a class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>Messages</a>
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>Messages</p>
                                 </li>
                             </ul>
                             

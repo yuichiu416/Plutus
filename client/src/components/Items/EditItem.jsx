@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
-import { UPDATE_ITEM, MAKE_BID} from "../../graphql/mutations";
+import { UPDATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";

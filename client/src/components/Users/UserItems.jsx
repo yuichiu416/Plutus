@@ -5,11 +5,10 @@ import { Image } from 'cloudinary-react';
 const { FETCH_ITEMS } = queries;
 
 
-export default class UserItems extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
+export default class UserItems extends Component {
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
         return (

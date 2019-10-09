@@ -4,10 +4,10 @@ import queries from '../../graphql/queries';
 import { Link } from 'react-router-dom';
 const { FETCH_MESSAGES } = queries;
 
-export default class UserMessages extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+export default class UserMessages extends Component {
+    // constructor(props) {
+    //     super(props)
+    // }
     
     render() {
         return (

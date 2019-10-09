@@ -7,9 +7,9 @@ import { translate } from 'react-switch-lang';
 const { FETCH_MESSAGES } = queries;
 
 class MessagesIndex extends Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
         const { t } = this.props;
@@ -20,8 +20,8 @@ class MessagesIndex extends Component {
                     if (error) return <p>{error}</p>
                     const messages = data.messages.map(message => {
                         return (
-                            <Link to={`/messages/${message.id}`}>
-                                <li key={message.id}>
+                            <Link to={`/messages/${message.id}`} key={message.id}>
+                                <li >
                                     <h3>{message.title}</h3>
                                     <p>{t("p.sentBy")} {message.sender.name}</p>
                                     <p>{message.replies.length} {t("p.replies")}</p>
