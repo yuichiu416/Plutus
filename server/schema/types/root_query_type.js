@@ -76,7 +76,6 @@ const RootQueryType = new GraphQLObjectType({
             type: NotificationType,
             args: { id: { type: new GraphQLNonNull(GraphQLID)} },
             resolve(_, { id }){
-                debugger
                 return Notification.findById(id);
             }
         },

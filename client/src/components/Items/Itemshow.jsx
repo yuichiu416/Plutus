@@ -25,7 +25,8 @@ class ItemShow extends React.Component {
             text: '',
             endpoint: "localhost:5000",
             currentPrice: null,
-            mybid: 0
+            mybid: 0,
+            sold: ""
         };
         this.update = this.update.bind(this);
         this.send = this.send.bind(this);
@@ -79,14 +80,7 @@ class ItemShow extends React.Component {
             if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = t("label.auctionEnded");
-                
-                // Issue mutation to toggle item sold
-                this.props.client.mutate({
-                    mutation: TOGGLE_SOLD,
-                    variables: { id: this.props.match.params.id},
-                }).then(response => {
-                    console.log(response);
-                })
+                this.setState({sold: true});
             }
         }, 1000);
     }
@@ -135,6 +129,13 @@ class ItemShow extends React.Component {
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     const countdownMinutes = item.endTime || 0;
                     this.countDown(countdownMinutes);
+                    if (this.state.sold){
+                        // Issue mutation to toggle item sold
+                        this.props.client.mutate({
+                            mutation: TOGGLE_SOLD,
+                            variables: { id: this.props.match.params.id },
+                        })
+                    } 
                     this.currentPrice = Math.max(item.starting_price, item.current_price);
                     const images = item.champions.map(champion => {
                         return <li key={champion}>

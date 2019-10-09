@@ -10,14 +10,7 @@ const NotificationType = new GraphQLObjectType({
         id: { type: GraphQLID },
         body: { type: GraphQLString },
         read: { type: GraphQLBoolean },
-        user: {
-            type: UserType,
-            resolve(parentValue){
-                return Notification.findById(parentValue.id)
-                        .populate("user")
-                        .then(notification => notification.user);
-            }
-        }
+        user: { type: GraphQLID }
     })
 });
 

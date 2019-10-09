@@ -145,9 +145,8 @@ export default {
           id
           body
           read
-          user{
-            id
-          }
+          user
+
         }
       }
     `

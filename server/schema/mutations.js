@@ -91,10 +91,10 @@ const mutations = new GraphQLObjectType({
                 endTime: { type: GraphQLFloat }
             },
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
-                // const obj = await AuthService.verifyUser({ token: context.token });
-                // const seller = obj.id;
-                const seller = "5d97634b7625491b5c673f72";
-                debugger
+                const obj = await AuthService.verifyUser({ token: context.token });
+                const seller = obj.id;
+                // const seller = "5d97634b7625491b5c673f72";
+                // debugger
                 const user = await User.findById(seller);
                 const notification = await new Notification({body: `Item ${name} has been posted!`, user}).save();
                 user.notifications.push(notification);
@@ -292,7 +292,6 @@ const mutations = new GraphQLObjectType({
             },
             async resolve(_, { id }){
                 const item = await Item.findById(id);
-
                 if (!item.sold){
                     item.sold = true;
                     item.save();
@@ -309,7 +308,7 @@ const mutations = new GraphQLObjectType({
                         seller.notifications.push(sellerNotification);
                         seller.save()
                     } else {
-                        sellerNotification = await new Notification({ body: 'Your item has expired but there is no buyer', user: seller }).save();
+                        sellerNotification = await new Notification({ body: `Your item ${item.name} has expired but there is no buyer`, user: seller }).save();
                         seller.notifications.push(sellerNotification);
                         seller.save();
                     }

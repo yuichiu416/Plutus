@@ -34,7 +34,6 @@ class Login extends Component {
             <Mutation
                 mutation={LOGIN_USER}
                 onCompleted={data => {
-                    debugger
                     const { token, id } = data.login;
                     localStorage.setItem("currentUser", id);
                     localStorage.setItem("auth-token", token);
