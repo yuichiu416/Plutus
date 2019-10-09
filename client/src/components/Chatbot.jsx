@@ -92,6 +92,7 @@ class Chatbot extends React.Component {
             case "English":
                 console.log("change to english");
                 setLanguage("en");
+                break;
             default:
                 break;
         }

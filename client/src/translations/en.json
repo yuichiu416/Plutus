@@ -34,7 +34,9 @@
         "endIn": "End in",
         "minutes": "minutes",
         "sendYourBidHere": "Send your bid here:",
-        "currentPrice": "Current Price: "
+        "currentPrice": "Current Price: ",
+        "auctionIsDueIn": "Auction is due in: ",
+        "auctionEnded": "Auction for this item is ENDED!!"
     },
     "h1": {
         "noItems": "No items yet",

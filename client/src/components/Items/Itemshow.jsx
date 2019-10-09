@@ -20,22 +20,27 @@ class ItemShow extends React.Component {
             username: null,
             text: '',
             endpoint: "localhost:5000",
-            announce: ""
+            currentPrice: 0,
+            mybid: 0
         };
         this.update = this.update.bind(this);
+        this.send = this.send.bind(this);
     }
-    send = () => {
+    send(){
+        console.log(this.state.mybid);
+        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
+            return alert("Bid too low, please make a higher bid");
+
         const socket = socketIOClient(this.state.endpoint);
-        socket.emit('send announce', this.state.announce);
-        const input = document.getElementById("announce-input");
+        socket.emit('bid', this.state.mybid);
+        const input = document.getElementById("mybid-input");
         if(input)
             input.value = "";
     }
     componentDidMount(){
         const socket = socketIOClient(this.state.endpoint);
-        setInterval(this.send(), 1000)
-        socket.on('send announce', (announce) => {
-                this.setState({ announce: announce })
+        socket.on('bid', (currentPrice) => {
+                this.setState({ currentPrice: currentPrice })
             });
     }
     update(field) {
@@ -43,9 +48,10 @@ class ItemShow extends React.Component {
     }
     countDown(endTime){
         const that = this;
+        const { t } = this.props;
         // Update the count down every 1 second
         var x = setInterval(() => {
-
+            
             // Get today's date and time
             var now = new Date().getTime();
             // Find the distance between now and the count down date
@@ -60,13 +66,12 @@ class ItemShow extends React.Component {
             const timer = document.getElementById("timer");
             if(!timer)
                 return;
-            timer.innerHTML = "Auction is due in: " + days + "d " + hours + "h "
+            timer.innerHTML = t("label.auctionIsDUeIn") + days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
 
-            // If the count down is finished, write some text
             if (that.timer || distance < 0) {
                 clearInterval(x);
-                timer.innerHTML = "Auction is EXPIRED";
+                timer.innerHTML = t("label.auctionEnded");
             }
         }, 1000);
     }
@@ -100,12 +105,12 @@ class ItemShow extends React.Component {
                             </ul>
                             <label>
                                 {t("label.sendYourBidHere")}
-                                <input type="text" onChange={this.update("announce")} id="announce-input"/>
+                                <input type="text" onChange={this.update("mybid")} id="mybid-input"/>
                                 <button onClick={this.send}>{t("button.bid")}</button>
                             </label>
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             <label>
-                                {t("label.currentPrice")} {this.state.announce}
+                                {t("label.currentPrice")} {this.state.currentPrice}
                             </label>
                             <Map />
                         </div>

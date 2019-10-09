@@ -65,6 +65,29 @@ const UPDATE_ITEM = gql`
       champions
       location
       endTime
+      current_price
+    }
+  }
+`;
+
+const MAKE_BID = gql`
+  mutation makeBid($id: ID!, $current_price: Float!){
+    makeBid(id: $id, current_price: $current_price){
+            id
+      name
+      description
+      starting_price
+      minimum_price
+      category{
+        id
+        name
+      }
+      sold
+      appraised
+      champions
+      location
+      endTime
+      current_price
     }
   }
 `;
@@ -121,4 +144,4 @@ const ADD_REPLY = gql`
   }
 `
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY };
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY, MAKE_BID };
