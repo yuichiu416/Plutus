@@ -128,23 +128,6 @@ export default {
         }
       }
     `,
-    FETCH_USER_MESSAGES: gql`
-      query FetchUserMessages($id: ID!){
-        user(id: $id){
-          id
-          name
-          email
-          messages{
-            id
-            title
-            body
-            replies{
-              id
-            }
-          }
-        }
-      }
-    `,
     FETCH_USER: gql`
       query FetchUser($id: ID!){
         user(id: $id){

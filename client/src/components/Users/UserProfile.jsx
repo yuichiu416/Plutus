@@ -22,9 +22,7 @@ export default class UserProfile extends React.Component {
                     nonActiveAnchors[i].classList.toggle("hidden");
                 }
             }
-            debugger
             const activeAnchor = document.getElementsByClassName(field)[0];
-            debugger
             activeAnchor.classList.toggle("hidden");
         }
     }
@@ -67,10 +65,10 @@ export default class UserProfile extends React.Component {
                                 <UserDetail user={user} />
                             </div>
                             <div className="user-tab user-items hidden">
-                                <UserItems/>
+                                <UserItems user={user}/>
                             </div>
                             <div className="user-tab user-messages hidden">
-                                <UserMessages/>
+                                <UserMessages user={user}/>
                             </div>
                         </div>
                     )
