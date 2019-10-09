@@ -72,7 +72,7 @@ class ItemShow extends React.Component {
             const timer = document.getElementById("timer");
             if(!timer)
                 return;
-            timer.innerHTML = t("label.auctionIsDUeIn") + days + "d " + hours + "h "
+            timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
 
             if (that.timer || distance < 0) {
