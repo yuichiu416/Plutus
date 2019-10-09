@@ -162,8 +162,10 @@ class CreateItem extends Component {
                 }}
             >
                 {(newItem) => {
-                    return <div className="create-form">
-
+                    return <body className="create-form-body">
+                      
+                        {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                        <div className="create-form">
                         <form onSubmit={e => this.handleSubmit(e, newItem)}>
                             <fieldset>
                             <input
@@ -183,6 +185,7 @@ class CreateItem extends Component {
                             <label className="top-label">
                                 Starting Price:
                                 <input
+                                    type="number"
                                     className="field1"
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
@@ -192,6 +195,7 @@ class CreateItem extends Component {
                             <label className="top-label">
                                 Minimum Price:
                                 <input
+                                    type="number"
                                     className="field1"
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
@@ -239,6 +243,7 @@ class CreateItem extends Component {
                         </form>
                         <p>{this.state.message}</p>
                     </div>
+                    </body>
                 }}
             </Mutation>
         );

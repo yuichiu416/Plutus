@@ -28,6 +28,7 @@ class Register extends Component {
 
     render() {
         return (
+            <body className="register-body">
             <Mutation
                 mutation={REGISTER_USER}
                 onCompleted={data => {
@@ -38,7 +39,8 @@ class Register extends Component {
                 update={(client, data) => this.updateCache(client, data)}
             >
                 {registerUser => (
-                    <div>
+                // <body className="register-body">
+                    <div className="create-form">
                         <form
                             onSubmit={e => {
                                 e.preventDefault();
@@ -51,27 +53,36 @@ class Register extends Component {
                                 });
                             }}
                         >
+                            <fieldset>
                             <input
+                                type="email"
                                 value={this.state.email}
                                 onChange={this.update("email")}
                                 placeholder="Email"
+                                className="field1"
                             />
                             <input
+                                type="name"
                                 value={this.state.name}
                                 onChange={this.update("name")}
                                 placeholder="Name"
+                                className="field1"
                             />
                             <input
                                 value={this.state.password}
                                 onChange={this.update("password")}
                                 type="password"
                                 placeholder="Password"
+                                className="field1"
                             />
+                            </fieldset>
                             <button type="submit">Sign up</button>
                         </form>
                     </div>
+                // </body>
                 )}
             </Mutation>
+            </body>
         );
     }
 }

@@ -4,10 +4,12 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 import { translate } from 'react-switch-lang';
+import { Mutation } from "react-apollo";
+import { MAKE_BID } from '../../graphql/mutations';
 
 const { FETCH_ITEMS } = queries;
 
@@ -24,25 +26,27 @@ class ItemShow extends React.Component {
             mybid: 0
         };
         this.update = this.update.bind(this);
-        this.send = this.send.bind(this);
+        // this.send = this.send.bind(this);
+        this.handlebid = this.handlebid.bind(this);
+        this.id = this.props.match.params.id;
     }
-    send(){
-        console.log(this.state.mybid);
-        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
-            return alert("Bid too low, please make a higher bid");
+    // send(){
+    //     console.log(this.state.mybid);
+    //     if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
+    //         return alert("Bid too low, please make a higher bid");
 
-        const socket = socketIOClient(this.state.endpoint);
-        socket.emit('bid', this.state.mybid);
-        const input = document.getElementById("mybid-input");
-        if(input)
-            input.value = "";
-    }
-    componentDidMount(){
-        const socket = socketIOClient(this.state.endpoint);
-        socket.on('bid', (currentPrice) => {
-                this.setState({ currentPrice: currentPrice })
-            });
-    }
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     socket.emit('bid', this.state.mybid);
+    //     const input = document.getElementById("mybid-input");
+    //     if(input)
+    //         input.value = "";
+    // }
+    // componentDidMount(){
+    //     const socket = socketIOClient(this.state.endpoint);
+    //     socket.on('bid', (currentPrice) => {
+    //             this.setState({ currentPrice: currentPrice })
+    //         });
+    // }
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
@@ -75,6 +79,35 @@ class ItemShow extends React.Component {
             }
         }, 1000);
     }
+    updateCache(cache, { data }) {
+        let items;
+        try {
+            items = cache.readQuery({ query: FETCH_ITEMS });
+        } catch (err) {
+            return;
+        }
+        if (items) {
+            let itemArray = items.items;
+            let item = data.makeBid;
+            itemArray.find((obj, idx) => (obj.id === this.id ? itemArray[idx] = item : ""));
+            cache.writeQuery({
+                query: FETCH_ITEMS,
+                data: { items: itemArray }
+            });
+        }
+    }
+    handlebid(e, makeBid){
+        e.preventDefault();
+        makeBid({
+            variables: {
+                id: this.id,
+                current_price: parseFloat(this.state.mybid)
+            }
+        }).then( response => {
+            this.setState({ currentPrice: response.data.current_price})
+        }).catch( err => console.log(err));
+        document.getElementById("mybid-input").value="";
+    }
     
     render() {
         // const { username } = this.state;
@@ -87,8 +120,9 @@ class ItemShow extends React.Component {
                     if (data.items.length === 0)
                         return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
-                    const countdownMinutes = item.endTime || 3;
+                    const countdownMinutes = item.endTime || 0;
                     this.countDown(countdownMinutes);
+                    this.state = Object.assign({}, this.state, { current_price: Math.max(item.starting_price, this.state.currentPrice)});
                     const images = item.champions.map(champion => {
                         return <li key={champion}>
                             <Image cloudName='chinweenie' publicId={champion}/>
@@ -103,11 +137,28 @@ class ItemShow extends React.Component {
                             <ul>
                                 {images}
                             </ul>
-                            <label>
-                                {t("label.sendYourBidHere")}
-                                <input type="text" onChange={this.update("mybid")} id="mybid-input"/>
-                                <button onClick={this.send}>{t("button.bid")}</button>
-                            </label>
+                            <Mutation
+                                mutation={MAKE_BID}
+                                // if we error out we can set the message here
+                                onError={err => this.setState({ message: err.message })}
+                                // we need to make sure we update our cache once our new item is created
+                                update={(cache, data) => this.updateCache(cache, data)}
+                                // when our query is complete we'll display a success message
+                                onCompleted={data => {
+                                    this.setState({
+                                        message: `Made bid created successfully`
+                                    });
+                                }}
+                            >
+                                {(makeBid) => {
+                                    return <form onSubmit={e => this.handlebid(e, makeBid)}>
+                                        {t("label.sendYourBidHere")}
+                                        <input type="text" onChange={this.update("mybid")} id="mybid-input" />
+                                        <button type="submit" onClick={this.send}>{t("button.bid")}</button>
+                                    </form>
+                                }}
+                            </Mutation>
+                            {console.log(this.state)}
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             <label>
                                 {t("label.currentPrice")} {this.state.currentPrice}

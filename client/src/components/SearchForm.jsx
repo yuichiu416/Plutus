@@ -80,10 +80,12 @@ class SearchForm extends React.Component {
                         this.ids[item.name] = item.id;
                     })
                     return (
-                        <form className="search-form" id="search-form">
-                            <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder={t("input.searchForItems")} value={this.state.inputVal} />
-                            {searchResults}
-                        </form>
+                        <div class="search-div" >
+                            <form className="search-form" id="search-form">
+                                <input className="search-input search-dropdown" id="searchBar" type="text" onChange={this.update} placeholder=placeholder={t("input.searchForItems")}  value={this.state.inputVal} />
+                                {searchResults}
+                            </form>
+                        </div>
                     );
                 }}
             </Query>

@@ -21,7 +21,9 @@ const App = () => {
       <Nav />
       <Chatbot />
       {/* <h1>PLUTUS</h1> */}
+      
       <Switch>
+        
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
         <Route exact path="/items/new" component={CreateItem} />
