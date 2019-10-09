@@ -8,12 +8,14 @@ const CategoryType = require("./types/category_type");
 const ItemType = require("./types/item_type");
 const MessageType = require('./types/message_type');
 const ChampionType = require('./types/champion_type');
+const NotificationType = require('./types/notification_type');
 
 const Category = mongoose.model("categories");
 const Item = mongoose.model("items");
 const Message = mongoose.model("message");
 const Champion = mongoose.model('champion');
 const User = mongoose.model("user");
+const Notification = mongoose.model("notification");
 
 const mutations = new GraphQLObjectType({
     name: "Mutations",
@@ -91,6 +93,10 @@ const mutations = new GraphQLObjectType({
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
+                const notification = await new Notification({body: `Item ${name} has been posted!`}).save();
+                const user = await User.findById(seller);
+                user.notifications.push(notification);
+                user.save();
                 const nameHash = {};
                 const str = name.replace(/\s/g, '').toLowerCase();
                 location = JSON.parse(location);
@@ -141,14 +147,22 @@ const mutations = new GraphQLObjectType({
             type: ItemType,
             args: {
                 id: { type: GraphQLID },
-                current_price: { type: GraphQLFloat }
+                current_price: { type: GraphQLFloat },
+                highestBidder: { type: GraphQLID }
             },
-            async resolve(_, { id, current_price }, context) {
-                return Item.findByIdAndUpdate(id, { current_price: current_price },
+            async resolve(_, { id, current_price, highestBidder }, context) {
+                const item = await Item.findById(id);
+                const notification = await new Notification({body: `Item ${item.name}'s current price is ${current_price}`}).save();
+                const seller = await User.findById(item.seller);
+                seller.notifications.push(notification);
+                seller.save();
+                const highestBidder = User.findById(highestBidder);
+                return Item.findByIdAndUpdate(id, { current_price: current_price, highestBidder: highestBidder },
                     (err, item) => {
                         return item;
                     }
                 );
+
             }
         },
         newMessage: {
@@ -166,9 +180,11 @@ const mutations = new GraphQLObjectType({
                     const message = await new Message({ title, body, sender, receiver }).save();
                     const user = await User.findById(sender);
                     const receiverUser = await User.findById(receiver);
+                    const notification = await new Notification({ body: `You have a new message from ${user.name}`})
                     user.messages.push(message);
                     user.save();
                     receiverUser.messages.push(message);
+                    receiverUser.notifications.push(notification);
                     receiverUser.save();
                     return message;
                 }
@@ -186,26 +202,29 @@ const mutations = new GraphQLObjectType({
 
                 if (validUser.loggedIn){
                     const message = await Message.findById(id);
-                    const receiver = message.receiver;
+                    const receiver = await User.findById(message.receiver);
                     const title = message.title;
-                    const sender = validUser.id;
+                    const sender = await User.findById(validUser.id);
                     const reply = await new Message({ title, body, receiver, sender }).save();
+                    const notification = await new Notification({ body: `You received a reply from ${sender.name}`}).save();
+                    receiver.notifications.push(notification);
+                    receiver.save();
                     return Message.addReply(id, reply);
                 }
                 
             }
         },
-        createChampion: {
-            type: ChampionType,
-            args: {
-                name: { type: GraphQLString },
-                publicId: { type: GraphQLString },
-                item: { type: GraphQLString }
-            },
-            resolve(_, { name, publicId, item }){
-                return new Champion({name, publicId, item}).save();
-            }
-        },
+        // createChampion: {
+        //     type: ChampionType,
+        //     args: {
+        //         name: { type: GraphQLString },
+        //         publicId: { type: GraphQLString },
+        //         item: { type: GraphQLString }
+        //     },
+        //     resolve(_, { name, publicId, item }){
+        //         return new Champion({name, publicId, item}).save();
+        //     }
+        // },
         updateItemImages: {
             type: ItemType,
             args: {
@@ -260,6 +279,36 @@ const mutations = new GraphQLObjectType({
                 notification.save();
                 return notification;
             }
+        },
+        toggleSold: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID }
+            },
+            async resolve(_, { id }){
+                debugger
+                const item = await Item.findById(id);
+                item.sold = true;
+                item.save();
+                const buyer = await User.findById(item.highestBidder);
+                let sellerNotification;
+                const seller = await User.findById(item.seller);
+                debugger
+                if (buyer){
+                    const buyerNotification = await new Notification({ body: `You won item ${item.name}!`}).save();
+                    buyer.notifications.push(buyerNotification);
+                    buyer.save();
+                    
+                    sellerNotification = await new Notification({ body: `Item ${item.name} has been sold!`}).save();
+                    seller.notifications.push(sellerNotification);
+                    seller.save()
+                } else {
+                    sellerNotification = await new Notification({ body: 'Your item has expired but there is no buyer'}).save();
+                    seller.notifications.push(sellerNotification);
+                    seller.save();
+                }
+                return item;
+            }
         }   
     }
     
@@ -268,7 +317,7 @@ const mutations = new GraphQLObjectType({
 module.exports = mutations;
 
 // Notifications 
-// 1. When user posts an auction item, notify seller
+// 1. When user posts an auction item, notify seller /
 // 2. When an item has expired, notify seller and buyer
-// 3. When user receives a new message
+// 3. When user receives a new message /
 // 4. 

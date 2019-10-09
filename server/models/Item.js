@@ -54,6 +54,10 @@ const ItemSchema = new Schema({
     current_price: {
         type: Number,
         default: 0
+    },
+    highestBidder: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     }
 });
 

@@ -9,7 +9,7 @@ import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
-import { MAKE_BID } from '../../graphql/mutations';
+import { MAKE_BID, TOGGLE_SOLD } from '../../graphql/mutations';
 import { withApollo } from 'react-apollo';
 
 const { FETCH_ITEMS } = queries;
@@ -55,6 +55,7 @@ class ItemShow extends React.Component {
     countDown(endTime){
         const that = this;
         const { t } = this.props;
+        debugger;
         // Update the count down every 1 second
         var x = setInterval(() => {
             
@@ -78,9 +79,20 @@ class ItemShow extends React.Component {
             if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = t("label.auctionEnded");
+                
+                // Issue mutation to toggle item sold
+                this.props.client.mutate({
+                    mutation: TOGGLE_SOLD,
+                    variables: { id: this.props.match.params.id},
+                }).then(response => {
+                    debugger;
+                    console.log(response);
+                })
             }
         }, 1000);
     }
+
+    
     updateCache(cache, { data }) {
         let items;
         try {
@@ -103,7 +115,8 @@ class ItemShow extends React.Component {
         makeBid({
             variables: {
                 id: this.id,
-                current_price: parseFloat(this.state.mybid)
+                current_price: parseFloat(this.state.mybid),
+                highestBidder: localStorage.getItem("currentUser")
             }
         }).then( response => {
             this.setState({ currentPrice: response.data.current_price})

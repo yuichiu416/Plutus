@@ -66,6 +66,11 @@ export default {
           name
           email
         }
+        notifications{
+          id
+          body
+          read
+        }
       }
     `,
     FETCH_CHAMPION: gql`
