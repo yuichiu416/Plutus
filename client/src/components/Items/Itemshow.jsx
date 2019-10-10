@@ -148,10 +148,12 @@ class ItemShow extends React.Component {
                                 <p id="timer"></p>
                                 <br />
                                 <label>
+                                    <br/>
                                     {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
                                 </label>
                                 <br />
-                            
+                            {/* </div>
+                            <div> */}
                                 <Mutation
                                     mutation={MAKE_BID}
                                     // if we error out we can set the message here
