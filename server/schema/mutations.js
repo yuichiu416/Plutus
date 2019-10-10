@@ -93,8 +93,6 @@ const mutations = new GraphQLObjectType({
             async resolve(_, { name, description, starting_price, minimum_price, category, sold, appraised, location, champions, endTime }, context) {
                 const obj = await AuthService.verifyUser({ token: context.token });
                 const seller = obj.id;
-                // const seller = "5d97634b7625491b5c673f72";
-                // debugger
                 const user = await User.findById(seller);
                 const notification = await new Notification({body: `Item ${name} has been posted!`, user}).save();
                 user.notifications.push(notification);
@@ -268,7 +266,7 @@ const mutations = new GraphQLObjectType({
                 user: { type: GraphQLID }
             },
             async resolve(_, { body, user }){
-                const user = await User.findById(user);
+                user = await User.findById(user);
                 const notification = await new Notification({ body, user }).save();
                 return notification;
             }
