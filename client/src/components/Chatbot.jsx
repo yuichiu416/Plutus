@@ -155,8 +155,11 @@ class Chatbot extends React.Component {
         const { t } = this.props;
         document.getElementById("chatbot").classList.remove("hidden");
         document.getElementById("open-chat-btn").classList.add("hidden");
-        this.state.chatHistory.push(t("p.option.greeting") + " " + t("p.option.empty"));
-        this.setState({chatHistory: this.state.chatHistory});
+        const histroy = this.state.chatHistory;
+        if(histroy.length % 2 === 0){   
+            this.state.chatHistory.push(t("p.option.greeting") + " " + t("p.option.empty"));
+            this.setState({chatHistory: this.state.chatHistory});
+        }
     }
 
     closeForm() {
