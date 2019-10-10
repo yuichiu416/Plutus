@@ -156,7 +156,7 @@ div[class*=box] {
     
   }
 }
-}
+
 @media screen and (min-width: 1500px) {
   .search-div {
     padding-left: 25em;

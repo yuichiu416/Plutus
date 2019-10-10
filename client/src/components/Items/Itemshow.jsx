@@ -4,13 +4,14 @@ import queries from "../../graphql/queries";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
-// import socketIOClient from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import Map from './MapContainer';
 import { geolocated } from "react-geolocated";
 import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
-import { MAKE_BID } from '../../graphql/mutations';
+import { MAKE_BID, TOGGLE_SOLD } from '../../graphql/mutations';
 import { withApollo } from 'react-apollo';
+import CreateMessage from '../Messages/CreateMessage';
 
 const { FETCH_ITEMS } = queries;
 
@@ -24,31 +25,35 @@ class ItemShow extends React.Component {
             text: '',
             endpoint: "localhost:5000",
             currentPrice: null,
-            mybid: 0
+            mybid: 0,
+            sold: ""
         };
         this.update = this.update.bind(this);
-        // this.send = this.send.bind(this);
+        this.send = this.send.bind(this);
         this.handlebid = this.handlebid.bind(this);
         this.id = this.props.match.params.id;
         this.currentPrice = 0;
     }
-    // send(){
-    //     console.log(this.state.mybid);
-    //     if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
-    //         return alert("Bid too low, please make a higher bid");
+    send(){
+        console.log(this.state.mybid);
+        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
+            return alert("Bid too low, please make a higher bid");
 
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     socket.emit('bid', this.state.mybid);
-    //     const input = document.getElementById("mybid-input");
-    //     if(input)
-    //         input.value = "";
-    // }
-    // componentDidMount(){
-    //     const socket = socketIOClient(this.state.endpoint);
-    //     socket.on('bid', (currentPrice) => {
-    //             this.setState({ currentPrice: currentPrice })
-    //         });
-    // }
+        const socket = socketIOClient(this.state.endpoint);
+        socket.emit('bid', this.state.mybid);
+        const input = document.getElementById("mybid-input");
+        if(input)
+            input.value = "";
+    }
+    componentDidMount(){
+        const socket = socketIOClient(this.state.endpoint);
+        socket.on('bid', (currentPrice) => {
+                this.setState({ currentPrice: currentPrice })
+            });
+    }
+
+    
+
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
@@ -72,15 +77,21 @@ class ItemShow extends React.Component {
             const timer = document.getElementById("timer");
             if(!timer)
                 return;
-            timer.innerHTML = t("label.auctionIsDUeIn") + days + "d " + hours + "h "
+            timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
 
             if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = t("label.auctionEnded");
+                this.props.client.mutate({
+                    mutation: TOGGLE_SOLD,
+                    variables: { id: this.props.match.params.id }
+                });
             }
         }, 1000);
     }
+
+    
     updateCache(cache, { data }) {
         let items;
         try {
@@ -103,7 +114,8 @@ class ItemShow extends React.Component {
         makeBid({
             variables: {
                 id: this.id,
-                current_price: parseFloat(this.state.mybid)
+                current_price: parseFloat(this.state.mybid),
+                highestBidder: localStorage.getItem("currentUser")
             }
         }).then( response => {
             this.setState({ currentPrice: response.data.current_price})
@@ -113,6 +125,7 @@ class ItemShow extends React.Component {
     
     render() {
         const { t } = this.props;
+        
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -138,6 +151,7 @@ class ItemShow extends React.Component {
                             <ul>
                                 {images}
                             </ul>
+                            
                             <Mutation
                                 mutation={MAKE_BID}
                                 // if we error out we can set the message here
@@ -160,6 +174,7 @@ class ItemShow extends React.Component {
                                 }}
                             </Mutation>
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
+                            <CreateMessage userId={item.seller}/>
                             <label>
                                 {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
                             </label>

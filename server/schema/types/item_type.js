@@ -43,7 +43,15 @@ const ItemType = new GraphQLObjectType({
             }
         },
         endTime: { type: GraphQLFloat },
-        current_price: { type: GraphQLFloat }
+        current_price: { type: GraphQLFloat },
+        highestBidder: {
+            type: require('./user_type'),
+            resolve(parentValue){
+                return Item.findById(parentValue.id)
+                        .populate("highestBidder")
+                        .then(item => item.highestBidder);
+            }
+        }
     })
 });
 

@@ -13,7 +13,7 @@ class CreateMessage extends React.Component {
         this.state = {
             title: "",
             body: "",
-            receiver: "",
+            receiver: this.props.userId,
             message: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,11 +33,17 @@ class CreateMessage extends React.Component {
                 body: this.state.body,
                 receiver: this.state.receiver,
             }
+        }).then(response => {
+            this.setState({
+                title: "",
+                body:"",
+                message: ""
+            });
         })
     }
 
     render() {
-        const { t } = this.props;
+        const { t, userId } = this.props;
         return (
             <Mutation
                 mutation={CREATE_MESSAGE}
@@ -61,7 +67,7 @@ class CreateMessage extends React.Component {
                                     placeholder="Type your message here"/>
 
                               
-                                <div>
+                                {/* <div>
                                     <select value={this.state.receiver} onChange={this.update("receiver")}>
                                         <option value="" disabled>{t("option.pleaseSelect")}</option>
                                         <Query query={FETCH_USERS}>
@@ -76,9 +82,10 @@ class CreateMessage extends React.Component {
                                             }}
                                         </Query>
                                     </select>
-                                </div>
+                                </div> */}
                                 <button>{t("button.send")}</button>
                             </form>
+                            {this.state.message}
                         </div>
                     }}
             </Mutation>

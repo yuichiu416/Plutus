@@ -107,8 +107,8 @@ class CreateItem extends Component {
         e.preventDefault();
         const coords = this.props.coords;
         const location = JSON.stringify({
-            lat: coords.latitude,
-            lon: coords.longitude
+            latitude: coords.latitude,
+            longitude: coords.longitude
         });
         this.updateImageURLs().then(champions => {
             
@@ -122,7 +122,8 @@ class CreateItem extends Component {
                     sold: this.state.sold,
                     appraised: this.state.appraised,
                     location: location,
-                    champions: champions
+                    champions: champions,
+                    endTime: this.state.endTime
                 }
             }).then(response => {
                 this.setState({

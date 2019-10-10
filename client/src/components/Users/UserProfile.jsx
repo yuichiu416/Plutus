@@ -5,6 +5,7 @@ import UserDetail from './UserDetail';
 import UserItems from './UserItems';
 import UserMessages from './UserMessages';
 import './UserProfile.css';
+import UserNotifications from './UserNotifications';
 
 // import { Mutation } from "react-apollo";
 const { FETCH_USERS } = queries; 
@@ -59,6 +60,9 @@ export default class UserProfile extends Component {
                                 <li className="nav-item">
                                     <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>Messages</p>
                                 </li>
+                                <li className="nav-item">
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>Notifications</p>
+                                </li>
                             </ul>
                             
                             
@@ -70,6 +74,9 @@ export default class UserProfile extends Component {
                             </div>
                             <div className="user-tab user-messages hidden">
                                 <UserMessages user={user}/>
+                            </div>
+                            <div className="user-tab user-notifications hidden">
+                                <UserNotifications user={user}/>
                             </div>
                         </div>
                     )
