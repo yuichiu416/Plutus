@@ -141,3 +141,7 @@
 .btn span{
   padding: 5px 0;
 }
+
+#map{
+  width: 40%;
+}

@@ -13,6 +13,9 @@ export class MapContainer extends Component {
         super(props);
         this.handleCurrentItem = this.handleCurrentItem.bind(this);
     }
+    componentDidMount(){
+        this.setMapStyle();
+    }
     displayMarkers(){
         return this.items.map((obj, index) => {
             let location = JSON.parse(obj.location);
@@ -31,7 +34,16 @@ export class MapContainer extends Component {
         }
     }
 
+    setMapStyle() {
+        const map = document.getElementById("map");
+        if (!map)
+            return;
+        map.firstElementChild.style.width = "50%";
+        map.firstElementChild.style.height = "50%";
+    }
+
     render() {
+        
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -47,13 +59,15 @@ export class MapContainer extends Component {
                         return <h1>The item doesn't have location information</h1>
                     }
                     return (
-                        <Map
-                            google={this.props.google}
-                            zoom={12}
-                            initialCenter={{ lat: coords.latitude, lng: coords.longitude }}
-                        >
-                            {this.displayMarkers()}
-                        </Map>
+                        <div id="map">
+                            <Map
+                                google={this.props.google}
+                                zoom={12}
+                                initialCenter={{ lat: coords.latitude, lng: coords.longitude }}
+                            >
+                                {this.displayMarkers()}
+                            </Map>
+                        </div>
                     );
                 }}
             </Query>

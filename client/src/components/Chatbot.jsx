@@ -177,7 +177,7 @@ class Chatbot extends React.Component {
         searchResults = <ul className="search-ul hidden" id="search-results">{searchResults}</ul>
         const histroy = this.state.chatHistory.map((msg, idx) => {
             if(msg === "")
-                return;
+                return null;
             else if(idx % 2 === 0)
                 return <li key={idx} className="from-bot"><p>{msg}</p></li>
             else
