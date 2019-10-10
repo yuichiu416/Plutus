@@ -17,7 +17,7 @@ const Nav = props => {
                         if (data.isLoggedIn) {
                             return (
                                 <div className="loggedin-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" />
+                                    <Link to="/"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <SearchForm />
                                     {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
                                         <li><img src="" className="" alt="" /></li>
