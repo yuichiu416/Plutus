@@ -30,7 +30,7 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: String!, $champions: [String], $endTime: Float) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: String, $champions: [String], $endTime: Float) {
     newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions, endTime: $endTime) {
       id
       name
@@ -73,8 +73,8 @@ const UPDATE_ITEM = gql`
 `;
 
 const MAKE_BID = gql`
-  mutation makeBid($id: ID!, $current_price: Float!){
-    makeBid(id: $id, current_price: $current_price){
+  mutation makeBid($id: ID!, $current_price: Float!, $highestBidder: ID!){
+    makeBid(id: $id, current_price: $current_price, highestBidder: $highestBidder){
       id
       name
       description
@@ -90,6 +90,11 @@ const MAKE_BID = gql`
       location
       endTime
       current_price
+      highestBidder{
+        id
+        name
+        email
+      }
     }
   }
 `;
@@ -156,6 +161,48 @@ const UPDATE_USER = gql`
   }
 `
 
+const UPDATE_NOTIFICATION_STATUS = gql`
+  mutation UpdateNotificationStatus($id: ID!){
+    updateNotificationStatus(id: $id){
+      id
+      body
+      read
+      user{
+        id
+        name
+        email
+      }
+    }
+  }
+`
+
+const TOGGLE_SOLD = gql`
+  mutation ToggleSold($id: ID!){
+    toggleSold(id: $id){
+      id
+      name
+      sold
+      seller
+      description
+      starting_price
+      minimum_price
+      category{
+        id
+        name
+      }
+      appraised
+      location
+      endTime
+      nameHash
+      current_price
+      highestBidder{
+        id
+        name
+      }
+    }
+  }
+`
 
 
-export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY, MAKE_BID, UPDATE_USER };
+
+export { LOGIN_USER, VERIFY_USER, REGISTER_USER, CREATE_ITEM, UPDATE_ITEM, CREATE_MESSAGE, CREATE_CHAMPION, UPDATE_ITEM_IMAGES, ADD_REPLY, MAKE_BID, UPDATE_USER, UPDATE_NOTIFICATION_STATUS, TOGGLE_SOLD };

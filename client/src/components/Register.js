@@ -35,7 +35,6 @@ class Register extends Component {
             <Mutation
                 mutation={REGISTER_USER}
                 onCompleted={data => {
-                    debugger
                     const { token, id } = data.register;
                     localStorage.setItem("currentUser", id);
                     localStorage.setItem("auth-token", token);

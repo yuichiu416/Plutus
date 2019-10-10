@@ -1,11 +1,12 @@
 {
     "p": {
         "option": {
-            "empty": "Greetings! How can I help you?\nType 1 to search an item\nType 2 to change the language\n",
+            "greeting": "Greetings! How can I help you?",
+            "empty": "Type 1 to search an item. Type 2 to change the language",
             "first": "Please input the item name or some of the characters to search.",
-            "second": "Switching to Chinese",
+            "second": "Please input the languages you want to change to. Options: English, Chinese",
             "default": "Unknown option, please select again.",
-            "language": "Please input the languages you want to change to.\nOptions: English, Chinese"
+            "language": "Switched to "
         },
         "loading": "Loading...",
         "sentBy": "Sent by",
@@ -53,5 +54,8 @@
     },
     "option": {
         "pleaseSelect": "--Please Select--"
+    },
+    "text": {
+        "noResultsFound": "Sorry, I can't find anything based on the name you provided."
     }
 }

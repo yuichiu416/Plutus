@@ -19,6 +19,8 @@
     flex-direction: row;
 }
 
+
+
 .card {
     width: 300px;
     height: 350px;
@@ -37,4 +39,17 @@
 
 .nav-link:hover{
     cursor: pointer;
+}
+
+.user-notifications-ul {
+    list-style: none;
+}
+
+.user-notifications-ul > li {
+    cursor: pointer;
+}
+
+.user-notifications-ul > .unread {
+    font-weight: bolder;
+    color: black;
 }

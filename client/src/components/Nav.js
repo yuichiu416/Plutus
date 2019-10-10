@@ -4,6 +4,7 @@ import { Query, ApolloConsumer } from "react-apollo";
 import Queries from "../graphql/queries";
 import { Link, withRouter } from 'react-router-dom';
 import SearchForm from './SearchForm';
+import './Nav.css';
 
 const { IS_LOGGED_IN } = Queries;
 
@@ -16,8 +17,18 @@ const Nav = props => {
                         if (data.isLoggedIn) {
                             return (
                                 <div className="loggedin-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" />
+                                    <Link to="/"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <SearchForm />
+                                    {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
+                                        <li><img src="" className="" alt="" /></li>
+                                        <ul className="profile-dropdown-menu" id="profile-dropdown-menu">
+                                            <li className="profile-dropdown-header">
+                                                <img src="" className="" alt="" />
+                                            </li>
+                                            <li><Link to={`/users/:id`}>Profile</Link></li>
+                                        <li><Link to="/messages">Messages</Link></li>
+                                        </ul>
+                                    </ul> */}
                                     <div className="nav-logout-div">
                                         <div className="box">
                                             <div className="btn logout-btn">

@@ -27,123 +27,118 @@ class Chatbot extends React.Component {
         super(props);
         this.defaultState = {
             option: "",
-            questionText: "",
-            answer: "",
+            message: "",
             waitingForAnswer: false,
-            language: "en",
+            chatHistory: []
         };
         this.state = this.defaultState;
         this.nameHashes = {};
         this.ids = {};
-        this.handleFirstOption = this.handleFirstOption.bind(this);
         this.selectLanguageByInput = this.selectLanguageByInput.bind(this);
         this.submitForm = this.submitForm.bind(this);
-        this.update = this.update.bind(this);
+        this.updateMsg = this.updateMsg.bind(this);
         this.handleGreetingText = this.handleGreetingText.bind(this);
         this.openForm = this.openForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
+        this.handleOption1 = this.handleOption1.bind(this);
+    }
 
-    }
-    
-    componentDidMount(){
-        this.handleGreetingText();
-    }
-    update(field){
-        return e => this.setState({[field]: e.target.value});
+    updateMsg(e){
+        const val = e.target.value;
+        if(this.state.waitingForAnswer)
+            this.setState({ message: val })
+        else
+            this.setState({ message: val, option: val })
     }
     handleGreetingText(){
         let questionText;
         const { t } = this.props;
+
         switch (this.state.option) {
             case "":
                 questionText = t("p.option.empty");
-                break;
+            break;
             case "1":
                 questionText = t("p.option.first");
-                break;
+            break;
             case "2":
-                questionText = t("p.option.second");
-                break;
+            questionText = t("p.option.second");
+            break;
             default:
                 questionText = t("p.option.default");
                 break;
-        }
-        this.setState({ questionText: questionText});
-    }
-    async handleFirstOption() {
-        if(this.state.waitingForAnswer){
-            await this.setState({waitingForAnswer: false, option: ""});
-            this.handleGreetingText();
-            document.getElementById("search-results").classList.toggle("hidden");
-        }
-        this.setState({ waitingForAnswer: true })
-    }
-    async handleSecondOption() {
-        if (this.state.waitingForAnswer) {
-            await this.setState({ waitingForAnswer: false, option: "" });
-            this.handleGreetingText();
-        }
-        this.setState({ waitingForAnswer: true })
+            }
+        this.state.chatHistory.push(questionText);
     }
     selectLanguageByInput(input){
-        console.log(input);
         switch(input){
             case "Chinese":
                 setLanguage("zh");
-                console.log("change to Chinese");
                 break;
             case "English":
-                console.log("change to english");
                 setLanguage("en");
                 break;
             default:
                 break;
         }
     }
-    toggleInputFields(){
-        document.getElementById("option").classList.toggle("hidden");
-        document.getElementById("answer").classList.toggle("hidden");
-    }
+
     handleSwitchLanguageText(){
         const { t } = this.props;
-        this.setState({ questionText: t("p.option.language") });
+        this.state.chatHistory.push(t("p.option.language") + this.state.message);
     }
-    
+
+    handleOption1() {
+        this.setState({waitingForAnswer: false});
+        const { t } = this.props
+        let results = "The items based on your input are:\n";
+        const matches = this.matches();
+        if(matches.length === 0)
+            return this.state.chatHistory.push(t("text.noResultsFound"));
+        matches.forEach((title, idx) => results += (idx + 1) + ". " + title + " ");
+        this.state.chatHistory.push(results);
+    }
+
     submitForm(e){
         e.preventDefault();
         // setTimeout(() => {   // set a thinking time of the chatbog
+        const val = this.state.message;
+        this.state.chatHistory.push(val);
             switch (this.state.option) {
                 case "1":
-                    this.handleGreetingText();
-                    this.handleFirstOption();
-                    this.toggleInputFields();
+                    if(this.state.waitingForAnswer){
+                        this.handleOption1();
+                        this.setState({ option: "", message: "" });
+                    } else{
+                        this.handleGreetingText();
+                        this.setState({waitingForAnswer: true});
+                    }
                     break;
                 case "2":
-                    this.handleSwitchLanguageText();
-                    this.handleSecondOption();
-                    this.toggleInputFields();
-                    this.selectLanguageByInput(this.state.answer);
-                    this.handleSwitchLanguageText(); // after we changed the input, need to change the language
+                    if (this.state.waitingForAnswer) {
+                        this.handleSwitchLanguageText();
+                        this.selectLanguageByInput(this.state.message);
+                        this.setState({option: "", message: ""});
+                    } else {
+                        this.handleGreetingText();
+                        this.setState({ waitingForAnswer: true });
+                    }
                     break;
                 default:
                     this.setState(this.defaultState);
                     document.getElementById("search-results").classList.add("hidden");
-                    document.getElementById("option").classList.remove("hidden");
-                    document.getElementById("answer").classList.add("hidden");
-                    document.getElementById("option").value = "";
-                    document.getElementById("answer").value = "";
                     this.handleGreetingText();
                     break;
             }
-            document.getElementById("option").value = "";
-            document.getElementById("answer").value = "";
+
+        document.getElementById("message").value = "";
         // }, 1000);
     }
     matches() {
         const matches = [];
-        if (this.state.answer.length === 0)
+        if (this.state.message.length === 0)
             return [];
-        const input = this.state.answer.replace(/\s/g, '').toLowerCase();
+        const input = this.state.message.replace(/\s/g, '').toLowerCase();
         if (input === "*all*") {
             return Object.keys(this.nameHashes);
         }
@@ -157,23 +152,38 @@ class Chatbot extends React.Component {
         return matches;
     }
     openForm() {
+        const { t } = this.props;
         document.getElementById("chatbot").classList.remove("hidden");
         document.getElementById("open-chat-btn").classList.add("hidden");
+        const histroy = this.state.chatHistory;
+        if(histroy.length % 2 === 0){   
+            this.state.chatHistory.push(t("p.option.greeting") + " " + t("p.option.empty"));
+            this.setState({chatHistory: this.state.chatHistory});
+        }
     }
 
     closeForm() {
         document.getElementById("open-chat-btn").classList.remove("hidden");
         document.getElementById("chatbot").classList.add("hidden");
+        this.setState({ option: "", message: ""});
     }
     
     render() {
-        
         const { t } = this.props;
         let searchResults = this.matches().map((result, i) => {
             const id = this.ids[result];
             return <li key={i} onClick={this.selectName} className={i === this.state.index ? "search-selected" : ""}><Link to={`/items/${id}`} id={`match-${i}`}>{result}</Link></li>
         });
         searchResults = <ul className="search-ul hidden" id="search-results">{searchResults}</ul>
+        const histroy = this.state.chatHistory.map((msg, idx) => {
+            if(msg === "")
+                return null;
+            else if(idx % 2 === 0)
+                return <li key={idx} className="from-bot"><p>{msg}</p></li>
+            else
+                return <li key={idx} className="from-user"><p>{msg}</p></li>
+
+        })
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -187,25 +197,17 @@ class Chatbot extends React.Component {
                     })
                     
                     return (
-                        
                         <div className="chat-popup">
-                            {/* <label> */}
-                                {/* {this.state.questionText} */}
-                            <button type="submit" class="open-button" id="open-chat-btn" onClick={this.openForm}>Chat</button>
+                            <button className="open-button" id="open-chat-btn" onClick={this.openForm}>Chat</button>
                             <form onSubmit={this.submitForm} action="/action_page.php" id="chatbot" className="form-container hidden">
-                                    <h1>Chat</h1>
-                                    <label for="msg"><b>Message</b>{this.state.questionText}</label>
-                                    {/* <input type="text" id="option" placeholder="option" onChange={this.update("option")} /> */}
-                                    <textarea type="text" id="option" placeholder="Type message.." name="msg" onChange={this.update("option")} required></textarea>
-                                    <input type="text" id="answer" placeholder="answer" onChange={this.update("answer")} className="hidden" />
-                                    {/* <input type="submit" id="submit" value="Send" /> */}
-                                    <button type="submit" className="btn" id="submit" value="Send">Send</button>
-                                    <button type="button" className="btn cancel" onClick={this.closeForm}>Close</button>
-                                </form>
-                                <div>
-                                    {searchResults}
-                                </div>
-                            {/* </label> */}
+                            <ul className="chat-histroy">{histroy}</ul>
+                            <input type="text" id="message" placeholder="message" onChange={this.updateMsg}/>
+                                <button type="submit" className="btn" id="submit" value="Send"><span>Send</span></button>
+                                <button type="button" className="btn cancel" onClick={this.closeForm}><span>Close</span></button>
+                            </form>
+                            <div>
+                                {searchResults}
+                            </div>
                         </div>
                     );
                 }}

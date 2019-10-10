@@ -9,15 +9,41 @@ import { translate } from 'react-switch-lang';
 const { FETCH_ITEMS } = queries;
 
 export class MapContainer extends Component {
-    displayMarkers() {
+    constructor(props){
+        super(props);
+        this.handleCurrentItem = this.handleCurrentItem.bind(this);
+    }
+    componentDidMount(){
+        this.setMapStyle();
+    }
+    displayMarkers(){
         return this.items.map((obj, index) => {
-            return <Marker key={index} id={index} position={JSON.parse(obj.location)}
+            let location = JSON.parse(obj.location);
+            location = {lat: location.latitude, lng: location.longitude}
+            return <Marker key={index} id={index} position={location}
                 onClick={() => this.props.history.push(`/items/${obj.id}`)}
-            ></Marker>
+                ></Marker>
         })
+    }
+    handleCurrentItem(items){
+        for(let i = 0; i < items.length; i++){
+            if(items[i].id === this.props.match.params.id){
+                this.item = items[i]
+                this.coords = JSON.parse(items[i].location);
+            }
+        }
+    }
+
+    setMapStyle() {
+        const map = document.getElementById("map");
+        if (!map)
+            return;
+        map.firstElementChild.style.width = "50%";
+        map.firstElementChild.style.height = "50%";
     }
 
     render() {
+        
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -26,15 +52,22 @@ export class MapContainer extends Component {
                     if (data.items.length === 0)
                         return <h1>No items yet</h1>
                     this.items = data.items;
-                    const coords = this.props.coords || { latitude: 38.9551308, longitude: -92.34679059999999 }
+                    this.handleCurrentItem(data.items);
+                    let coords = this.coords
+                    if(!coords){
+                        coords = this.props.coords;
+                        return <h1>The item doesn't have location information</h1>
+                    }
                     return (
-                        <Map
-                            google={this.props.google}
-                            zoom={12}
-                            initialCenter={{ lat: coords.latitude, lng: coords.longitude }}
-                        >
-                            {this.displayMarkers()}
-                        </Map>
+                        <div id="map">
+                            <Map
+                                google={this.props.google}
+                                zoom={12}
+                                initialCenter={{ lat: coords.latitude, lng: coords.longitude }}
+                            >
+                                {this.displayMarkers()}
+                            </Map>
+                        </div>
                     );
                 }}
             </Query>
@@ -43,5 +76,5 @@ export class MapContainer extends Component {
 }
 export default translate(geolocated()(
     withRouter(GoogleApiWrapper({
-        apiKey: 'AIzaSyDM9z1mv9d6Smdi3Z3vdDlUdabGYObzSvo'
-    })(MapContainer))));
+    apiKey: 'AIzaSyDM9z1mv9d6Smdi3Z3vdDlUdabGYObzSvo'
+})(MapContainer))));
