@@ -139,47 +139,61 @@ class ItemShow extends React.Component {
                     this.currentPrice = Math.max(item.starting_price, item.current_price);
                     const images = item.champions.map(champion => {
                         return <li key={champion}>
-                            <Image cloudName='chinweenie' publicId={champion}/>
+                            <Image className="box-image" cloudName='chinweenie' publicId={champion}/>
                         </li>
                     });
                     return (
-                        <div>
-                            <Link to="/">Home</Link>
-                            <h1>{t("h1.itemName")} {item.name}</h1>
-                            <p>{item.description}</p>
-                            <p id="timer"></p>
-                            <ul>
-                                {images}
-                            </ul>
+                        <body className="item-show-body">
+                        <div className="item-show-wrapper">
+                            {/* <Link to="/">Home</Link> */} 
+                            <div className="box-header">
+                                <h1 className="box-header">{t("h1.itemName")} {item.name}</h1>
+                            </div>
+                            <div className="box-content">
+                                <p className="box-content">{item.description}</p>
+                            </div>
+                            <div className="box-images">
+                                <ul>
+                                    {images}
+                                </ul>
+                            </div>
+                            <div className="box-bid">
+                                <p id="timer"></p>
+                                <br />
+                                <label>
+                                    {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
+                                </label>
+                                <br />
                             
-                            <Mutation
-                                mutation={MAKE_BID}
-                                // if we error out we can set the message here
-                                onError={err => this.setState({ message: err.message })}
-                                // we need to make sure we update our cache once our new item is created
-                                update={(cache, data) => this.updateCache(cache, data)}
-                                // when our query is complete we'll display a success message
-                                onCompleted={data => {
-                                    this.setState({
-                                        message: `Made bid created successfully`
-                                    });
-                                }}
-                            >
-                                {(makeBid) => {
-                                    return <form onSubmit={e => this.handlebid(e, makeBid)}>
-                                        {t("label.sendYourBidHere")}
-                                        <input type="text" onChange={this.update("mybid")} id="mybid-input" />
-                                        <button type="submit" onClick={this.send}>{t("button.bid")}</button>
-                                    </form>
-                                }}
-                            </Mutation>
+                                <Mutation
+                                    mutation={MAKE_BID}
+                                    // if we error out we can set the message here
+                                    onError={err => this.setState({ message: err.message })}
+                                    // we need to make sure we update our cache once our new item is created
+                                    update={(cache, data) => this.updateCache(cache, data)}
+                                    // when our query is complete we'll display a success message
+                                    onCompleted={data => {
+                                        this.setState({
+                                            message: `Made bid created successfully`
+                                        });
+                                    }}
+                                >
+                                    {(makeBid) => {
+                                            return <form className="box-bid-form" onSubmit={e => this.handlebid(e, makeBid)}>
+                                            {t("label.sendYourBidHere")}
+                                            <br />
+                                            <input type="text" onChange={this.update("mybid")} id="mybid-input" />
+                                            <br/>
+                                            <button type="submit" onClick={this.send}>{t("button.bid")}</button>
+                                        </form>
+                                    }}
+                                </Mutation>
+                            </div>
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
-                            <CreateMessage userId={item.seller}/>
-                            <label>
-                                {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
-                            </label>
-                            <Map />
+                            
+                                {/* <Map className="box-map"/> */}
                         </div>
+                        </body>
                     );
                 }}
             </Query>
