@@ -159,8 +159,8 @@ const mutations = new GraphQLObjectType({
                 const notification = await new Notification({ body: `Item ${item.name}'s current price is ${current_price}`, user: seller}).save();
                 seller.notifications.push(notification);
                 seller.save();
-                const highestBidder = User.findById(highestBidder);
-                return Item.findByIdAndUpdate(id, { current_price: current_price, highestBidder: highestBidder },
+                highestBidder = User.findById(highestBidder);
+                return Item.findByIdAndUpdate(id, { current_price: current_price, highestBidder },
                     (err, item) => {
                         return item;
                     }
