@@ -193,7 +193,7 @@ class ItemShow extends React.Component {
                             </div>
                             <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
                             
-                                {/* <Map className="box-map"/> */}
+                                <Map className="box-map"/>
                         </div>
                         </body>
                     );
