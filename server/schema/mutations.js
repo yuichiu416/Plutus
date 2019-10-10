@@ -292,10 +292,10 @@ const mutations = new GraphQLObjectType({
             },
             async resolve(_, { id }){
                 const item = await Item.findById(id);
+                const buyer = await User.findById(item.highestBidder);
                 if (!item.sold){
                     item.sold = true;
                     item.save();
-                    const buyer = await User.findById(item.highestBidder);
                     let sellerNotification;
                     const seller = await User.findById(item.seller);
 

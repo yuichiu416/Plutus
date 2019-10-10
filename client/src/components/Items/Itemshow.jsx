@@ -51,6 +51,9 @@ class ItemShow extends React.Component {
                 this.setState({ currentPrice: currentPrice })
             });
     }
+
+    
+
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
@@ -80,7 +83,9 @@ class ItemShow extends React.Component {
             if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = t("label.auctionEnded");
-                this.setState({sold: true});
+                if (!timer.classList.contains("timer-ended")){
+                    timer.classList.add("timer-ended");
+                }
             }
         }, 1000);
     }
@@ -119,6 +124,7 @@ class ItemShow extends React.Component {
     
     render() {
         const { t } = this.props;
+        
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -129,13 +135,6 @@ class ItemShow extends React.Component {
                     const item = data.items.find(obj => obj.id === this.props.match.params.id);
                     const countdownMinutes = item.endTime || 0;
                     this.countDown(countdownMinutes);
-                    if (this.state.sold){
-                        // Issue mutation to toggle item sold
-                        this.props.client.mutate({
-                            mutation: TOGGLE_SOLD,
-                            variables: { id: this.props.match.params.id },
-                        })
-                    } 
                     this.currentPrice = Math.max(item.starting_price, item.current_price);
                     const images = item.champions.map(champion => {
                         return <li key={champion}>

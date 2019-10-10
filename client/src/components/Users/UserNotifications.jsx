@@ -15,9 +15,18 @@ export default class UserNotifications extends React.Component {
                 {({ loading, error, data }) => {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error.message}</p>
+                    const distinctArray = [];
                     const notifications = data.notifications.filter(notification => notification.user === this.props.user.id);
-                    if (notifications.length === 0) return <p>No notifications yet</p>
-                    const notificationsLi = notifications.map(notification => {
+                    const uniqueNotifications = [];
+                    notifications.values.forEach(notification => {
+                        if (!distinctArray.indexOf(notification.body)){
+                            distinctArray.push(notification.body);
+                            uniqueNotifications.push(notification);
+                        }
+                    })
+                    // notifications.map(notification => hashWithBody[notification.id] = notification.body);
+                    if (uniqueNotifications.length === 0) return <p>No notifications yet</p>
+                    const notificationsLi = uniqueNotifications.map(notification => {
                         if (notification.read) {
                             return <li key={notification.id} className="user-notification-li read">
                                 <p>{notification.body}</p>
