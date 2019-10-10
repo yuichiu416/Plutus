@@ -83,9 +83,10 @@ class ItemShow extends React.Component {
             if (that.timer || distance < 0) {
                 clearInterval(x);
                 timer.innerHTML = t("label.auctionEnded");
-                if (!timer.classList.contains("timer-ended")){
-                    timer.classList.add("timer-ended");
-                }
+                this.props.client.mutate({
+                    mutation: TOGGLE_SOLD,
+                    variables: { id: this.props.match.params.id }
+                });
             }
         }, 1000);
     }
