@@ -19,7 +19,7 @@ const Nav = props => {
                                 <div className="loggedin-navbar">
                                     <img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" />
                                     <SearchForm />
-                                    <ul className="profile-dropdown-main" id="profile-dropdown-main">
+                                    {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
                                         <li><img src="" className="" alt="" /></li>
                                         <ul className="profile-dropdown-menu" id="profile-dropdown-menu">
                                             <li className="profile-dropdown-header">
@@ -28,7 +28,7 @@ const Nav = props => {
                                             <li><Link to={`/users/:id`}>Profile</Link></li>
                                         <li><Link to="/messages">Messages</Link></li>
                                         </ul>
-                                    </ul>
+                                    </ul> */}
                                     <div className="nav-logout-div">
                                         <div className="box">
                                             <div className="btn logout-btn">

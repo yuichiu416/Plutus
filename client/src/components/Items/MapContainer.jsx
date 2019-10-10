@@ -43,11 +43,9 @@ export class MapContainer extends Component {
                     this.handleCurrentItem(data.items);
                     let coords = this.coords
                     if(!coords){
-                        alert("The item doesn't have location information, initializing map with your location instead");
                         coords = this.props.coords;
-                        return <h1>Loading...</h1>
+                        return <h1>The item doesn't have location information</h1>
                     }
-                    console.log(coords);
                     return (
                         <Map
                             google={this.props.google}

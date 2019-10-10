@@ -92,8 +92,11 @@ class Chatbot extends React.Component {
         this.setState({waitingForAnswer: false});
         const { t } = this.props
         let results = "The items based on your input are:\n";
-        this.matches().forEach((title, idx) => results += (idx + 1) + ". " + title + " ");
-        this.state.chatHistory.push(results + t("p.option.empty"));
+        const matches = this.matches();
+        if(matches.length === 0)
+            return this.state.chatHistory.push(t("text.noResultsFound"));
+        matches.forEach((title, idx) => results += (idx + 1) + ". " + title + " ");
+        this.state.chatHistory.push(results);
     }
 
     submitForm(e){
@@ -169,8 +172,15 @@ class Chatbot extends React.Component {
             return <li key={i} onClick={this.selectName} className={i === this.state.index ? "search-selected" : ""}><Link to={`/items/${id}`} id={`match-${i}`}>{result}</Link></li>
         });
         searchResults = <ul className="search-ul hidden" id="search-results">{searchResults}</ul>
-        const histroy = this.state.chatHistory.map((msg, idx) => <li key={idx}>{msg}</li>)
-        console.log(this.state);
+        const histroy = this.state.chatHistory.map((msg, idx) => {
+            if(msg === "")
+                return;
+            else if(idx % 2 === 0)
+                return <li key={idx} className="from-bot"><p>{msg}</p></li>
+            else
+                return <li key={idx} className="from-user"><p>{msg}</p></li>
+
+        })
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -184,26 +194,17 @@ class Chatbot extends React.Component {
                     })
                     
                     return (
-                        
                         <div className="chat-popup">
-                            {/* <label> */}
-                                {/* {this.state.questionText} */}
-                            Histroy: <ul>{histroy}</ul>
-
                             <button className="open-button" id="open-chat-btn" onClick={this.openForm}>Chat</button>
                             <form onSubmit={this.submitForm} action="/action_page.php" id="chatbot" className="form-container hidden">
-                                    <h1>Chat</h1>
-                                    
-                                    {/* <input type="text" id="option" placeholder="option" onChange={this.updateMsg("option")} /> */}
-                                    <input type="text" id="message" placeholder="message" onChange={this.updateMsg}/>
-                                    {/* <input type="submit" id="submit" value="Send" /> */}
-                                    <button type="submit" className="btn" id="submit" value="Send">Send</button>
-                                    <button type="button" className="btn cancel" onClick={this.closeForm}>Close</button>
-                                </form>
-                                <div>
-                                    {searchResults}
-                                </div>
-                            {/* </label> */}
+                            <ul className="chat-histroy">{histroy}</ul>
+                            <input type="text" id="message" placeholder="message" onChange={this.updateMsg}/>
+                                <button type="submit" className="btn" id="submit" value="Send"><span>Send</span></button>
+                                <button type="button" className="btn cancel" onClick={this.closeForm}><span>Close</span></button>
+                            </form>
+                            <div>
+                                {searchResults}
+                            </div>
                         </div>
                     );
                 }}
