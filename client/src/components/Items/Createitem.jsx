@@ -164,7 +164,7 @@ class CreateItem extends Component {
             >
                 {(newItem) => {
                     return <div className="create-form-body">
-                            {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                            {/* <img src="watercolor.jpg" alt="watercolor" className="background-photo" /> */}
                             <div className="create-form">
                             <form onSubmit={e => this.handleSubmit(e, newItem)}>
                                 <fieldset>

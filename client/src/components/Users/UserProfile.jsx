@@ -63,16 +63,16 @@ class UserProfile extends Component {
                                 {userProfileHeader}
                                 <ul className="nav nav-tabs" onClick={this.showDetail}>
                                     <li className="nav-item">
-                                        <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>{t("p.setting")}</p>
+                                        <p className="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>{t("p.setting")}</p>
                                     </li>
                                     <li className="nav-item">
-                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
+                                        <p className="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
                                     </li>
                                     <li className="nav-item">
-                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>{t("p.messages")}</p>
+                                        <p className="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>{t("p.messages")}</p>
                                     </li>
                                     <li className="nav-item">
-                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>{t("p.notifications")}</p>
+                                        <p className="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>{t("p.notifications")}</p>
                                     </li>
                                 </ul>
 
@@ -99,7 +99,7 @@ class UserProfile extends Component {
                                 <CreateMessage userId={user.id}/>
                                 <ul className="nav nav-tabs" onClick={this.showDetail}>
                                     <li className="nav-item active">
-                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
+                                        <p className="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
                                     </li>
                                 </ul>
 
