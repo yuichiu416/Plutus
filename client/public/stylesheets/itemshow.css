@@ -12,6 +12,7 @@
   grid-column: 1/3;
   grid-row: 1;
   font-family: 'Raleway', sans-serif;
+  color: rgb(66, 66, 66);
   /* border: 1px solid black; */
   /* align-self: start; */
 }
@@ -24,6 +25,7 @@
   /* border: 1px solid rgb(133, 132, 132); */
   align-self: start;
   font-family: 'Raleway', sans-serif;
+  color: rgb(65, 64, 64);
   /* grid-auto-rows: minmax(200px auto); */
 }
 .box-image{
@@ -68,7 +70,10 @@
   align-self: end;
   padding-right: 3em;
   text-decoration: none;
-  color: gray;
+  color: rgb(88, 88, 88);
+}
+.box-map{
+  display: none;
 }
 @media only screen and (max-width: 800px){
   .box-content{
@@ -95,6 +100,7 @@
   }
   .box-edit-link{
   grid-row: 1;
+  /* grid-column: 2; */
   align-self: start;
   }
 }
