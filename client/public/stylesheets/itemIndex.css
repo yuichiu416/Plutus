@@ -1,6 +1,6 @@
 .index-body  {
   margin: 30px;
-  background-color: rgb(252, 252, 249);
+  /* background-color: rgb(252, 252, 249); */
   width: 95vw;
   font-family: 'Raleway', sans-serif;
   text-decoration: none;
@@ -14,12 +14,14 @@ a {
   width: 25.5vw;
   height: 14.5vw;
   background:rgb(247, 245, 245);
+  /* background-image: url(../frame.png) */
   padding:18px 18px 18px 18px;
   border:1px solid #999;
   box-shadow: 0px 2px 10px 0px silver;
   box-shadow: 12px;
   /* background-image: url(../frame.png);
-	clear: both;
+  background-size: cover; */
+	/*clear: both;
 	width: 29vw;
   height: 17vw;
   background-color: transparent;
@@ -49,7 +51,7 @@ a {
   height: 14.5vw;
   /* padding: 1.5em; */
   background-color: transparent;
-  border: 1px solid rgb(39, 39, 39);
+  border: 1px solid rgb(100, 100, 100);
   /* align-self: center; */
   grid-auto-columns: minmax(100px, auto);
   grid-auto-rows: minmax(100px, auto);
