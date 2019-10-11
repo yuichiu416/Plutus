@@ -1,11 +1,11 @@
 import React from 'react'
-import { Query } from 'react-apollo';
+// import { Query } from 'react-apollo';
 import { Mutation } from "react-apollo";
 import { CREATE_MESSAGE } from '../../graphql/mutations';
-import Queries from '../../graphql/queries';
+// import Queries from '../../graphql/queries';
 import { translate } from 'react-switch-lang';
 
-const { FETCH_USERS } = Queries;
+// const { FETCH_USERS } = Queries;
 
 class CreateMessage extends React.Component {
     constructor(props){
@@ -43,7 +43,7 @@ class CreateMessage extends React.Component {
     }
 
     render() {
-        const { t, userId } = this.props;
+        const { t } = this.props;
         return (
             <Mutation
                 mutation={CREATE_MESSAGE}

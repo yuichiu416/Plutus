@@ -52,8 +52,7 @@ const Nav = props => {
                         } else {
                             return (
                                 <div className="loggedout-navbar">
-                                    <img src="Logo5.png" alt="plutus-logo-nav" className="plutus-logo-nav" />
-                                    <SearchForm />
+                                    <Link to="/"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <div className="nav-button-duo">
                                         <Link to="/login" className="nav-button">{t("button.login")}</Link>
                                         <Link to="/register" className="nav-button">{t("button.signup")}</Link>

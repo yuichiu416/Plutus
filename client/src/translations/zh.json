@@ -31,7 +31,8 @@
         "reply": "回覆",
         "chat": "小幫手",
         "close": "關閉",
-        "submit": "送出"
+        "submit": "送出",
+        "demo": "Demo"
     },
     "input": {
         "searchForItems": "搜尋物品...",

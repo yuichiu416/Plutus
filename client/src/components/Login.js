@@ -14,6 +14,8 @@ class Login extends Component {
             password: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemo = this.handleDemo.bind(this);
+        this.handleDemoPassword = this.handleDemoPassword.bind(this);
     }
 
     update(field) {
@@ -29,9 +31,49 @@ class Login extends Component {
              }
         });
     }
-    handleSubmit(e, loginUser){
+
+    handleDemo(e) {
         e.preventDefault();
-        loginUser({
+        this.setState({
+            username: "",
+            email: "",
+            password: ""
+        });
+        const email = 'demo@plutus.com'.split('');
+        this.handleDemoUsername(email);
+    }
+    handleDemoUsername(email) {
+        setTimeout(() => {
+            this.setState({ email: this.state.email + email.shift() }, () => {
+                if (email.length === 0) {
+                    const password = '123123'.split('');
+                    this.handleDemoPassword(password);
+                } else {
+                    this.handleDemoUsername(email);
+                }
+            });
+        }, 150);
+    }
+    handleDemoPassword(password) {
+        setTimeout(() => {
+            this.setState({ password: this.state.password + password.shift() }, () => {
+                if (password.length === 0) {
+                    this.loginUser({
+                        variables: {
+                            email: this.state.email,
+                            password: this.state.password
+                        }
+                    })
+                        .then(() => this.props.history.push('/'));
+                } else {
+                    this.handleDemoPassword(password);
+                }
+            });
+        }, 150);
+    }
+    handleSubmit(e){
+        e.preventDefault();
+        this.loginUser({
             variables: {
                 email: this.state.email,
                 password: this.state.password
@@ -42,7 +84,7 @@ class Login extends Component {
     render(){
         const { t } = this.props;
         return (
-            <body className="login-body">
+            <div className="login-body">
             <Mutation
                 mutation={LOGIN_USER}
                 onCompleted={data => {
@@ -53,9 +95,11 @@ class Login extends Component {
                 }}
                 update={(client, data) => this.updateCache(client, data)}
             >
-                {loginUser => (
-                    <div className="create-form">
-                        <form onSubmit={ e => this.handleSubmit(e, loginUser)} >
+                {loginUser => {
+                    this.loginUser = loginUser;
+                
+                    return <div className="create-form">
+                        <form onSubmit={this.handleSubmit} >
                             <fieldset>
                                 <input
                                     type="email"
@@ -73,11 +117,12 @@ class Login extends Component {
                                 />
                             </fieldset>
                             <button type="submit">{t("button.login")}</button>
+                            <button onClick={this.handleDemo}>{t("button.demo")}</button>
                         </form>
                     </div>
-                )}
+                }}
             </Mutation>
-            </body>
+            </div>
         );
     }
 }

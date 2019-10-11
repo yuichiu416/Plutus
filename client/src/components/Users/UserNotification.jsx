@@ -5,7 +5,7 @@ import { translate } from 'react-switch-lang';
 
 const { FETCH_NOTIFICATIONS } = queries;
 
-class UserNotification extends React.Component {
+class UserNotification extends Component {
     constructor(props) {
         super(props);
         this.toggleRead = this.toggleRead.bind(this);

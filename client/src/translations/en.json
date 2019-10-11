@@ -31,7 +31,8 @@
         "reply": "Reply",
         "chat": "Chat",
         "close": "Close",
-        "submit": "Submit"
+        "submit": "Submit",
+        "demo": "Demo"
     },
     "input": {
         "searchForItems": "Search for items...",
