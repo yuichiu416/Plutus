@@ -25,9 +25,9 @@ class ItemIndex extends React.Component {
                             <div className="index-wrapper">
                                 <ul>
                                     {data.items.map((item, idx) => (
-                                        <div>
-                                            <Link to={`/items/${item.id}`} key={`/${item.id}`} >
-                                            <li key={item.id + "index"} className="item-preview">
+                                        <div key={`/${item.id}`} >
+                                            <Link to={`/items/${item.id}`}>
+                                            <li className="item-preview">
                                             {item.champions[0] ? <Image className="item-preview-image" cloudName='chinweenie' publicId={item.champions[0]} /> : <h3>{t("h3.noImageProvided")}</h3>}
                                             <p>{item.name}</p><br />
                                             <p>${item.current_price}</p><br/>
