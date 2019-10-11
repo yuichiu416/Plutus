@@ -6,6 +6,7 @@ import UserItems from './UserItems';
 import UserMessages from './UserMessages';
 import UserNotification from './UserNotification';
 import { translate } from 'react-switch-lang';
+import CreateMessage from '../Messages/CreateMessage';
 
 
 // import { Mutation } from "react-apollo";
@@ -49,39 +50,74 @@ class UserProfile extends Component {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error.message}</p>
                     const user = data.users.find(user => user.id === this.props.match.params.userId);
-                    return (
-                        <div>
-                            <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
-                            <ul className="nav nav-tabs" onClick={this.showDetail}>
-                                <li className="nav-item">
-                                    <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>{t("p.setting")}</p>
-                                </li>
-                                <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
-                                </li>
-                                <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>{t("p.messages")}</p>
-                                </li>
-                                <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>{t("p.notifications")}</p>
-                                </li>
-                            </ul>
-                            
-                            
-                            <div className="user-tab user-detail">
-                                <UserDetail user={user} />
-                            </div>
-                            <div className="user-tab user-items hidden">
-                                <UserItems user={user}/>
-                            </div>
-                            <div className="user-tab user-messages hidden">
-                                <UserMessages user={user}/>
-                            </div>
-                            <div className="user-tab user-notifications hidden">
-                                <UserNotification user={user}/>
-                            </div>
+                    const userProfileHeader = (
+                        <div className="user-profile-header">
+                            <h3>{user.name}</h3>
+                            <h4>{user.email}</h4>
                         </div>
                     )
+                    if (user.id === localStorage.getItem('currentUser')){
+                        return (
+                            <div>
+                                <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
+                                {userProfileHeader}
+                                <ul className="nav nav-tabs" onClick={this.showDetail}>
+                                    <li className="nav-item">
+                                        <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>{t("p.setting")}</p>
+                                    </li>
+                                    <li className="nav-item">
+                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
+                                    </li>
+                                    <li className="nav-item">
+                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>{t("p.messages")}</p>
+                                    </li>
+                                    <li className="nav-item">
+                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>{t("p.notifications")}</p>
+                                    </li>
+                                </ul>
+
+
+                                <div className="user-tab user-detail">
+                                    <UserDetail user={user} />
+                                </div>
+                                <div className="user-tab user-items hidden">
+                                    <UserItems user={user} />
+                                </div>
+                                <div className="user-tab user-messages hidden">
+                                    <UserMessages user={user} />
+                                </div>
+                                <div className="user-tab user-notifications hidden">
+                                    <UserNotification user={user} />
+                                </div>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
+                                {userProfileHeader}
+                                <CreateMessage userId={user.id}/>
+                                <ul className="nav nav-tabs" onClick={this.showDetail}>
+                                    <li className="nav-item active">
+                                        <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
+                                    </li>
+                                </ul>
+
+
+                                
+                                <div className="user-tab user-items">
+                                    <UserItems user={user} />
+                                </div>
+                                <div className="user-tab user-messages hidden">
+                                    <UserMessages user={user} />
+                                </div>
+                                <div className="user-tab user-notifications hidden">
+                                    <UserNotification user={user} />
+                                </div>
+                            </div>
+                        )
+                    }
+                    
                 }}
             </Query>
             

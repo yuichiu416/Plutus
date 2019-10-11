@@ -11,6 +11,7 @@ import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
 import { MAKE_BID, TOGGLE_SOLD } from '../../graphql/mutations';
 import { withApollo } from 'react-apollo';
+import CreateMessage from '../Messages/CreateMessage';
 // import CreateMessage from '../Messages/CreateMessage';
 
 const { FETCH_ITEMS } = queries;
@@ -137,7 +138,7 @@ class ItemShow extends React.Component {
                     if (data.items.length === 0)
                         return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
                     this.item = data.items.find(obj => obj.id === this.props.match.params.id);
-                    
+                    debugger
                     const countdownMinutes = this.item.endTime || 0;
                     this.countDown(countdownMinutes);
                     this.currentPrice = Math.max(this.item.starting_price, this.item.current_price);
@@ -191,6 +192,12 @@ class ItemShow extends React.Component {
                                                 </form>
                                     }}
                                 </Mutation>
+                            </div>
+                            <div className="seller-info">
+                                <h4>Seller info</h4>
+                                <p>{this.item.seller.name}</p>
+                                <p>{this.item.seller.email}</p>
+                                <Link to={`/users/${this.item.seller.id}`}><h5>Contact seller</h5></Link>
                             </div>
                             <Link to={`${this.props.match.params.id}/edit`} className="box-edit-link">{t("button.editItem")}</Link>
                             <Map/>

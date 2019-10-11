@@ -271,7 +271,7 @@ const mutations = new GraphQLObjectType({
                 id: { type: GraphQLID },
             },
             async resolve(_, { id }){
-                const notification = await notification.findById(id);
+                const notification = await Notification.findById(id);
                 notification.read = true;
                 notification.save();
                 return notification;
@@ -307,7 +307,7 @@ const mutations = new GraphQLObjectType({
                 }
                 return item;
             }
-        }   
+        },
     }
     
 });
