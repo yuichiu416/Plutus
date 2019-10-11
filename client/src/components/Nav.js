@@ -1,14 +1,16 @@
-// components/Nav.js
+
 import React from 'react';
 import { Query, ApolloConsumer } from "react-apollo";
 import Queries from "../graphql/queries";
 import { Link, withRouter } from 'react-router-dom';
 import SearchForm from './SearchForm';
-import './Nav.css';
+import { translate } from 'react-switch-lang';
+
 
 const { IS_LOGGED_IN } = Queries;
 
 const Nav = props => {
+    const { t } = props;
     return (
         <ApolloConsumer>
             {client => (
@@ -40,7 +42,7 @@ const Nav = props => {
                                                         client.writeData({ data: { isLoggedIn: false, currentUser: null } });
                                                         props.history.push("/");
                                                     }}
-                                                >Logout</span>
+                                                >{t("button.logout")}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -53,8 +55,8 @@ const Nav = props => {
                                     <img src="Logo5.png" alt="plutus-logo-nav" className="plutus-logo-nav" />
                                     <SearchForm />
                                     <div className="nav-button-duo">
-                                        <Link to="/login" className="nav-button">Login</Link>
-                                        <Link to="/register" className="nav-button">Sign Up</Link>
+                                        <Link to="/login" className="nav-button">{t("button.login")}</Link>
+                                        <Link to="/register" className="nav-button">{t("button.signup")}</Link>
                                     </div>
                                     <div className="nav-shadow"></div>
                                 </div>
@@ -67,4 +69,4 @@ const Nav = props => {
     );
 };
 
-export default withRouter(Nav);
+export default translate(withRouter(Nav));

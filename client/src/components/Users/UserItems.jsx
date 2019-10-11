@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { Query } from "react-apollo";
 import queries from '../../graphql/queries';
 import { Image } from 'cloudinary-react';
+import { translate } from 'react-switch-lang';
 const { FETCH_ITEMS } = queries;
 
 
-export default class UserItems extends Component {
+class UserItems extends Component {
     // constructor(props) {
     //     super(props);
     // }
 
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_ITEMS}>
                 {({ loading, error, data }) => {
@@ -25,7 +27,7 @@ export default class UserItems extends Component {
                                     <h4 className="card-title">
                                         {item.name}
                                     </h4>
-                                    <p className="card-text">Selling at USD {item.starting_price}</p>
+                                    <p className="card-text">{t("p.sellingAt")} {item.starting_price}</p>
                                 </div>
                             </li>
                         )
@@ -43,3 +45,5 @@ export default class UserItems extends Component {
         )
     }
 }
+
+export default translate(UserItems);

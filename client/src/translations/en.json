@@ -10,21 +10,31 @@
         },
         "loading": "Loading...",
         "sentBy": "Sent by",
-        "replies": "replies"
+        "replies": "replie(s)",
+        "sellingAt": "Selling at USD",
+        "noNotificationsYet": "No notifications yet",
+        "setting": "Setting",
+        "items": "Items",
+        "messages": "Messages",
+        "notifications": "Notifications"
     },
     "button": {
         "switchLanguage": "Switch Language",
         "createNewItem": "Create a new item !",
-        "logout": "Logout",
+        "logout": "Log Out",
+        "login": "Log In",
+        "signup": "Sign Up",
         "send": "Send",
         "editItem": "Edit Item",
+        "updateItem": "Update Item",
         "bid": "Bid!",
-        "reply": "Reply"
+        "reply": "Reply",
+        "chat": "Chat",
+        "close": "Close",
+        "submit": "Submit"
     },
     "input": {
         "searchForItems": "Search for items...",
-        "option": "option",
-        "answer": "answer",
         "itemName": "Item Name",
         "description": "Description",
         "pleaseSelect": "Please Select",
@@ -38,24 +48,34 @@
         "currentPrice": "Current Price: ",
         "auctionIsDueIn": "Auction is due in: ",
         "auctionEnded": "Auction for this item is ENDED!!",
-        "startingPrice": "Starting Price",
-        "minimumPrice": "Minimum Price",
-        "category": "Category: "
+        "startingPrice": "Starting Price: ",
+        "minimumPrice": "Minimum Price: ",
+        "category": "Category: ",
+        "sold": "Sold: ",
+        "emailAddress": "Email address",
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "message": "message..."
     },
     "h1": {
         "noItems": "No items yet",
-        "itemName": "The item name is:"
+        "itemName": "The item name is: ",
+        "noLocationInfomation": "The item doesn't have location information"
     },
     "h2": {
         "replies": "Replies"
     },
     "h3": {
-        "sentBy": "Sent by"
+        "sentBy": "Sent by",
+        "noImageProvieded": "No image Provided"
     },
     "option": {
         "pleaseSelect": "--Please Select--"
     },
     "text": {
-        "noResultsFound": "Sorry, I can't find anything based on the name you provided."
+        "noResultsFound": "Sorry, I can't find anything based on the name you provided.",
+        "madeBidSuccessfully": "Made bid successfully",
+        "weWillNeverShareYourEmailWithAnyoneElse": "We'll never share your email with anyone else."
     }
 }

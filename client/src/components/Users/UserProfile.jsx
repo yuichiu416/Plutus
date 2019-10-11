@@ -4,13 +4,14 @@ import queries from "../../graphql/queries";
 import UserDetail from './UserDetail';
 import UserItems from './UserItems';
 import UserMessages from './UserMessages';
-import './UserProfile.css';
-import UserNotifications from './UserNotifications';
+import UserNotification from './UserNotification';
+import { translate } from 'react-switch-lang';
+
 
 // import { Mutation } from "react-apollo";
 const { FETCH_USERS } = queries; 
 
-export default class UserProfile extends Component {
+class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.openTab = this.openTab.bind(this);
@@ -41,6 +42,7 @@ export default class UserProfile extends Component {
     }
     
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_USERS}>
                 {({loading, error, data}) => {
@@ -52,16 +54,16 @@ export default class UserProfile extends Component {
                             <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
                             <ul className="nav nav-tabs" onClick={this.showDetail}>
                                 <li className="nav-item">
-                                    <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>Setting</p>
+                                    <p class="nav-link active" data-toggle="tab" onClick={this.openTab("user-detail")}>{t("p.setting")}</p>
                                 </li>
                                 <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>Items</p>
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-items")}>{t("p.items")}</p>
                                 </li>
                                 <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>Messages</p>
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-messages")}>{t("p.messages")}</p>
                                 </li>
                                 <li className="nav-item">
-                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>Notifications</p>
+                                    <p class="nav-link" data-toggle="tab" onClick={this.openTab("user-notifications")}>{t("p.notifications")}</p>
                                 </li>
                             </ul>
                             
@@ -76,7 +78,7 @@ export default class UserProfile extends Component {
                                 <UserMessages user={user}/>
                             </div>
                             <div className="user-tab user-notifications hidden">
-                                <UserNotifications user={user}/>
+                                <UserNotification user={user}/>
                             </div>
                         </div>
                     )
@@ -86,3 +88,5 @@ export default class UserProfile extends Component {
         )
     }
 }
+
+export default translate(UserProfile);

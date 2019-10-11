@@ -2,16 +2,17 @@
 import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { REGISTER_USER } from "../graphql/mutations";
+import { translate } from 'react-switch-lang';
 
 class Register extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             name: "",
             email: "",
             password: ""
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     update(field) {
@@ -28,67 +29,65 @@ class Register extends Component {
              }
         });
     }
+    handleSubmit(e, registerUser){
+        e.preventDefault();
+        registerUser({
+            variables: {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
+        });
+    }
 
     render() {
+        const { t } = this.props;
         return (
-            <body className="register-body">
-            <Mutation
-                mutation={REGISTER_USER}
-                onCompleted={data => {
-                    const { token, id } = data.register;
-                    localStorage.setItem("currentUser", id);
-                    localStorage.setItem("auth-token", token);
-                    this.props.history.push("/");
-                }}
-                update={(client, data) => this.updateCache(client, data)}
-            >
-                {registerUser => (
-                // <body className="register-body">
-                    <div className="create-form">
-                        <form
-                            onSubmit={e => {
-                                e.preventDefault();
-                                registerUser({
-                                    variables: {
-                                        name: this.state.name,
-                                        email: this.state.email,
-                                        password: this.state.password
-                                    }
-                                });
-                            }}
-                        >
-                            <fieldset>
-                            <input
-                                type="email"
-                                value={this.state.email}
-                                onChange={this.update("email")}
-                                placeholder="Email"
-                                className="field1"
-                            />
-                            <input
-                                type="name"
-                                value={this.state.name}
-                                onChange={this.update("name")}
-                                placeholder="Name"
-                                className="field1"
-                            />
-                            <input
-                                value={this.state.password}
-                                onChange={this.update("password")}
-                                type="password"
-                                placeholder="Password"
-                                className="field1"
-                            />
-                            </fieldset>
-                            <button type="submit">Sign up</button>
-                        </form>
-                    </div>
-                // </body>
-                )}
-            </Mutation>
-            </body>
+            <div className="register-body">
+                <Mutation
+                    mutation={REGISTER_USER}
+                    onCompleted={data => {
+                        const { token, id } = data.register;
+                        localStorage.setItem("currentUser", id);
+                        localStorage.setItem("auth-token", token);
+                        this.props.history.push("/");
+                    }}
+                    update={(client, data) => this.updateCache(client, data)}
+                >
+                    {registerUser => (
+                        <div className="create-form">
+                            <form onSubmit={e => this.handleSubmit(e, registerUser)}>
+                                <fieldset>
+                                    <input
+                                        type="email"
+                                        value={this.state.email}
+                                        onChange={this.update("email")}
+                                        placeholder={t("label.email")}
+                                        className="field1"
+                                    />
+                                    <input
+                                        type="name"
+                                        value={this.state.name}
+                                        onChange={this.update("name")}
+                                        placeholder={t("label.name")}
+                                        className="field1"
+                                    />
+                                    <input
+                                        value={this.state.password}
+                                        onChange={this.update("password")}
+                                        type="password"
+                                        placeholder={t("label.password")}
+                                        className="field1"
+                                    />
+                                </fieldset>
+                                <button type="submit">{t("button.signup")}</button>
+                            </form>
+                        </div>
+                    )}
+                </Mutation>
+            </div>
         );
     }
 }
 
-export default Register;
+export default translate(Register);

@@ -2,14 +2,17 @@ import React, { Component } from 'react'
 import { Query } from "react-apollo";
 import queries from '../../graphql/queries';
 import { Link } from 'react-router-dom';
+import { translate } from 'react-switch-lang';
+
 const { FETCH_MESSAGES } = queries;
 
-export default class UserMessages extends Component {
+class UserMessages extends Component {
     // constructor(props) {
     //     super(props)
     // }
     
     render() {
+        const { t } = this.props;
         return (
             <Query query={FETCH_MESSAGES}>
                 {({loading, error, data}) => {
@@ -21,15 +24,13 @@ export default class UserMessages extends Component {
                             <Link to={`/messages/${message.id}`}>
                                 <li key={message.id} className="list-group-item d-flex justify-content-between align-items-center">
                                 <h3>{message.title}</h3>
-                                <p>{message.replies.length} replie(s)</p>
+                                <p>{message.replies.length} {t("p.replies")}</p>
                                 </li>
                             </Link>
-                            
                         )
                     })
                     return (
                         <div>
-                            
                             <ul className="user-messages-ul list-group">
                                 {messagesLi}
                             </ul>
@@ -40,3 +41,5 @@ export default class UserMessages extends Component {
         )
     }
 }
+
+export default translate(UserMessages);

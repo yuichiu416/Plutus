@@ -40,8 +40,7 @@ export class MapContainer extends Component {
             return;
         map.firstElementChild.style.width = "80%";
         map.firstElementChild.style.height = "50%";
-        map.firstElementChild.style.gridRow = "7";
-        map.firstElementChild.style.gridColumn = "1";
+        map.parentElement.style.gridRow = "6";
     }
 
     render() {
@@ -56,9 +55,10 @@ export class MapContainer extends Component {
                     this.items = data.items;
                     this.handleCurrentItem(data.items);
                     let coords = this.coords
+                    const { t } = this.props
                     if(!coords){
                         coords = this.props.coords;
-                        return <h1>The item doesn't have location information</h1>
+                        return <h1>{t("h1.noLocationInfomation")}</h1>
                     }
                     return (
                         <div id="map">

@@ -35,10 +35,14 @@ class ItemShow extends React.Component {
         this.currentPrice = 0;
     }
     send(){
-        console.log(this.state.mybid);
-        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid))
-            return alert("Bid too low, please make a higher bid");
-
+        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid)){
+            alert("Bid too low, please make a higher bid");
+            return false;
+        }
+        if(this.item.endTime - new Date().getTime() <= 0){
+            alert("Sorry, the auction for this is ended.");
+            return false;
+        }
         const socket = socketIOClient(this.state.endpoint);
         socket.emit('bid', this.state.mybid);
         const input = document.getElementById("mybid-input");
@@ -51,8 +55,6 @@ class ItemShow extends React.Component {
                 this.setState({ currentPrice: currentPrice })
             });
     }
-
-    
 
     update(field) {
         return e => this.setState({ [field]: e.target.value });
@@ -90,7 +92,6 @@ class ItemShow extends React.Component {
             }
         }, 1000);
     }
-
     
     updateCache(cache, { data }) {
         let items;
@@ -111,6 +112,8 @@ class ItemShow extends React.Component {
     }
     handlebid(e, makeBid){
         e.preventDefault();
+        if(!this.send())
+            return;
         makeBid({
             variables: {
                 id: this.id,
@@ -133,11 +136,12 @@ class ItemShow extends React.Component {
                     if (error) return `Error! ${error.message}`;
                     if (data.items.length === 0)
                         return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
-                    const item = data.items.find(obj => obj.id === this.props.match.params.id);
-                    const countdownMinutes = item.endTime || 0;
+                    this.item = data.items.find(obj => obj.id === this.props.match.params.id);
+                    
+                    const countdownMinutes = this.item.endTime || 0;
                     this.countDown(countdownMinutes);
-                    this.currentPrice = Math.max(item.starting_price, item.current_price);
-                    const images = item.champions.map(champion => {
+                    this.currentPrice = Math.max(this.item.starting_price, this.item.current_price);
+                    const images = this.item.champions.map(champion => {
                         return <div className="box-images" key={champion}>
                             <Image className="box-image" cloudName='chinweenie' publicId={champion}/>
                         </div>
@@ -147,10 +151,10 @@ class ItemShow extends React.Component {
                         <div className="item-show-wrapper">
                             {/* <Link to="/">Home</Link> */} 
                             {/* <div className="box-header"> */}
-                                <h1 className="box-header"> &nbsp; &nbsp; {item.name}</h1>
+                                <h1 className="box-header"> &nbsp; &nbsp; {this.item.name}</h1>
                             {/* </div> */}
                             {/* <div className="box-content"> */}
-                                <p className="box-content">{item.description}</p>
+                                <p className="box-content">{this.item.description}</p>
                             {/* </div> */}
                             <div className="box-images">
                             
@@ -177,7 +181,7 @@ class ItemShow extends React.Component {
                                     // when our query is complete we'll display a success message
                                     onCompleted={data => {
                                         this.setState({
-                                            message: `Made bid successfully`
+                                            message: t("text.madeBidSuccessfully")
                                         });
                                     }}
                                 >
@@ -187,7 +191,7 @@ class ItemShow extends React.Component {
                                                     <br />
                                                     <input type="text" onChange={this.update("mybid")} id="mybid-input" />
                                                     <br/>
-                                                    <button type="submit" onClick={this.send}>{t("button.bid")}</button>
+                                                    <button type="submit" >{t("button.bid")}</button>
                                                 </form>
                                     }}
                                 </Mutation>

@@ -4,6 +4,7 @@ import { UPDATE_ITEM } from "../../graphql/mutations";
 import { Query } from "react-apollo";
 import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
+import { translate } from 'react-switch-lang';
 
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
@@ -138,7 +139,7 @@ class EditItem extends Component {
                     });
                 }}
             >
-                {(updateItem, { data }) => (
+                {(updateItem, { data, t }) => (
                     <div>
                         {this.itemDetails}
                         <form onSubmit={e => this.handleSubmit(e, updateItem)}>
@@ -158,7 +159,7 @@ class EditItem extends Component {
                                 placeholder="Upload image urls"
                             /> */}
                             <label>
-                                Starting Price: 
+                                {t("label.startingPrice")}
                                 <input
                                     onChange={this.update("starting_price")}
                                     value={this.state.starting_price}
@@ -166,7 +167,7 @@ class EditItem extends Component {
                                 />
                             </label>
                             <label>
-                                Minimum Price:
+                                {t("label.minimumPrice")}
                                 <input
                                     onChange={this.update("minimum_price")}
                                     value={this.state.minimum_price}
@@ -181,7 +182,7 @@ class EditItem extends Component {
                             /> */}
                             
                             <label>
-                                Sold:
+                                {t("label.sold")}
                                 <input
                                     onChange={this.update("sold")}
                                     value={this.state.sold}
@@ -189,7 +190,7 @@ class EditItem extends Component {
                                 />
                             </label>
                             <label>
-                                Appraised: 
+                                {t("label.appraised")}
                                 <input
                                     onChange={this.update("appraised")}
                                     value={this.state.appraised}
@@ -198,10 +199,10 @@ class EditItem extends Component {
                             <br/>
                             <br/>
                             <label>
-                                Category:
+                                {t("label.category")}
                                 {categories}
                             </label>
-                            <button type="submit">Update Item</button>
+                            <button type="submit">{t("button.updateItem")}</button>
                         </form>
                         <p>{this.state.message}</p>
                     </div>
@@ -211,4 +212,4 @@ class EditItem extends Component {
     }
 }
 
-export default withRouter(EditItem);
+export default translate(withRouter(EditItem));

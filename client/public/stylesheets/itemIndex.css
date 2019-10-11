@@ -1,0 +1,19 @@
+.item-preview{
+    width: 20%;
+    box-sizing: border-box;
+    background-color: snow;
+    box-shadow: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    list-style: none;
+    padding: 10px;
+}
+.item-preview p{
+    padding: 0;
+    margin: 0;
+}
+.item-preview-image{
+    width: 100%;
+    border-radius: 10px;
+}

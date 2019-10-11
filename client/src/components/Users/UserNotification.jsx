@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Query } from "react-apollo";
 import queries from '../../graphql/queries';
+import { translate } from 'react-switch-lang';
+
 const { FETCH_NOTIFICATIONS } = queries;
 
-export default class UserNotifications extends React.Component {
+class UserNotification extends React.Component {
     constructor(props) {
         super(props);
         this.toggleRead = this.toggleRead.bind(this);
@@ -55,3 +57,5 @@ export default class UserNotifications extends React.Component {
         )
     }
 }
+
+export default translate(UserNotification);

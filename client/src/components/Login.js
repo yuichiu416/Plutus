@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { LOGIN_USER } from "../graphql/mutations";
+import { translate } from 'react-switch-lang';
 
 
 class Login extends Component {
@@ -12,6 +13,7 @@ class Login extends Component {
             email: "",
             password: ""
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     update(field) {
@@ -27,8 +29,18 @@ class Login extends Component {
              }
         });
     }
+    handleSubmit(e, loginUser){
+        e.preventDefault();
+        loginUser({
+            variables: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        })
+    }
 
-    render() {
+    render(){
+        const { t } = this.props;
         return (
             <body className="login-body">
             <Mutation
@@ -43,34 +55,24 @@ class Login extends Component {
             >
                 {loginUser => (
                     <div className="create-form">
-                        <form
-                            onSubmit={e => {
-                                e.preventDefault();
-                                loginUser({
-                                    variables: {
-                                        email: this.state.email,
-                                        password: this.state.password
-                                    }
-                                });
-                            }}
-                        >
+                        <form onSubmit={ e => this.handleSubmit(e, loginUser)} >
                             <fieldset>
                                 <input
                                     type="email"
                                     value={this.state.email}
                                     onChange={this.update("email")}
-                                    placeholder="Email"
+                                    placeholder={t("label.email")}
                                     className="field1"
                                 />
                                 <input
                                     value={this.state.password}
                                     onChange={this.update("password")}
                                     type="password"
-                                    placeholder="Password"
+                                        placeholder={t("label.password")}
                                     className="field1"
                                 />
                             </fieldset>
-                            <button type="submit">Log In</button>
+                            <button type="submit">{t("button.login")}</button>
                         </form>
                     </div>
                 )}
@@ -80,4 +82,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default translate(Login);

@@ -1,16 +1,81 @@
 {
     "p": {
         "option": {
+            "greeting": "安安，我能怎麼幫助你呢",
             "empty": "哈囉，我能為你提供什麼服務呢?\n輸入 \"1\" 搜尋物品\n輸入 \"2\" 切換語言\n",
             "first": "請輸入想搜尋物品的名稱 或是其中的幾個單字",
             "second": "請輸入你想更換的語言，選項: English, Chinese",
             "default": "錯誤的選項，請重新選擇",
             "language": "語言已切換成 "
         },
-        "Loading": "讀取中..."
-    },
+        "Loading": "讀取中...",
+        "sentBy": "寄件人:",
+        "replies": "個回覆",
+        "sellingAt": "價格為 美元",
+        "noNotificationsYet": "還沒有任何通知",
+        "setting": "設定",
+        "items": "物品",
+        "messages": "訊息",
+        "notifications": "通知"
+},
     "button": {
         "switchLanguage": "切換語言",
-        "createNewItem": "拍賣一個東西!"
+        "createNewItem": "拍賣一個東西!",
+        "logout": "登出",
+        "login": "登入",
+        "signup": "註冊",
+        "send": "送出",
+        "editItem": "編輯物品",
+        "updateItem": "更新物品",
+        "bid": "出價",
+        "reply": "回覆",
+        "chat": "小幫手",
+        "close": "關閉",
+        "submit": "送出"
+    },
+    "input": {
+        "searchForItems": "搜尋物品...",
+        "itemName": "物品名稱",
+        "description": "物品描述",
+        "pleaseSelect": "請選擇",
+        "uploadImages": "上傳圖片"
+    },
+    "label": {
+        "appraised": "已認證",
+        "endIn": "即將在",
+        "minutes": "分鐘內結束",
+        "sendYourBidHere": "出價:",
+        "currentPrice": "目前價格為: ",
+        "auctionIsDueIn": "拍賣即將終止於: ",
+        "auctionEnded": "此物品的拍賣已結束",
+        "startingPrice": "起標價格: ",
+        "minimumPrice": "最低成交價: ",
+        "category": "類別: ",
+        "sold": "已售出: ",
+        "emailAddress": "電子信箱",
+        "name": "姓名",
+        "email": "電子信箱",
+        "password": "密碼",
+        "message": "傳送訊息..."
+    },
+    "h1": {
+        "noItems": "還沒有任何物品",
+        "itemName": "物品名稱: ",
+        "noLocationInfomation": "物品並沒有位置資訊"
+    },
+    "h2": {
+        "replies": "個回覆"
+    },
+    "h3": {
+        "sentBy": "寄件人為",
+        "noImageProvieded": "並無商品照片"
+    },
+    "option": {
+        "pleaseSelect": "--請選擇--"
+    },
+    "text": {
+        "noResultsFound": "抱歉，並沒有找到符合條件的商品",
+        "madeBidSuccessfully": "已成功出價",
+        "weWillNeverShareYourEmailWithAnyoneElse": "我們並不會將您的電子信箱提供給任何人"
     }
 }

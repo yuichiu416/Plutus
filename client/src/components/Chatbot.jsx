@@ -198,12 +198,12 @@ class Chatbot extends React.Component {
                     
                     return (
                         <div className="chat-popup">
-                            <button className="open-button" id="open-chat-btn" onClick={this.openForm}>Chat</button>
+                            <button className="open-button" id="open-chat-btn" onClick={this.openForm}>{t("button.chat")}</button>
                             <form onSubmit={this.submitForm} action="/action_page.php" id="chatbot" className="form-container hidden">
                             <ul className="chat-histroy">{histroy}</ul>
-                            <input type="text" id="message" placeholder="message" onChange={this.updateMsg}/>
-                                <button type="submit" className="btn" id="submit" value="Send"><span>Send</span></button>
-                                <button type="button" className="btn cancel" onClick={this.closeForm}><span>Close</span></button>
+                            <input type="text" className="message-input" id="message" placeholder={t("label.message")} onChange={this.updateMsg}/>
+                                <button type="submit" className="btn" id="submit" value="Send"><span>{t("button.send")}</span></button>
+                                <button type="button" className="btn cancel" onClick={this.closeForm}><span>{t("button.close")}</span></button>
                             </form>
                             <div>
                                 {searchResults}
