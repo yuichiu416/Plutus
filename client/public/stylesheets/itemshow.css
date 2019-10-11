@@ -1,5 +1,8 @@
-.item-show-body body {
-  /* margin: 40px; */
+.item-show-body  {
+  margin: 30px;
+  background-color: rgb(252, 252, 249);
+  width: 95vw;
+  
 }
 .item-show-wrapper{
   display: grid;
@@ -57,6 +60,7 @@
   padding-left: 5%;
   font-family: 'Raleway', sans-serif;
   color: red;
+  font-size: 22px;
 }
 .nested-bid-form{
   grid-row: 5;
@@ -90,7 +94,7 @@
   }
   .nested-timer {
     grid-row: 4;
-    padding-top: 5em;
+    padding-top: 3em;
     /* padding-bottom: 5em; */
     /* align-self: end; */
   }
