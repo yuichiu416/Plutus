@@ -115,18 +115,14 @@ const mutations = new GraphQLObjectType({
                 id: { type: GraphQLID },
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                starting_price: { type: GraphQLInt },
                 minimum_price: { type: GraphQLInt },
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
                 champions: { type: new GraphQLList(GraphQLString) },
-                endTime: { type: GraphQLFloat }
             },
-            async resolve(_, { id, name, description, starting_price, minimum_price, category, sold, appraised, champions, endTime }, context) {
-                const obj = await AuthService.verifyUser({ token: context.token });
-                const seller = obj.id;
-                const item = { name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, endTime };
+            async resolve(_, { id, name, description, minimum_price, category, sold, appraised, champions }) {
+                const item = { name, description, minimum_price, category, sold, appraised, champions };
                 return Item.findOneAndUpdate(
                     { _id: id },
                     { $set: item },

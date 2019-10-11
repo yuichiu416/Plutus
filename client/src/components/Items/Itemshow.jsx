@@ -113,8 +113,6 @@ class ItemShow extends React.Component {
     }
     handlebid(e, makeBid){
         e.preventDefault();
-        console.log(parseInt(this.state.mybid))
-
         if(!this.send())
             return;
         makeBid({
