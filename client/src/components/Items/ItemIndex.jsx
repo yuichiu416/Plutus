@@ -20,18 +20,22 @@ class ItemIndex extends React.Component {
                         return <h1>No items yet, <Link to="items/new">Create new item</Link></h1>
                     
                     return (
-                        <div>
-                            <Link to="items/new">{t("button.createNewItem")}</Link>
-                            <ul>
-                                {data.items.map((item, idx) => (
-                                    <Link to={`/items/${item.id}`} key={`/${item.id}`} >
-                                    <li key={item.id} className="item-preview">
-                                    {item.champions[0] ? <Image className="item-preview-image" cloudName='chinweenie' publicId={item.champions[0]} /> : <h3>{t("h3.noImageProvided")}</h3>}
-                                    <p>{item.name}</p><br />
-                                    <p>${item.current_price}</p><br/>
-                                    </li></Link>
-                                ))}
-                            </ul>
+                        <div className="index-body">
+                            <Link className="index-create-link" to="items/new">{t("button.createNewItem")}</Link>
+                            <div className="index-wrapper">
+                                <ul>
+                                    {data.items.map((item, idx) => (
+                                        <div>
+                                            <Link to={`/items/${item.id}`} key={`/${item.id}`} >
+                                            <li key={item.id} className="item-preview">
+                                            {item.champions[0] ? <Image className="item-preview-image" cloudName='chinweenie' publicId={item.champions[0]} /> : <h3>{t("h3.noImageProvided")}</h3>}
+                                            <p>{item.name}</p><br />
+                                            <p>${item.current_price}</p><br/>
+                                            </li></Link>
+                                        </div>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     );
                 }}
