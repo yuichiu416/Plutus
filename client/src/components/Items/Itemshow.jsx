@@ -52,7 +52,7 @@ class ItemShow extends React.Component {
     componentDidMount(){
         const socket = socketIOClient(this.state.endpoint);
         socket.on('bid', (currentPrice) => {
-                this.setState({ currentPrice: currentPrice })
+                this.setState({ currentPrice: currentPrice });
             });
     }
 
