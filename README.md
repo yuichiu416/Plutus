@@ -1,8 +1,7 @@
 # Plutus
 
-## Background
 Plutus is an auction bidding web app where users are allowed to bid on luxurious
-products they like, or sell products for other users to bid. 
+products they like, or sell products for other users to bid.
 
 ## Functionaliy and MVP
 In this web app, users will be able to:
