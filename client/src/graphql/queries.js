@@ -12,7 +12,11 @@ export default {
       items {
         id
         name
-        seller
+        seller{
+          id
+          name
+          email
+        }
         description
         starting_price
         minimum_price
@@ -33,7 +37,11 @@ export default {
     query fetchItem($id: String!){
       item(id: $id){
         name
-        seller
+        seller{
+          id
+          name
+          email
+        }
         description
         starting_price
         minimum_price
