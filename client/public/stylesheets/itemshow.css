@@ -72,9 +72,7 @@
   text-decoration: none;
   color: rgb(88, 88, 88);
 }
-.box-map{
-  display: none;
-}
+
 @media only screen and (max-width: 800px){
   .box-content{
     grid-row: 3;

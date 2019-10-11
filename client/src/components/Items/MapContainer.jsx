@@ -38,8 +38,10 @@ export class MapContainer extends Component {
         const map = document.getElementById("map");
         if (!map)
             return;
-        map.firstElementChild.style.width = "50%";
+        map.firstElementChild.style.width = "80%";
         map.firstElementChild.style.height = "50%";
+        map.firstElementChild.style.gridRow = "7";
+        map.firstElementChild.style.gridColumn = "1";
     }
 
     render() {

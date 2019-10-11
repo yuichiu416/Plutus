@@ -11,7 +11,7 @@ import { translate } from 'react-switch-lang';
 import { Mutation } from "react-apollo";
 import { MAKE_BID, TOGGLE_SOLD } from '../../graphql/mutations';
 import { withApollo } from 'react-apollo';
-import CreateMessage from '../Messages/CreateMessage';
+// import CreateMessage from '../Messages/CreateMessage';
 
 const { FETCH_ITEMS } = queries;
 
@@ -143,7 +143,7 @@ class ItemShow extends React.Component {
                         </div>
                     });
                     return (
-                        <body className="item-show-body">
+                        <div className="item-show-body">
                         <div className="item-show-wrapper">
                             {/* <Link to="/">Home</Link> */} 
                             {/* <div className="box-header"> */}
@@ -193,10 +193,9 @@ class ItemShow extends React.Component {
                                 </Mutation>
                             </div>
                             <Link to={`${this.props.match.params.id}/edit`} className="box-edit-link">{t("button.editItem")}</Link>
-                            
-                                {/* <Map className="box-map"/> */}
+                            <Map/>
                         </div>
-                        </body>
+                        </div>
                     );
                 }}
             </Query>
