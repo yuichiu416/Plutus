@@ -138,33 +138,36 @@ class ItemShow extends React.Component {
                     this.countDown(countdownMinutes);
                     this.currentPrice = Math.max(item.starting_price, item.current_price);
                     const images = item.champions.map(champion => {
-                        return <li key={champion}>
+                        return <div className="box-images" key={champion}>
                             <Image className="box-image" cloudName='chinweenie' publicId={champion}/>
-                        </li>
+                        </div>
                     });
                     return (
                         <body className="item-show-body">
                         <div className="item-show-wrapper">
                             {/* <Link to="/">Home</Link> */} 
-                            <div className="box-header">
-                                <h1 className="box-header">{t("h1.itemName")} {item.name}</h1>
-                            </div>
-                            <div className="box-content">
+                            {/* <div className="box-header"> */}
+                                <h1 className="box-header"> &nbsp; &nbsp; {item.name}</h1>
+                            {/* </div> */}
+                            {/* <div className="box-content"> */}
                                 <p className="box-content">{item.description}</p>
-                            </div>
+                            {/* </div> */}
                             <div className="box-images">
-                                <ul>
+                            
                                     {images}
-                                </ul>
+                                
                             </div>
-                            <div className="box-bid">
-                                <p id="timer"></p>
-                                <br />
-                                <label>
+                            {/* <div className="box-bid"> */}
+                                
+                                <div className="nested-timer" id="timer"></div>
+                                <br/>
+                                    <label className="nested-current-price">
+                                    <br/>
                                     {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
                                 </label>
                                 <br />
-                            
+                           {/* </div> */}
+                                <div className="nested-bid-form">  
                                 <Mutation
                                     mutation={MAKE_BID}
                                     // if we error out we can set the message here
@@ -174,22 +177,22 @@ class ItemShow extends React.Component {
                                     // when our query is complete we'll display a success message
                                     onCompleted={data => {
                                         this.setState({
-                                            message: `Made bid created successfully`
+                                            message: `Made bid successfully`
                                         });
                                     }}
                                 >
                                     {(makeBid) => {
-                                            return <form className="box-bid-form" onSubmit={e => this.handlebid(e, makeBid)}>
-                                            {t("label.sendYourBidHere")}
-                                            <br />
-                                            <input type="text" onChange={this.update("mybid")} id="mybid-input" />
-                                            <br/>
-                                            <button type="submit" onClick={this.send}>{t("button.bid")}</button>
-                                        </form>
+                                            return <form  onSubmit={e => this.handlebid(e, makeBid)}>
+                                                {t("label.sendYourBidHere")}
+                                                    <br />
+                                                    <input type="text" onChange={this.update("mybid")} id="mybid-input" />
+                                                    <br/>
+                                                    <button type="submit" onClick={this.send}>{t("button.bid")}</button>
+                                                </form>
                                     }}
                                 </Mutation>
                             </div>
-                            <Link to={`${this.props.match.params.id}/edit`} >{t("button.editItem")}</Link>
+                            <Link to={`${this.props.match.params.id}/edit`} className="box-edit-link">{t("button.editItem")}</Link>
                             
                                 {/* <Map className="box-map"/> */}
                         </div>
