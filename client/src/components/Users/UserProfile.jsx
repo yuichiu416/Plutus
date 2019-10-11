@@ -103,8 +103,6 @@ class UserProfile extends Component {
                                     </li>
                                 </ul>
 
-
-                                
                                 <div className="user-tab user-items">
                                     <UserItems user={user} />
                                 </div>
