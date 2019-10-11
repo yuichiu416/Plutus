@@ -55,12 +55,13 @@ div[class*=box] {
 }
 /* .box { background-color: #3C3C3C; } */
 .btn {
-    line-height: 28px;
+    line-height: 17px;
     height: 25px;
     text-align: center;
     width: 85px;
     cursor: pointer;
     font-family: 'Raleway', sans-serif;
+    color: rgb(78, 78, 78);
 }
 .logout-btn {
     color: rgb(78, 78, 78);
