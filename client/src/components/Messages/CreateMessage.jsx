@@ -4,7 +4,7 @@ import { Mutation } from "react-apollo";
 import { CREATE_MESSAGE } from '../../graphql/mutations';
 // import Queries from '../../graphql/queries';
 import { translate } from 'react-switch-lang';
-
+import './CreateMessage.css';
 // const { FETCH_USERS } = Queries;
 
 class CreateMessage extends React.Component {
@@ -53,15 +53,14 @@ class CreateMessage extends React.Component {
                 }}>
                     {(newMessage, { data }) => {
                         return <div>
-                            <form onSubmit={e => this.handleSubmit(e, newMessage)}>
+                            <form onSubmit={e => this.handleSubmit(e, newMessage)} className="create-message-form">
                                 <input 
                                     type="text" 
                                     value={this.state.title} 
                                     onChange={this.update("title")}
-                                    placeholder="Title"/>
-                                
-                                <input 
-                                    type="text" 
+                                    placeholder="Message title"/>
+                                <br/>
+                                <textarea 
                                     value={this.state.body}
                                     onChange={this.update("body")}
                                     placeholder="Type your message here"/>

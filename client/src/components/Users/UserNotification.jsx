@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Query } from "react-apollo";
+import { Query, withApollo } from "react-apollo";
 import queries from '../../graphql/queries';
 import { translate } from 'react-switch-lang';
+import { UPDATE_NOTIFICATION_STATUS } from '../../graphql/mutations';
 
 const { FETCH_NOTIFICATIONS } = queries;
 
@@ -11,9 +12,13 @@ class UserNotification extends Component {
         this.toggleRead = this.toggleRead.bind(this);
     }
 
-    toggleRead(e){
+    toggleRead(e, id){
         e.preventDefault();
         e.target.parentElement.classList.toggle("unread");
+        this.props.client.mutate({
+            mutation: UPDATE_NOTIFICATION_STATUS,
+            variables: { id: id}
+        }).then(response => console.log(response));
     }
 
     render() {
@@ -41,7 +46,7 @@ class UserNotification extends Component {
                                 <p>{notification.body}</p>
                             </li>
                         } else {
-                            return <li key={notification.id} className="user-notification-li unread" onClick={this.toggleRead}>
+                            return <li key={notification.id} className="user-notification-li unread" onClick={(e) => this.toggleRead(e, notification.id)}>
                                 <p>{notification.body}</p>
                             </li>
                         }
@@ -58,4 +63,4 @@ class UserNotification extends Component {
     }
 }
 
-export default translate(UserNotification);
+export default withApollo(translate(UserNotification));
