@@ -1,7 +1,7 @@
 //server/schema/types/item_type.js
 const mongoose = require("mongoose");
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLID, GraphQLFloat } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLID, GraphQLFloat, GraphQLInt } = graphql;
 
 const Item = mongoose.model("items");
 
@@ -21,8 +21,8 @@ const ItemType = new GraphQLObjectType({
         },
         description: { type: GraphQLString },
         seller: { type: GraphQLID },
-        starting_price: { type: GraphQLFloat },
-        minimum_price: { type: GraphQLFloat },
+        starting_price: { type: GraphQLInt },
+        minimum_price: { type: GraphQLInt },
         category: {
             type: require("./category_type"),
             resolve(parentValue) {
@@ -43,7 +43,7 @@ const ItemType = new GraphQLObjectType({
             }
         },
         endTime: { type: GraphQLFloat },
-        current_price: { type: GraphQLFloat },
+        current_price: { type: GraphQLInt },
         highestBidder: {
             type: require('./user_type'),
             resolve(parentValue){

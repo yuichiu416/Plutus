@@ -35,7 +35,7 @@ class ItemShow extends React.Component {
         this.currentPrice = 0;
     }
     send(){
-        if(parseFloat(this.state.currentPrice) >= parseFloat(this.state.mybid)){
+        if(parseInt(this.currentPrice) >= parseInt(this.state.mybid)){
             alert("Bid too low, please make a higher bid");
             return false;
         }
@@ -48,6 +48,7 @@ class ItemShow extends React.Component {
         const input = document.getElementById("mybid-input");
         if(input)
             input.value = "";
+        return true;
     }
     componentDidMount(){
         const socket = socketIOClient(this.state.endpoint);
@@ -112,16 +113,17 @@ class ItemShow extends React.Component {
     }
     handlebid(e, makeBid){
         e.preventDefault();
+        console.log(parseInt(this.state.mybid))
+
         if(!this.send())
             return;
         makeBid({
             variables: {
                 id: this.id,
-                current_price: parseFloat(this.state.mybid),
-                highestBidder: localStorage.getItem("currentUser")
+                current_price: parseInt(this.state.mybid)
             }
         }).then( response => {
-            this.setState({ currentPrice: response.data.current_price})
+            this.setState({ currentPrice: response.data.makeBid.current_price})
         }).catch( err => console.log(err));
         document.getElementById("mybid-input").value="";
     }
@@ -149,7 +151,6 @@ class ItemShow extends React.Component {
                     return (
                         <div className="item-show-body">
                         <div className="item-show-wrapper">
-                            {/* <Link to="/">Home</Link> */} 
                             {/* <div className="box-header"> */}
                                 <h1 className="box-header"> &nbsp; &nbsp; {this.item.name}</h1>
                             {/* </div> */}
@@ -157,12 +158,9 @@ class ItemShow extends React.Component {
                                 <p className="box-content">{this.item.description}</p>
                             {/* </div> */}
                             <div className="box-images">
-                            
                                     {images}
-                                
                             </div>
                             {/* <div className="box-bid"> */}
-                                
                                 <div className="nested-timer" id="timer"></div>
                                 <br/>
                                     <label className="nested-current-price">

@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLID, GraphQLFloat } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLID, GraphQLInt, GraphQLFloat } = graphql;
 const mongoose = require("mongoose");
 const AuthService = require("../services/auth");
 
@@ -81,8 +81,8 @@ const mutations = new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                starting_price: {type: GraphQLFloat},
-                minimum_price: {type: GraphQLFloat},
+                starting_price: {type: GraphQLInt},
+                minimum_price: {type: GraphQLInt},
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
@@ -99,14 +99,14 @@ const mutations = new GraphQLObjectType({
                 user.save();
                 const nameHash = {};
                 const str = name.replace(/\s/g, '').toLowerCase();
+                const current_price = starting_price;
                 location = JSON.parse(location);
                 for (let i = 0; i < str.length; i++) {
                     const char = str[i];
                     nameHash[char] = nameHash[char] || 0;
                     nameHash[char]++;
                 }
-                return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, location, champions, endTime, nameHash }).save();
-                // return new Item({ name, description, seller, starting_price, minimum_price, category, sold, appraised, champions, endTime, nameHash }).save();
+                return new Item({ name, description, seller, starting_price, minimum_price, current_price, category, sold, appraised, location, champions, endTime, nameHash }).save();
             }
         },
         updateItem: {
@@ -115,8 +115,8 @@ const mutations = new GraphQLObjectType({
                 id: { type: GraphQLID },
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
-                starting_price: { type: GraphQLFloat },
-                minimum_price: { type: GraphQLFloat },
+                starting_price: { type: GraphQLInt },
+                minimum_price: { type: GraphQLInt },
                 category: { type: GraphQLString },
                 sold: { type: GraphQLBoolean },
                 appraised: { type: GraphQLBoolean },
@@ -148,8 +148,7 @@ const mutations = new GraphQLObjectType({
             type: ItemType,
             args: {
                 id: { type: GraphQLID },
-                current_price: { type: GraphQLFloat },
-                highestBidder: { type: GraphQLID }
+                current_price: { type: GraphQLInt }
             },
             async resolve(_, { id, current_price, highestBidder }, context) {
                 const item = await Item.findById(id);
@@ -157,8 +156,7 @@ const mutations = new GraphQLObjectType({
                 const notification = await new Notification({ body: `Item ${item.name}'s current price is ${current_price}`, user: seller}).save();
                 seller.notifications.push(notification);
                 seller.save();
-                highestBidder = User.findById(highestBidder);
-                return Item.findByIdAndUpdate(id, { current_price: current_price, highestBidder },
+                return Item.findByIdAndUpdate(id, { current_price: current_price, highestBidder: id },
                     (err, item) => {
                         return item;
                     }

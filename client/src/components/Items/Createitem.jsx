@@ -17,8 +17,8 @@ class CreateItem extends Component {
             message: "",
             name: "",
             description: "",
-            starting_price: 0,
-            minimum_price: 0,
+            starting_price: "",
+            minimum_price: "",
             category: "",
             sold: false,
             appraised: false,
@@ -96,7 +96,7 @@ class CreateItem extends Component {
         return publicIdsArray;
     }
     setEndTime(e) {
-        const val = parseFloat(e.target.value);
+        const val = parseInt(e.target.value);
         if (isNaN(val)) {
             return;
         }
@@ -116,8 +116,8 @@ class CreateItem extends Component {
                 variables: {
                     name: this.state.name,
                     description: this.state.description,
-                    starting_price: parseFloat(this.state.starting_price),
-                    minimum_price: parseFloat(this.state.minimum_price),
+                    starting_price: parseInt(this.state.starting_price),
+                    minimum_price: parseInt(this.state.minimum_price) || 0,
                     category: this.state.category,
                     sold: this.state.sold,
                     appraised: this.state.appraised,
@@ -130,8 +130,8 @@ class CreateItem extends Component {
                     message: "",
                     name: "",
                     description: "",
-                    starting_price: 0,
-                    minimum_price: 0,
+                    starting_price: "",
+                    minimum_price: "",
                     category: "",
                     sold: false,
                     appraised: false,
@@ -164,7 +164,6 @@ class CreateItem extends Component {
             >
                 {(newItem) => {
                     return <div className="create-form-body">
-                      
                             {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
                             <div className="create-form">
                             <form onSubmit={e => this.handleSubmit(e, newItem)}>
@@ -200,7 +199,6 @@ class CreateItem extends Component {
                                         className="field1"
                                         onChange={this.update("minimum_price")}
                                         value={this.state.minimum_price}
-                                        placeholder={t("input.minimumPrice")}
                                     />
                                 </label>
 

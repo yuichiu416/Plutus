@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import Queries from "../../graphql/queries";
 import { translate } from 'react-switch-lang';
 
+
 const { FETCH_ITEMS, FETCH_CATEGORIES } = Queries;
 
 class EditItem extends Component {
@@ -14,47 +15,11 @@ class EditItem extends Component {
         this.id = this.props.match.params.id;
         this.state = {
             message: "",
-            name: "",
-            description: "",
-            starting_price: 0,
-            minimum_price: 0,
-            category: "",
-            sold: false,
-            appraised: false,
-            champions: [],
-            location: [],
-            endTime: 3
         };
-        this.itemDetails = this.setDefaultItemState();
-        this.mapItemToState = this.mapItemToState.bind(this);
         this.updateCache = this.updateCache.bind(this);
     }
-    mapItemToState(item){
-        this.setState({
-            id: this.id,
-            name: item.name,
-            description: item.description,
-            starting_price: item.starting_price,
-            minimum_price: item.minimum_price,
-            category: item.category.id,
-            sold: item.sold,
-            appraised: item.appraised,
-            champions: item.champions,
-            location: item.location,
-            endTime: item.endTime
-        });
-    }
     setDefaultItemState(){
-        return <Query query={FETCH_ITEMS}>
-            {({ loading, error, data }) => {
-                if (loading) return "Loading...";
-                if (error) return `Error! ${error.message}`;
-                const item = data.items.find(obj => obj.id === this.id);
-                if(item)
-                    this.mapItemToState(item);
-                return null;
-            }}
-        </Query>
+        return 
     }
 
     update(field) {
@@ -124,90 +89,116 @@ class EditItem extends Component {
     }
     render() {
         const categories = this.fetchCategories();
+        const setDefaultItem = this.setDefaultItemState();
+        const { t } = this.props;
         return (
-            <Mutation
-                mutation={UPDATE_ITEM}
-                // if we error out we can set the message here
-                onError={err => this.setState({ message: err.message })}
-                // we need to make sure we update our cache once our new item is created
-                update={(cache, data) => this.updateCache(cache, data)}
-                // when our query is complete we'll display a success message
-                onCompleted={data => {
-                    const { name } = data.updateItem;
-                    this.setState({
-                        message: `Item ${name} updated successfully`
-                    });
+            <Query query={FETCH_ITEMS}>
+                {({ loading, error, data }) => {
+                    if (loading) return "Loading...";
+                    if (error) return `Error! ${error.message}`;
+                    const item = data.items.find(obj => obj.id === this.id);
+                    if (item)
+                        this.item = item;
+                    console.log(item);
+                    return <Mutation
+                        mutation={UPDATE_ITEM}
+                        // if we error out we can set the message here
+                        onError={err => this.setState({ message: err.message })}
+                        // we need to make sure we update our cache once our new item is created
+                        update={(cache, data) => this.updateCache(cache, data)}
+                        // when our query is complete we'll display a success message
+                        onCompleted={data => {
+                            const { name } = data.updateItem;
+                            this.setState({
+                                message: `Item ${name} updated successfully`
+                            });
+                        }}
+                    >
+                        {(updateItem) => (
+                            <div className="create-form-body">
+                                {setDefaultItem}
+                                {/* <img src="watercolor.jpg" alt="watercolor" class="background-photo" /> */}
+                                <div className="create-form">
+                                    <form onSubmit={e => this.handleSubmit(e, updateItem)}>
+                                        <fieldset>
+                                            <input
+                                                type="name"
+                                                onChange={this.update("name")}
+                                                value={this.item.name}
+                                                placeholder={t("input.itemName")}
+                                                className="field1"
+                                            />
+                                            <textarea
+                                                onChange={this.update("description")}
+                                                value={this.item.description}
+                                                placeholder={t("input.description")}
+                                                className="field2"
+                                            />
+
+                                            <label className="top-label">
+                                                {t("label.startingPrice")}
+                                                <input
+                                                    type="number"
+                                                    className="field1"
+                                                    onChange={this.update("starting_price")}
+                                                    value={this.item.starting_price}
+                                                />
+                                            </label>
+                                            <label className="top-label">
+                                                {t("label.minimumPrice")}
+                                                <input
+                                                    type="number"
+                                                    className="field1"
+                                                    onChange={this.update("minimum_price")}
+                                                    value={this.item.minimum_price}
+                                                />
+                                            </label>
+                                            <label className="top-label">
+                                                {t("label.category")}
+                                                {categories}
+                                            </label>
+                                            <br />
+                                            <label className="top-label">
+                                                {t("input.uploadImages")} &nbsp;
+                                    <input type="file" multiple onChange={this.onDrop} />
+                                            </label>
+                                            <br />
+
+                                            {/* <label name="buttom-label">
+                                    Sold:
+                                    <input
+                                        name="bottom-entry"
+                                        onChange={this.update("sold")}
+                                        value={this.item.sold}
+                                        // placeholder="Sold"
+                                    />
+                                </label> */}
+                                            <label className="buttom-label">
+                                                {t("label.appraised")} &nbsp;
+                                    <input
+                                                    type="text"
+                                                    className="bottom-entry"
+                                                    onChange={this.update("appraised")}
+                                                    value={this.item.appraised}
+                                                />
+                                            </label>
+                                            <label className="bottom-label">
+                                                {t("label.endIn")} &nbsp;
+                                    <input type="text" className="bottom-entry" onChange={this.setEndTime} />
+                                                &nbsp; {t("label.minutes")}
+                                            </label>
+                                        </fieldset>
+                                        <button type="submit">{t("button.updateItem")}</button>
+                                    </form>
+                                    <p>{this.state.message}</p>
+                                </div>
+                            </div>
+                        )}
+                    </Mutation>
                 }}
-            >
-                {(updateItem, { data, t }) => (
-                    <div>
-                        {this.itemDetails}
-                        <form onSubmit={e => this.handleSubmit(e, updateItem)}>
-                            <input
-                                onChange={this.update("name")}
-                                value={this.state.name}
-                                placeholder="Name"
-                            />
-                            <textarea
-                                onChange={this.update("description")}
-                                value={this.state.description}
-                                placeholder="description"
-                            />
-                            {/* <input
-                                onChange={this.updateImageURLs()}
-                                value={this.state.champions}
-                                placeholder="Upload image urls"
-                            /> */}
-                            <label>
-                                {t("label.startingPrice")}
-                                <input
-                                    onChange={this.update("starting_price")}
-                                    value={this.state.starting_price}
-                                    type="number"
-                                />
-                            </label>
-                            <label>
-                                {t("label.minimumPrice")}
-                                <input
-                                    onChange={this.update("minimum_price")}
-                                    value={this.state.minimum_price}
-                                    placeholder="Minimum Price"
-                                    type="number"
-                                />
-                            </label>
-                            {/* <input
-                                onChange={this.updateLocation("location")}
-                                value={this.state.location}
-                                placeholder="Location"
-                            /> */}
-                            
-                            <label>
-                                {t("label.sold")}
-                                <input
-                                    onChange={this.update("sold")}
-                                    value={this.state.sold}
-                                    placeholder="Sold"
-                                />
-                            </label>
-                            <label>
-                                {t("label.appraised")}
-                                <input
-                                    onChange={this.update("appraised")}
-                                    value={this.state.appraised}
-                                />
-                            </label>
-                            <br/>
-                            <br/>
-                            <label>
-                                {t("label.category")}
-                                {categories}
-                            </label>
-                            <button type="submit">{t("button.updateItem")}</button>
-                        </form>
-                        <p>{this.state.message}</p>
-                    </div>
-                )}
-            </Mutation>
+            </Query>
+
+            
         );
     }
 }

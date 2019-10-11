@@ -30,7 +30,7 @@ const VERIFY_USER = gql`
 `;
 
 const CREATE_ITEM = gql`
-  mutation newItem($name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: String, $champions: [String], $endTime: Float) {
+  mutation newItem($name: String!, $description: String!, $starting_price: Int, $minimum_price: Int, $category: String!, $sold: Boolean!, $appraised: Boolean!, $location: String, $champions: [String], $endTime: Float) {
     newItem(name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, location: $location, champions: $champions, endTime: $endTime) {
       id
       name
@@ -51,7 +51,7 @@ const CREATE_ITEM = gql`
 `;
 
 const UPDATE_ITEM = gql`
-  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Float, $minimum_price: Float, $category: String!, $sold: Boolean!, $appraised: Boolean!, $champions: [String], $endTime: Float) {
+  mutation updateItem($id: ID!, $name: String!, $description: String!, $starting_price: Int, $minimum_price: Int, $category: String!, $sold: Boolean!, $appraised: Boolean!, $champions: [String], $endTime: Float) {
     updateItem(id: $id, name: $name, description: $description, starting_price: $starting_price, minimum_price: $minimum_price, category: $category, sold: $sold, appraised: $appraised, champions: $champions, endTime: $endTime){
       id
       name
@@ -73,8 +73,8 @@ const UPDATE_ITEM = gql`
 `;
 
 const MAKE_BID = gql`
-  mutation makeBid($id: ID!, $current_price: Float!, $highestBidder: ID!){
-    makeBid(id: $id, current_price: $current_price, highestBidder: $highestBidder){
+  mutation makeBid($id: ID!, $current_price: Int!){
+    makeBid(id: $id, current_price: $current_price){
       id
       name
       description
