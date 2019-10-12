@@ -15,6 +15,12 @@ export class MapContainer extends Component {
     }
     componentDidMount(){
         this.setMapStyle();
+        window.addEventListener('resize', () => {
+            if(window.innerWidth > 800)
+                document.getElementById("map").parentElement.style.gridRow = "6";
+            else
+                document.getElementById("map").parentElement.style.gridRow = "8";
+        });
     }
     displayMarkers(){
         return this.items.map((obj, index) => {
@@ -40,8 +46,6 @@ export class MapContainer extends Component {
             return;
         map.firstElementChild.style.width = "80vw";
         map.firstElementChild.style.height = "75vw";
-        if (window.innerWidth < 800) console.log("shitgood");
-        map.parentElement.style.gridRow = "6";
         map.parentElement.style.alignSelf = "center";
         map.parentElement.style.padding = "2em";
     }

@@ -139,7 +139,7 @@ class CreateItem extends Component {
                     endTime: 3
                 });
                 this.files = [];
-                this.props.history.push(`/`);
+                this.props.history.push(`/index`);
             })
         })
     }
