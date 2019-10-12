@@ -27,14 +27,14 @@ const App = () => {
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
+        <AuthRoute exact path="/items/new" component={CreateItem} />
+        <AuthRoute exact path="/items/:id/edit" component={EditItem} />
+        <AuthRoute exact path="/messages/new" component={CreateMessage} />
+        <AuthRoute exact path="/messages/:messageId" component={MessageDetail}/>
+        <AuthRoute exact path="/messages" component={MessagesIndex}/>
+        <AuthRoute exact path="/users/:userId" component={UserProfile}/>
         <Route exact path="/index" component={ItemIndex} />
-        <Route exact path="/items/new" component={CreateItem} />
-        <Route exact path="/items/:id/edit" component={EditItem} />
         <Route exact path="/items/:id" component={ItemShow} />
-        <Route exact path="/messages/new" component={CreateMessage} />
-        <Route exact path="/messages/:messageId" component={MessageDetail}/>
-        <Route exact path="/messages" component={MessagesIndex}/>
-        <Route exact path="/users/:userId" component={UserProfile}/>
         <Route exact path="/" component={Splash} />
       </Switch>
     </div>

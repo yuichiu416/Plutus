@@ -146,6 +146,7 @@
 /* Adjust the button's format*/
 .btn{
   border-radius: 20px;
+  margin-top: 5px;
 }
 /* Adjust the button text's format*/
 .btn span{
