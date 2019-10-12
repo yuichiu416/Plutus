@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 
 function Splash() {
-
-  "use strict";
   /**
    * Written by Dillon https://codepen.io/Dillo
    *
@@ -111,8 +109,7 @@ function Splash() {
   //------------------------------------------------------------------------
   function move() {
 
-    let part, prev, dx, dy, s, c, r, rv, av, deltar;
-    let mindeltar;
+    let part, prev;
 
     for (let k = 0; k < nbParticles; ++k) {
       part = particles[k];
@@ -123,9 +120,9 @@ function Splash() {
       }
 
       prev = { x: part.x, y: part.y }; // position before this move
-      mindeltar = 10000; // used to evaluate hue
 
-      eddies.forEach((eddy, ke) => {
+      eddies.forEach((eddy) => {
+        let part = this.part, prev = this.prev, dx, dy, s, c, r, rv, av, deltar;
         dx = prev.x - eddy.x;
         dy = prev.y - eddy.y;
         r = mhypot(dx, dy);    // distance particle - centre of the eddy
@@ -202,16 +199,14 @@ function Splash() {
   //------------------------------------------------------------------------
   // beginning of execution
 
-  {
-    canv = document.createElement('canvas');
-    canv.style.position = "absolute";
-    canv.addEventListener('click', clickCanvas);
-    document.body.appendChild(canv);
-    ctx = canv.getContext('2d');
-    canv.style.height = "100%";
-    canv.style.backgroundColor = "black";
-    canv.style.zIndex = 10;
-  } // canvas creation
+  canv = document.createElement('canvas');
+  canv.style.position = "absolute";
+  canv.addEventListener('click', clickCanvas);
+  document.body.appendChild(canv);
+  ctx = canv.getContext('2d');
+  canv.style.height = "100%";
+  canv.style.backgroundColor = "black";
+  canv.style.zIndex = 10;
 
   startOver();
 
