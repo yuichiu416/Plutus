@@ -11,6 +11,7 @@ const { IS_LOGGED_IN } = Queries;
 
 const Nav = props => {
     const { t } = props;
+    
     return (
         <ApolloConsumer>
             {client => (
@@ -21,6 +22,7 @@ const Nav = props => {
                                 <div className="loggedin-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <SearchForm />
+
                                     {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
                                         <li><img src="" className="" alt="" /></li>
                                         <ul className="profile-dropdown-menu" id="profile-dropdown-menu">
@@ -31,9 +33,10 @@ const Nav = props => {
                                         <li><Link to="/messages">Messages</Link></li>
                                         </ul>
                                     </ul> */}
+
                                     <div className="nav-logout-div">
                                         <div className="box-lgout">
-                                            <div className="btn logout-btn">
+                                            <div className="logout-btn">
                                                 <span
                                                     onClick={e => {
                                                         e.preventDefault();
