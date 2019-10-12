@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { LOGIN_USER } from "../graphql/mutations";
 import { translate } from 'react-switch-lang';
-
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             email: "",
             password: ""
@@ -64,7 +63,6 @@ class Login extends Component {
                             password: this.state.password
                         }
                     })
-                        .then(() => this.props.history.push('/index'));
                 } else {
                     this.handleDemoPassword(password);
                 }
@@ -91,7 +89,6 @@ class Login extends Component {
                     const { token, id } = data.login;
                     localStorage.setItem("currentUser", id);
                     localStorage.setItem("auth-token", token);
-                    this.props.history.push("/index");
                 }}
                 update={(client, data) => this.updateCache(client, data)}
             >
@@ -116,8 +113,9 @@ class Login extends Component {
                                     className="field1"
                                 />
                             </fieldset>
-                            <button type="submit">{t("button.login")}</button>
-                            <button onClick={this.handleDemo}>{t("button.demo")}</button>
+                            <Link to="/index" ><button type="submit">{t("button.login")}</button></Link>
+                            <Link to="/index" ><button onClick={this.handleDemo}>{t("button.demo")}</button></Link>
+                            
                         </form>
                     </div>
                 }}

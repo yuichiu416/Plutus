@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { REGISTER_USER } from "../graphql/mutations";
 import { translate } from 'react-switch-lang';
+import { Link } from 'react-router-dom';
 
 class Register extends Component {
     constructor(props) {
@@ -50,7 +51,7 @@ class Register extends Component {
                         const { token, id } = data.register;
                         localStorage.setItem("currentUser", id);
                         localStorage.setItem("auth-token", token);
-                        this.props.history.push("/");
+                        this.props.history.push("/index");
                     }}
                     update={(client, data) => this.updateCache(client, data)}
                 >
@@ -80,7 +81,9 @@ class Register extends Component {
                                         className="field1"
                                     />
                                 </fieldset>
-                                <button type="submit">{t("button.signup")}</button>
+                                <Link to="/index">
+                                    <button type="submit">{t("button.signup")}</button>
+                                </Link>
                             </form>
                         </div>
                     )}
