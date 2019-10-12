@@ -1,3 +1,10 @@
 .create-message-form > input{
     margin-bottom: 20px;
 }
+.message-seller {
+    padding-left: 5em;
+}
+.user-profile-header{
+    padding-left: 5em;
+    font-size: 16px;
+}

@@ -7,7 +7,7 @@
 .item-show-wrapper{
   display: grid;
   grid-template-columns: 1fr 2fr 2fr ;
-  grid-template-rows: 60px 2fr 10px 10px 100px 100px;
+  grid-template-rows: 60px 2fr 10px 10px 100px 100px 100px 100px;
   grid-row-gap: 1em;
   grid-column-gap: 1em; 
 }
@@ -101,11 +101,33 @@
     align-self: start;
   }
   .box-edit-link{
-  grid-row: 1;
-  /* grid-column: 2; */
+  grid-row: 7;
+  grid-column: 1;
   align-self: start;
+  padding-left: 5%;
+  
+  }
+  .seller-info{
+    grid-row: 7;
+    grid-column: 1;
+    align-self: end;
+    padding-top: 5%;
+    padding-left: 5%;
+  }
+  .map{
+    grid-row: 8;
+    grid-column: 1;
   }
 }
+.map{
+  grid-row: 6;
+}
+.footer{
+  height: 100px;
+}
+/* .message-seller{
+  padding-left: 10px;
+} */
 /*
 .sidebar {
         grid-area: sidebar;

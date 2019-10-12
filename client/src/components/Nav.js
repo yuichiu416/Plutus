@@ -32,7 +32,7 @@ const Nav = props => {
                                         </ul>
                                     </ul> */}
                                     <div className="nav-logout-div">
-                                        <div className="box">
+                                        <div className="box-lgout">
                                             <div className="btn logout-btn">
                                                 <span
                                                     onClick={e => {

@@ -198,6 +198,7 @@ class ItemShow extends React.Component {
                             </div>
                             <Link to={`${this.props.match.params.id}/edit`} className="box-edit-link">{t("button.editItem")}</Link>
                             <Map/>
+                            <div className="footer"></div>
                         </div>
                         </div>
                     );
