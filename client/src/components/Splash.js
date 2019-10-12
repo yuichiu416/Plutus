@@ -39,23 +39,16 @@ class Splash extends Component {
     this.startOver = this.startOver.bind(this);
   }
   componentDidMount(){
-    if(this.props.match.url === "/"){
-      canv = document.createElement('canvas');
-      console.log("created");
-      console.log(this.props.match);
-      canv.style.position = "fixed";
-      canv.addEventListener('click', this.clickCanvas);
-      document.body.appendChild(canv);
-      ctx = canv.getContext('2d');
-      canv.style.height = "100%";
-      canv.style.backgroundColor = "black";
-      canv.style.zIndex = 10;
-      this.startOver();
-      window.addEventListener('resize', this.startOver);
-    }
-    else{
-      window.removeEventListener('resize', this.startOver);
-    }
+    canv = document.createElement('canvas');
+    canv.style.position = "fixed";
+    canv.addEventListener('click', this.clickCanvas);
+    document.body.appendChild(canv);
+    ctx = canv.getContext('2d');
+    canv.style.height = "100%";
+    canv.style.backgroundColor = "black";
+    canv.style.zIndex = 10;
+    this.startOver();
+    window.addEventListener('resize', this.startOver);
   }
   alea(min, max) {
     if (typeof max == 'undefined') return min * mrandom();
