@@ -1,3 +1,4 @@
+
 //client/src/App.js
 import React from "react";
 import Login from "./components/Login";
@@ -5,7 +6,7 @@ import Register from "./components/Register";
 import { Route, Switch } from 'react-router-dom';
 import AuthRoute from "./util/route_util";
 import Nav from "./components/Nav";
-// import Splash from './components/Splash';
+import Splash from './components/Splash';
 import ItemIndex from "./components/Items/ItemIndex";
 import ItemShow from "./components/Items/Itemshow";
 import EditItem from "./components/Items/EditItem";
@@ -24,17 +25,17 @@ const App = () => {
       {/* <h1>PLUTUS</h1> */}
       
       <Switch>
-        
         <AuthRoute exact path="/login" component={Login} routeType="auth" />
         <AuthRoute exact path="/register" component={Register} routeType="auth" />
-        <Route exact path="/items/new" component={CreateItem} />
-        <Route exact path="/items/:id/edit" component={EditItem} />
+        <AuthRoute exact path="/items/new" component={CreateItem} />
+        <AuthRoute exact path="/items/:id/edit" component={EditItem} />
+        <AuthRoute exact path="/messages/new" component={CreateMessage} />
+        <AuthRoute exact path="/messages/:messageId" component={MessageDetail}/>
+        <AuthRoute exact path="/messages" component={MessagesIndex}/>
+        <AuthRoute exact path="/users/:userId" component={UserProfile}/>
+        <Route exact path="/index" component={ItemIndex} />
         <Route exact path="/items/:id" component={ItemShow} />
-        <Route exact path="/" component={ItemIndex} />
-        <Route exact path="/messages/new" component={CreateMessage} />
-        <Route exact path="/messages/:messageId" component={MessageDetail}/>
-        <Route exact path="/messages" component={MessagesIndex}/>
-        <Route exact path="/users/:userId" component={UserProfile}/>
+        <Route exact path="/" component={Splash} />
       </Switch>
     </div>
   );

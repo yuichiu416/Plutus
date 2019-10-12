@@ -40,7 +40,7 @@ export class MapContainer extends Component {
             return;
         map.firstElementChild.style.width = "80%";
         map.firstElementChild.style.height = "50%";
-        map.parentElement.style.gridRow = "6";
+        map.parentElement.style.gridRow = "7";
     }
 
     render() {

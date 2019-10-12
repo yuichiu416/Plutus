@@ -1,41 +1,18 @@
-.splash-body body {
-  
-  background-color: #000;
-  margin:0;
-  padding:0;
-  border-width:0;
-  z-index: 1;
-}
 .logo-container {
   display: flex;
   animation: fadeIn 3s;
-  /* animation-delay: 5s; */
   animation-fill-mode: inherit;
-  
-
-  /* visibility: hidden; */
 }
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-  /* background-size: contain; */
-  /* max-width: 10px; */
-
-/* .plutus-splash {
-  margin: 2%;
-  font-size: 28px;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-} */
 
 .plutus-logo {
   width: 70vw;
   margin-top: 23%;
   margin-left: 15%;
-
-  /* margin: 0 auto; */
+  z-index: 11;
 }
 
 .plutus-logo:hover {

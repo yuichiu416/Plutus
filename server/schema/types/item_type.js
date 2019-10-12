@@ -20,7 +20,14 @@ const ItemType = new GraphQLObjectType({
             } 
         },
         description: { type: GraphQLString },
-        seller: { type: GraphQLID },
+        seller: { 
+            type: require('./user_type'),
+            resolve(parentValue){
+                return Item.findById(parentValue.id)
+                        .populate("seller")
+                        .then(item => item.seller);
+            }
+         },
         starting_price: { type: GraphQLInt },
         minimum_price: { type: GraphQLInt },
         category: {

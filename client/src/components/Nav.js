@@ -19,7 +19,7 @@ const Nav = props => {
                         if (data.isLoggedIn) {
                             return (
                                 <div className="loggedin-navbar">
-                                    <Link to="/"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
+                                    <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <SearchForm />
                                     {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
                                         <li><img src="" className="" alt="" /></li>
@@ -40,7 +40,7 @@ const Nav = props => {
                                                         localStorage.removeItem("auth-token");
                                                         localStorage.removeItem("currentUser");
                                                         client.writeData({ data: { isLoggedIn: false, currentUser: null } });
-                                                        props.history.push("/");
+                                                        props.history.push("/index");
                                                     }}
                                                 >{t("button.logout")}</span>
                                             </div>
@@ -52,7 +52,7 @@ const Nav = props => {
                         } else {
                             return (
                                 <div className="loggedout-navbar">
-                                    <Link to="/"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
+                                    <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <div className="nav-button-duo">
                                         <Link to="/login" className="nav-button">{t("button.login")}</Link>
                                         <Link to="/register" className="nav-button">{t("button.signup")}</Link>

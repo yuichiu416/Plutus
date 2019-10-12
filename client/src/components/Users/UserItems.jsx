@@ -7,10 +7,6 @@ const { FETCH_ITEMS } = queries;
 
 
 class UserItems extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
     render() {
         const { t } = this.props;
         return (

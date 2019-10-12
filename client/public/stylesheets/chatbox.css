@@ -25,7 +25,7 @@
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 400px;
+  max-width: 300px;
   padding: 10px;
   background-color: white;
   border-radius: 10px;
@@ -146,6 +146,7 @@
 /* Adjust the button's format*/
 .btn{
   border-radius: 20px;
+  margin-top: 5px;
 }
 /* Adjust the button text's format*/
 .btn span{
@@ -154,7 +155,7 @@
 /* Adjust the message input's format*/
 .message-input{
   box-sizing: border-box;
-  width: 100%;
+  width: 300px;
   line-height: 45px;
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
