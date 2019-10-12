@@ -44,6 +44,10 @@ export class MapContainer extends Component {
         const map = document.getElementById("map");
         if (!map)
             return;
+        if (window.innerWidth > 800)
+            map.parentElement.style.gridRow = "6";
+        else
+            map.parentElement.style.gridRow = "8";
         map.firstElementChild.style.width = "80vw";
         map.firstElementChild.style.height = "75vw";
         map.parentElement.style.alignSelf = "center";
