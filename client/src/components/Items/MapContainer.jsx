@@ -44,12 +44,14 @@ export class MapContainer extends Component {
         const map = document.getElementById("map");
         if (!map)
             return;
-        map.firstElementChild.style.width = "80%";
-        map.firstElementChild.style.height = "50%";
         if (window.innerWidth > 800)
             map.parentElement.style.gridRow = "6";
         else
             map.parentElement.style.gridRow = "8";
+        map.firstElementChild.style.width = "80vw";
+        map.firstElementChild.style.height = "75vw";
+        map.parentElement.style.alignSelf = "center";
+        map.parentElement.style.padding = "2em";
     }
 
     render() {
@@ -70,7 +72,8 @@ export class MapContainer extends Component {
                         return <h1>{t("h1.noLocationInfomation")}</h1>
                     }
                     return (
-                        <div id="map">
+                        <div id="map" className="map">
+                            
                             <Map
                                 google={this.props.google}
                                 zoom={12}

@@ -21,12 +21,14 @@ class UserMessages extends Component {
                     const messages = data.messages.filter(message => message.sender.id === this.props.user.id);
                     const messagesLi = messages.map(message => {
                         return (
+                            <div className="message-seller">
                             <Link to={`/messages/${message.id}`}>
-                                <li key={message.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                <li key={message.id} >
                                 <h3>{message.title}</h3>
                                 <p>{message.replies.length} {t("p.replies")}</p>
                                 </li>
                             </Link>
+                            </div>
                         )
                     })
                     return (

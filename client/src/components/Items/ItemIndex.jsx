@@ -37,7 +37,7 @@ class ItemIndex extends React.Component {
                                             </li></Link>
                                         </div>
                                     ))}
-                                
+                                {/* <div className="footer"></div> */}
                             </div>
                         </div>
                     );

@@ -94,8 +94,8 @@ class UserProfile extends Component {
                     } else {
                         return (
                             <div>
-                                <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
-                                {userProfileHeader}
+                                {/* <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" /> */}
+                                {/* {userProfileHeader} */}
                                 <CreateMessage userId={user.id}/>
                                 <ul className="nav nav-tabs" onClick={this.showDetail}>
                                     <li className="nav-item active">

@@ -52,13 +52,16 @@ class CreateMessage extends React.Component {
                     this.setState({message: "The message has been sent"}); 
                 }}>
                     {(newMessage, { data }) => {
-                        return <div>
+                        return <div className="create-form">
+                            <fieldset>
                             <form onSubmit={e => this.handleSubmit(e, newMessage)} className="create-message-form">
                                 <input 
-                                    type="text" 
+                                    type="name" 
                                     value={this.state.title} 
                                     onChange={this.update("title")}
-                                    placeholder="Message title"/>
+                                    placeholder="Message title"
+                                    className="field1"/>
+                                    
                                 <br/>
                                 <textarea 
                                     value={this.state.body}
@@ -82,8 +85,11 @@ class CreateMessage extends React.Component {
                                         </Query>
                                     </select>
                                 </div> */}
-                                <button>{t("button.send")}</button>
+                                
+                                
                             </form>
+                                <button className="message-button">{t("button.send")}</button>
+                            </fieldset>
                             {this.state.message}
                         </div>
                     }}

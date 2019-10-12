@@ -44,7 +44,7 @@ padding: 1%;
   
 }
 
-div[class*=box] {
+div[class*=box-lgout] {
     height: 33.33%;
     width: 100%; 
   display: flex;
