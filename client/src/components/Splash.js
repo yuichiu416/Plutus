@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 function Splash() {
@@ -12,9 +13,6 @@ function Splash() {
    * @author Alex Andrix <alex@alexandrix.com>
    * @since 2019
    */
-
-
-
   const nbEddies = 5;
   const nbParticles = 2000; // number of particles
   const lifeTime = 1000; // average lifetime of particles
@@ -33,22 +31,10 @@ function Splash() {
 
   const mrandom = Math.random; // see above alternative function for reproductible results
   const mfloor = Math.floor;
-  const mround = Math.round;
-  const mceil = Math.ceil;
-  const mabs = Math.abs;
   const mmin = Math.min;
-  const mmax = Math.max;
-
-  const mPI = Math.PI;
-  const mPIS2 = Math.PI / 2;
-  const m2PI = Math.PI * 2;
-  const msin = Math.sin;
-  const mcos = Math.cos;
-  const matan2 = Math.atan2;
   const mexp = Math.exp;
 
   const mhypot = Math.hypot;
-  const msqrt = Math.sqrt;
 
   //-----------------------------------------------------------------------------
   // miscellaneous functions
@@ -222,30 +208,27 @@ function Splash() {
     canv.addEventListener('click', clickCanvas);
     document.body.appendChild(canv);
     ctx = canv.getContext('2d');
-
+    canv.style.height = "100%";
+    canv.style.backgroundColor = "black";
+    canv.style.zIndex = 10;
   } // canvas creation
 
   startOver();
 
   window.addEventListener('resize', startOver);
 
-  return (
+  function removeCanvas() {
+    document.getElementsByTagName("canvas")[0].remove();
+  }
 
-    // <div id="jsi-hex-container" className"container"></div>
-    <body className="splash-body">
-    <div className="Splash">
-      <div className="logo-container">
-        {/* <div className="splash-logo"></div> */}
-        {/* <p className="plutus-splash">PLUTUS</p> */}
-        <img src="Logo4.png" alt="plutus-logo" className="plutus-logo"
-        style={{
-          zIndex: 10,
-          
-          // height: 300
-           }} />
+  return (
+    <Link to="/index">
+      <div className="Splash splash-body">
+        <div className="logo-container">
+          <img onClick={removeCanvas} src="Logo4.png" alt="plutus-logo" className="plutus-logo"/>
+        </div>
       </div>
-    </div>
-    </body>
+    </Link>
   );
 }
 

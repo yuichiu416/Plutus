@@ -33,7 +33,7 @@ class ItemIndex extends React.Component {
                                             <p>{item.name}</p><br />
                                             <p>${item.current_price}</p><br/>
                                             </li></Link>
-                                        // </div>
+                                        </div>
                                     ))}
                                 {/* </div> */}
                             </div>

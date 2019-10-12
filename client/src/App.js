@@ -35,7 +35,7 @@ const App = () => {
         <Route exact path="/messages/:messageId" component={MessageDetail}/>
         <Route exact path="/messages" component={MessagesIndex}/>
         <Route exact path="/users/:userId" component={UserProfile}/>
-        {/* <Route exact path="/" component={Splash} /> */}
+        <Route exact path="/" component={Splash} />
       </Switch>
     </div>
   );
