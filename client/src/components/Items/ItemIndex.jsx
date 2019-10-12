@@ -24,9 +24,9 @@ class ItemIndex extends React.Component {
                             <Link className="index-create-link" to="items/new"> {t("button.createNewItem")}</Link>
                             
                             <div className="index-wrapper">
-                                {/* <div> */}
+                                
                                     {data.items.map((item, idx) => (
-                                        // <div>
+                                        
                                             <Link to={`/items/${item.id}`} key={`/${item.id}`} >
                                             
                                             <li key={item.id} className="item-preview">
@@ -38,9 +38,9 @@ class ItemIndex extends React.Component {
                                                     <p className="link-style"> &nbsp; &nbsp; &nbsp; ${item.current_price}</p>
                                             </div>
                                             </li></Link>
-                                        // </div>
+                                        
                                     ))}
-                                {/* </div> */}
+                                
                             </div>
                         </div>
                     );
