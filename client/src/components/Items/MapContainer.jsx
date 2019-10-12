@@ -46,6 +46,10 @@ export class MapContainer extends Component {
             return;
         map.firstElementChild.style.width = "80%";
         map.firstElementChild.style.height = "50%";
+        if (window.innerWidth > 800)
+            map.parentElement.style.gridRow = "6";
+        else
+            map.parentElement.style.gridRow = "8";
     }
 
     render() {
