@@ -62,10 +62,10 @@ function Splash() {
     return {
       x: alea(dimx),
       y: alea(dimy),
-      /*    
-        x: dimx / 2,
-        y: dimy / 2, 
-      */
+          
+        // x: dimx / 2,
+        // y: dimy / 2, 
+      
       //   coeffR: 0.0,        // coefficient for radial velocity
       coeffR: 0.001 * (alea(0.7, 1.3)),        // coefficient for radial velocity
       radius: 150 + alea(-50, 50),          // radius where angular velocity is max
@@ -109,7 +109,8 @@ function Splash() {
   //------------------------------------------------------------------------
   function move() {
 
-    let part, prev;
+    // let part, prev;
+    let part, prev, dx, dy, s, c, r, rv, av, deltar;
 
     for (let k = 0; k < nbParticles; ++k) {
       part = particles[k];
@@ -122,7 +123,7 @@ function Splash() {
       prev = { x: part.x, y: part.y }; // position before this move
 
       eddies.forEach((eddy) => {
-        let part = this.part, prev = this.prev, dx, dy, s, c, r, rv, av, deltar;
+        
         dx = prev.x - eddy.x;
         dy = prev.y - eddy.y;
         r = mhypot(dx, dy);    // distance particle - centre of the eddy
@@ -169,8 +170,8 @@ function Splash() {
     dimx = maxx - 8; // for a small margin around the canvas
     dimy = maxy - 8; // for a small margin around the canvas
 
-    canv.style.left = (maxx - dimx) / 2 + 'px';
-    canv.style.top = (maxy - dimy) / 2 + 'px';
+    canv.style.left = (maxx - dimx) / 20 + 'px';
+    canv.style.top = (maxy - dimy) / 20 + 'px';
 
     canv.width = dimx;
     canv.height = dimy;
@@ -200,25 +201,34 @@ function Splash() {
   // beginning of execution
 
   canv = document.createElement('canvas');
-  canv.style.position = "absolute";
+  canv.style.position = "fixed";
   canv.addEventListener('click', clickCanvas);
   document.body.appendChild(canv);
   ctx = canv.getContext('2d');
   canv.style.height = "100%";
   canv.style.backgroundColor = "black";
   canv.style.zIndex = 10;
+  // canv.style.border = "none";
+  // canv.style.left = 0;
+  // canv.style.top = 0;
+  
 
   startOver();
 
   window.addEventListener('resize', startOver);
 
+  // function removeCanvas() {
+  //   document.getElementsByTagName("canvas")[0].remove();
+  // }
   function removeCanvas() {
-    document.getElementsByTagName("canvas")[0].remove();
-  }
+    const canv = document.getElementsByTagName("canvas");
+    for (let i = 0; i < canv.length; i++)
+      canv[i].remove();
+  } 
 
   return (
     <Link to="/index">
-      <div className="Splash splash-body">
+      <div className="splash-body">
         <div className="logo-container">
           <img onClick={removeCanvas} src="Logo4.png" alt="plutus-logo" className="plutus-logo"/>
         </div>

@@ -30,8 +30,10 @@ class ItemIndex extends React.Component {
                                             <Link to={`/items/${item.id}`}>
                                             <li className="item-preview">
                                             {item.champions[0] ? <Image className="item-preview-image" cloudName='chinweenie' publicId={item.champions[0]} /> : <h3>{t("h3.noImageProvided")}</h3>}
-                                            <p>{item.name}</p><br />
-                                            <p>${item.current_price}</p><br/>
+                                                    <div className="index-info">
+                                                        <p className="link-style">&nbsp; &nbsp; {item.name}</p>
+                                                        <p className="link-style"> &nbsp; &nbsp; &nbsp; ${item.current_price}</p>
+                                                    </div>
                                             </li></Link>
                                         </div>
                                     ))}

@@ -64,7 +64,7 @@ class Login extends Component {
                             password: this.state.password
                         }
                     })
-                        .then(() => this.props.history.push('/'));
+                        .then(() => this.props.history.push('/index'));
                 } else {
                     this.handleDemoPassword(password);
                 }
@@ -91,7 +91,7 @@ class Login extends Component {
                     const { token, id } = data.login;
                     localStorage.setItem("currentUser", id);
                     localStorage.setItem("auth-token", token);
-                    this.props.history.push("/");
+                    this.props.history.push("/index");
                 }}
                 update={(client, data) => this.updateCache(client, data)}
             >

@@ -1,3 +1,7 @@
+.splash-body{
+  background-color: black;
+  margin: 0;
+}
 .logo-container {
   display: flex;
   animation: fadeIn 3s;
