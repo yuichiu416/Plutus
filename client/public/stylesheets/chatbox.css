@@ -25,7 +25,7 @@
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 400px;
+  max-width: 300px;
   padding: 10px;
   background-color: white;
   border-radius: 10px;
@@ -154,7 +154,7 @@
 /* Adjust the message input's format*/
 .message-input{
   box-sizing: border-box;
-  width: 100%;
+  width: 300px;
   line-height: 45px;
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
