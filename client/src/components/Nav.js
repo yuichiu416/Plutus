@@ -23,10 +23,10 @@ const Nav = props => {
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     
                                     
-                                        <div class="menu-wrap">
+                                        <div className="menu-wrap">
                                             <input type="checkbox" class="toggler"/>
-                                                <div class="hamburger"><div></div></div>
-                                                <div class="menu">
+                                                <div className="hamburger"><div></div></div>
+                                                <div className="menu">
                                                     <div>
                                                         <div>
                                                             <ul>
@@ -74,6 +74,23 @@ const Nav = props => {
                             return (
                                 <div className="loggedout-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
+                                    <div className="menu-wrap">
+                                        <input type="checkbox" class="toggler" />
+                                        <div className="hamburger"><div></div></div>
+                                        <div className="menu">
+                                            <div>
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="#">Profile</a></li>
+                                                        <li><a href="#">Messages</a></li>
+                                                        <li><a href="#">Notifications</a></li>
+                                                        <li><a href="#">Contact</a></li>
+                                                        <SearchForm />
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="nav-button-duo">
                                         <Link to="/login" className="nav-button">{t("button.login")}</Link>
                                         <Link to="/register" className="nav-button">{t("button.signup")}</Link>

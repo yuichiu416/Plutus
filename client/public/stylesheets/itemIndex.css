@@ -58,8 +58,8 @@ a {
   background-color: transparent;
   border: 1px solid rgb(53, 53, 53);
   /* align-self: center; */
-  grid-auto-columns: minmax(100px, auto);
-  grid-auto-rows: minmax(100px, auto);
+  /* grid-auto-columns: minmax(100px, auto); */
+  grid-auto-rows: minmax(300px, auto);
   
   /* z-index: 4; */
     /* width: 30vw; */

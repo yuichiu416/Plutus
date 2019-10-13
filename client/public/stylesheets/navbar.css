@@ -119,9 +119,13 @@ div[class*=box-lgout] {
   display: none;
 }
 
-/* .nav-search-div {
+.nav-search-bar {
+  height: 30px;
+  width: 200vw;
+  height: 200vw;
+}
   
-  align-items: center;
+  /* align-items: center; 
   position: absolute;
   display: inline-flex;
   flex-direction: row;
