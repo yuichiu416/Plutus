@@ -33,6 +33,10 @@ class ItemShow extends React.Component {
         this.id = this.props.match.params.id;
         this.currentPrice = 0;
         this.countDown = this.countDown.bind(this);
+        this.timer = [];
+    }
+    componentWillUnmount() {
+        this.timer.forEach(id => clearInterval(id))
     }
     send(){
         if(parseInt(this.currentPrice) >= parseInt(this.state.mybid)){
@@ -79,8 +83,6 @@ class ItemShow extends React.Component {
         timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
             + minutes + "m " + seconds + "s ";
 
-        if(this.timer || distance < 0)
-            return clearInterval(this.countDown);
         if (distance < 0) {
             timer.innerHTML = t("label.auctionEnded");
             this.props.client.mutate({
@@ -142,7 +144,7 @@ class ItemShow extends React.Component {
                     });
                     if(!this.item.seller)
                         return <h1>No seller information, please contact customer service</h1>
-                    this.timer = setInterval(this.countDown, 1000);
+                    this.timer.push(setInterval(this.countDown, 1000));
                     return (
                         <div className="item-show-body">
                         <div className="item-show-wrapper">
