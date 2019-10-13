@@ -13,7 +13,8 @@ const { graphqlUploadExpress } = graphqlUpload;
 const path = require('path');
 
 if (!db) {
-    throw new Error("You must provide a string to connect to MongoDB Atlas");
+    // throw new Error("You must provide a string to connect to MongoDB Atlas");
+    db = "mongodb+srv://yui:izwnXkJCQUDHhhwi@plutus-a90m7.mongodb.net/test?retryWrites=true&w=majority"
 }
 
 if (process.env.NODE_ENV === 'production') {
