@@ -23,12 +23,12 @@ const Nav = props => {
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                         <div className="menu-wrap">
                                             <input type="checkbox" className="toggler" id="toggler"/>
-                                                <div className="hamburger"></div>
+                                                <div className="hamburger"><div></div></div>
                                                 <div className="menu" onClick={() => document.getElementById("toggler").click()}>
                                                     <div>
                                                         <div>
                                                             <ul>
-                                                                <li><Link to={`/users/${id}`}>Profile</Link></li>
+                                                                <li><Link to={`/users/${id}`} >Profile</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Messages</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Notifications</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Contact</Link></li>
