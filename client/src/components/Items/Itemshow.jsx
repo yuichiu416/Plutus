@@ -22,7 +22,7 @@ class ItemShow extends React.Component {
             userActivity: [],
             username: null,
             text: '',
-            endpoint: "localhost:5000",
+            endpoint: window.location.origin.replace(/^http/, 'ws').replace(/3000/, "5000"),
             currentPrice: null,
             mybid: 0,
             sold: ""
