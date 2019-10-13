@@ -28,7 +28,7 @@ const Nav = props => {
                                                     <div>
                                                         <div>
                                                             <ul>
-                                                                <li><Link to={`/users/${id}`} >Profile</Link></li>
+                                                                <li><Link to={`/users/${id}`}>Profile</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Messages</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Notifications</Link></li>
                                                                 <li><Link to={`/users/${id}`}>Contact</Link></li>
