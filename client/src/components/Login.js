@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { LOGIN_USER } from "../graphql/mutations";
 import { translate } from 'react-switch-lang';
-import { Link } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {

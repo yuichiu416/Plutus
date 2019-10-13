@@ -144,6 +144,8 @@ class ItemShow extends React.Component {
                             <Image className="box-image" cloudName='chinweenie' publicId={champion}/>
                         </div>
                     });
+                    if(!this.item.seller)
+                        return <h1>No seller information, please contact customer service</h1>
                     return (
                         <div className="item-show-body">
                         <div className="item-show-wrapper">
