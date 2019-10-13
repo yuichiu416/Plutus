@@ -22,7 +22,6 @@ const App = () => {
     <div>
       <Nav />
       <Chatbot />
-      {/* <h1>PLUTUS</h1> */}
       
       <Switch>
         <AuthRoute exact path="/login" component={Login} routeType="auth" />

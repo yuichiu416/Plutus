@@ -8,7 +8,6 @@ import { translate } from 'react-switch-lang';
 
 
 const { IS_LOGGED_IN } = Queries;
-
 const Nav = props => {
     const { t } = props;
     
@@ -18,38 +17,27 @@ const Nav = props => {
                 <Query query={IS_LOGGED_IN}>
                     {({ data }) => {
                         if (data.isLoggedIn) {
+                            const id = localStorage.getItem("currentUser")
                             return (
                                 <div className="loggedin-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                         <div className="menu-wrap">
-                                            <input type="checkbox" className="toggler"/>
-                                                <div className="hamburger"><div></div></div>
-                                                <div className="menu">
+                                            <input type="checkbox" className="toggler" id="toggler"/>
+                                                <div className="hamburger"></div>
+                                                <div className="menu" onClick={() => document.getElementById("toggler").click()}>
                                                     <div>
                                                         <div>
                                                             <ul>
-                                                                <li><a href="#">Profile</a></li>
-                                                                <li><a href="#">Messages</a></li>
-                                                                <li><a href="#">Notifications</a></li>
-                                                                <li><a href="#">Contact</a></li>
+                                                                <li><Link to={`/users/${id}`}>Profile</Link></li>
+                                                                <li><Link to={`/users/${id}`}>Messages</Link></li>
+                                                                <li><Link to={`/users/${id}`}>Notifications</Link></li>
+                                                                <li><Link to={`/users/${id}`}>Contact</Link></li>
                                                                 <SearchForm />
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                    {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
-                                        <li><img src="" className="" alt="" /></li>
-                                        <ul className="profile-dropdown-menu" id="profile-dropdown-menu">
-                                            <li className="profile-dropdown-header">
-                                                <img src="" className="" alt="" />
-                                            </li>
-                                            <li><Link to={`/users/:id`}>Profile</Link></li>
-                                        <li><Link to="/messages">Messages</Link></li>
-                                        </ul>
-                                    </ul> */}
-                                    
                                     <div className="nav-logout-div">
                                         <div className="box-lgout">
                                             <div className="logout-btn">

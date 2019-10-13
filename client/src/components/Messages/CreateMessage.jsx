@@ -26,7 +26,6 @@ class CreateMessage extends React.Component {
     }
 
     handleSubmit(e, newMessage){
-        debugger
         e.preventDefault();
         newMessage({
             variables: {
