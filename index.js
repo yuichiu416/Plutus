@@ -9,7 +9,6 @@ io.on('connection', socket => {
     socket.on('bid', (currentPrice) => {
         // once we get a 'bid' event from one of our clients, we will send it to the rest of the clients
         // we make use of the socket.emit method again with the argument given to use from the callback function above
-        console.log('Announce is: ', currentPrice)
         io.sockets.emit('bid', currentPrice);
     });
 })

@@ -21,7 +21,6 @@ class Register extends Component {
     }
 
     updateCache(client, { data }) {
-        console.log(data);
         // here we can write directly to our cache with our returned mutation data
         client.writeData({
             data: { 
@@ -39,6 +38,7 @@ class Register extends Component {
                 password: this.state.password
             }
         });
+        this.props.history.push("/index");
     }
 
     render() {
@@ -81,9 +81,7 @@ class Register extends Component {
                                         className="field1"
                                     />
                                 </fieldset>
-                                <Link to="/index">
-                                    <button type="submit">{t("button.signup")}</button>
-                                </Link>
+                                <button type="submit">{t("button.signup")}</button>
                             </form>
                         </div>
                     )}

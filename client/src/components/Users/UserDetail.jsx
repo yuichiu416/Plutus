@@ -24,8 +24,6 @@ class UserDetail extends Component {
         }
         updateUser({
             variables
-        }).then(response => {
-            console.log(response.data);
         })
     };
 

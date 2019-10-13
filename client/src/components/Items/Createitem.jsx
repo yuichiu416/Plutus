@@ -136,7 +136,7 @@ class CreateItem extends Component {
                     sold: false,
                     appraised: false,
                     champions: [],
-                    endTime: 3
+                    endTime: 0
                 });
                 this.files = [];
                 this.props.history.push(`/index`);

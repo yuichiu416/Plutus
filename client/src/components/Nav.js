@@ -21,12 +21,10 @@ const Nav = props => {
                             return (
                                 <div className="loggedin-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
-                                    
-                                    
-                                        <div class="menu-wrap">
-                                            <input type="checkbox" class="toggler"/>
-                                                <div class="hamburger"><div></div></div>
-                                                <div class="menu">
+                                        <div className="menu-wrap">
+                                            <input type="checkbox" className="toggler"/>
+                                                <div className="hamburger"><div></div></div>
+                                                <div className="menu">
                                                     <div>
                                                         <div>
                                                             <ul>
