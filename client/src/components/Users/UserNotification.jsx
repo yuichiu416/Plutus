@@ -35,8 +35,8 @@ class UserNotification extends Component {
                     const uniqueNotifications = [];
                     Object.values(hashWithBody).forEach((notificationBody, i) => {
                         if (distinctArray.indexOf(notificationBody) < 0){
-                            distinctArray.push(notificationBody);
-                            uniqueNotifications.push(notifications[i]);
+                            distinctArray.unshift(notificationBody);
+                            uniqueNotifications.unshift(notifications[i]);
                         }
                     })
                     if (uniqueNotifications.length === 0) return <p>No notifications yet</p>
