@@ -3,12 +3,17 @@
 Plutus is an auction bidding web app where users are allowed to bid on luxurious
 products they like, or sell products for other users to bid.
 
+[Live Demo](https://plutus-5566.herokuapp.com/#/)
+
 ## Functionaliy and MVP
-In this web app, users will be able to:
-* Make a bid on the item you like (A google map will be used to show users where the bidding location is) or sell products for others to bid
-* Inbox for enquiry where users can send or receive messages from other users
-* A chatbot that can help you search items or change the language
-* Image zoom in/out as well as capture on the bid product show page
+* An "interactive" welcome page ![welcome](./images/welcome.gif)
+* Make a bid on an item and the latest price will be announced to all users in real-time. ![bidding](./images/bidding.gif)
+* A google map that shows users where the bidding location is ![map](./images/map.gif)
+* A user profile that shows the items they are selling or allows message inquiry 
+* Inbox for enquiry where users can send or receive messages from other users ![profile](./images/profile.gif)
+* A chatbot that can help you search items or change the language ![chatbot](./images/chatbot.gif)
+* A search form that the user can search for items ![search](./images/search.gif)
+* Responsive design ![responsive](./images/responsive.gif)
 
 ## Technologies and Technical Challenges
 The technologies used for this project are:
@@ -32,6 +37,6 @@ Our team consists of three members:
 * [Winnie](https://github.com/chinweenie)
 
 ## Usage
-``npm install`` in the root directory AND in the client directory
+``npm install`` in the root directory **AND** in the client directory
 
 ``npm run dev`` 
