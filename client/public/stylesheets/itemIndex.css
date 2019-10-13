@@ -1,9 +1,11 @@
-.index-body  {
-  margin: 30px;
+body  {
+  margin: auto;
   /* background-color: rgb(252, 252, 249); */
   width: 95vw;
   font-family: 'Raleway', sans-serif;
   text-decoration: none;
+  /* overflow: hidden; */
+  padding: 0 3rem;
 }
 a {
   color: inherit;
@@ -76,6 +78,9 @@ a {
 @media only screen and (max-width: 800px){
   .index-info{
     font-size: 10px;
+  }
+  .index-img{
+    padding:16px 16px 16px 16px;
   }
 }
 
