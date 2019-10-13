@@ -122,9 +122,11 @@
 }
 .map{
   grid-row: 6;
+  padding-bottom: 5em;
 }
 .footer{
-  height: 100px;
+  height: 100%;
+  
 }
 /* .message-seller{
   padding-left: 10px;
