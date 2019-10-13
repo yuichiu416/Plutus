@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const db = require("../config/keys.js").MONGO_URI;
+let db = require("../config/keys.js").MONGO_URI;
 const expressGraphQL = require("express-graphql");
 const models = require("./models/index");
 const schema = require("./schema/schema.js");
@@ -12,18 +12,20 @@ const graphqlUpload = require('graphql-upload');
 const { graphqlUploadExpress } = graphqlUpload;
 const path = require('path');
 
+console.log(db);
+console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV === 'production')
+
 if (!db) {
     // throw new Error("You must provide a string to connect to MongoDB Atlas");
     db = "mongodb+srv://yui:izwnXkJCQUDHhhwi@plutus-a90m7.mongodb.net/test?retryWrites=true&w=majority"
 }
 
-if (process.env.NODE_ENV === 'production') {
-    console.log("I'm in production");
-    app.use(express.static('client/build'));
-    app.get('/', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    })
-}
+app.use(express.static('client/build'));
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+})
+
 
 
 mongoose
