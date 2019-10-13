@@ -32,6 +32,7 @@ class ItemShow extends React.Component {
         this.handlebid = this.handlebid.bind(this);
         this.id = this.props.match.params.id;
         this.currentPrice = 0;
+        console.log(this.props);
     }
     send(){
         if(parseInt(this.currentPrice) >= parseInt(this.state.mybid)){

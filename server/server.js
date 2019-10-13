@@ -12,8 +12,6 @@ const graphqlUpload = require('graphql-upload');
 const { graphqlUploadExpress } = graphqlUpload;
 const path = require('path');
 
-console.log(db);
-console.log(process.env.NODE_ENV);
 if (!db) {
     throw new Error("You must provide a string to connect to MongoDB Atlas");
 }
