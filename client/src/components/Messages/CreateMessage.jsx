@@ -26,6 +26,7 @@ class CreateMessage extends React.Component {
     }
 
     handleSubmit(e, newMessage){
+        debugger
         e.preventDefault();
         newMessage({
             variables: {
@@ -34,6 +35,7 @@ class CreateMessage extends React.Component {
                 receiver: this.state.receiver,
             }
         }).then(response => {
+            console.log(response);
             this.setState({
                 title: "",
                 body:"",
@@ -87,8 +89,8 @@ class CreateMessage extends React.Component {
                                 </div> */}
                                 
                                 
-                            </form>
                                 <button className="message-button">{t("button.send")}</button>
+                            </form>
                             </fieldset>
                             {this.state.message}
                         </div>

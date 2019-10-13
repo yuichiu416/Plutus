@@ -104,6 +104,10 @@ export default {
             id
             name
           }
+          receiver{
+            id
+            name
+          }
           replies{
             id
             title
