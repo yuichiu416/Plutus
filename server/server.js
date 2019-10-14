@@ -12,16 +12,6 @@ const graphqlUpload = require('graphql-upload');
 const { graphqlUploadExpress } = graphqlUpload;
 const path = require('path');
 
-// Error handler
-const errorHandler = (err, req, res, next) => {
-    if (res.headersSent) {
-        return next(err);
-    }
-    const { status } = err;
-    res.status(status).json(err);
-};
-app.use(errorHandler);
-
 if (!db) {
     throw new Error("You must provide a string to connect to MongoDB Atlas");
 }
