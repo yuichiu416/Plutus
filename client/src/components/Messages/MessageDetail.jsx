@@ -41,27 +41,6 @@ class MessageDetail extends Component {
         e.preventDefault();
         this.setState({body: e.target.value});
     }
-
-    // updateCache(cache, {addReply}){
-    //     debugger
-    //     let message;
-    //     try {
-    //         message = cache.readQuery({ query: FETCH_MESSAGE, variables: {id: this.props.match.params.messageId} });
-    //     } catch (error) {
-    //         return;
-    //     }
-    //     debugger
-    //     if (message){
-    //         let repliesArray = message.message.replies;
-    //         debugger
-    //         cache.writeQuery({
-    //             query: FETCH_MESSAGE,
-    //             variables: this.props.match.params.messageId,
-    //             data: { message: repliesArray.concat(addReply) }
-    //         });
-    //         debugger
-    //     }
-    // }
     
     render() {
         const { t } = this.props;
