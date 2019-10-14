@@ -23,21 +23,21 @@ const Nav = props => {
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     
                                     
-                                        <div className="menu-wrap">
+                                        {/* <div className="menu-wrap">
                                             <input type="checkbox" class="toggler"/>
                                                 <div className="hamburger"><div></div></div>
-                                                <div className="menu">
-                                        {/* <div className="menu-wrap">
+                                                <div className="menu"> */}
+                                        <div className="menu-wrap">
                                             <input type="checkbox" className="toggler" id="toggler"/>
                                                 <div className="hamburger"><div></div></div>
-                                                <div className="menu" onClick={() => document.getElementById("toggler").click()}> */}
+                                                <div className="menu" >
                                                     <div>
                                                         <div>
                                                             <ul>
-                                                                <li><Link to={`/users/${id}`}>Profile</Link></li>
-                                                                <li><Link to={`/users/${id}`}>Messages</Link></li>
-                                                                <li><Link to={`/users/${id}`}>Notifications</Link></li>
-                                                                <li><Link to={`/users/${id}`}>Contact</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Profile</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Messages</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Notifications</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Contact</Link></li>
                                                                 <SearchForm />
                                                             </ul>
                                                         </div>
