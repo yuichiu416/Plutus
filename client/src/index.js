@@ -10,6 +10,7 @@ import { ApolloProvider } from "react-apollo";
 import { HashRouter } from 'react-router-dom'
 import { onError } from "apollo-link-error";
 import { VERIFY_USER } from "./graphql/mutations";
+import { ApolloLink } from 'apollo-link';
 
 const cache = new InMemoryCache({
     dataIdFromObject: object => object._id || null
