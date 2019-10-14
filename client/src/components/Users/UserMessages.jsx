@@ -18,12 +18,12 @@ class UserMessages extends Component {
                 {({loading, error, data}) => {
                     if (loading) return <p>Loading...</p>
                     if (error) return <p>{error.message}</p>
-                    const messages = data.messages.filter(message => message.sender.id === this.props.user.id);
+                    const messages = data.messages.filter(message => message.receiver.id === this.props.user.id || message.sender.id === this.props.user.id);
                     const messagesLi = messages.map(message => {
                         return (
-                            <div className="message-seller">
+                            <div className="message-seller" key={message.id} >
                             <Link to={`/messages/${message.id}`}>
-                                <li key={message.id} >
+                                <li>
                                 <h3>{message.title}</h3>
                                 <p>{message.replies.length} {t("p.replies")}</p>
                                 </li>

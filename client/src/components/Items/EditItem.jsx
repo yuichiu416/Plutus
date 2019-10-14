@@ -30,11 +30,6 @@ class EditItem extends Component {
         // this.setState({ category: e.target.options[e.target.selectedIndex].value })
     }
 
-    // we need to remember to update our cache directly with our new item
-
-    updateLocation(){
-        return e => console.log("current location");
-    }
     fetchCategories(){
         return <Query query={FETCH_CATEGORIES}>
             {({ loading, error, data }) => {

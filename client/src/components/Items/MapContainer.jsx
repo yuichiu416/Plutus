@@ -16,10 +16,13 @@ export class MapContainer extends Component {
     componentDidMount(){
         this.setMapStyle();
         window.addEventListener('resize', () => {
+            const map = document.getElementById("map");
+            if(!map)
+                return;
             if(window.innerWidth > 800)
-                document.getElementById("map").parentElement.style.gridRow = "6";
+                map.parentElement.style.gridRow = "6";
             else
-                document.getElementById("map").parentElement.style.gridRow = "8";
+                map.parentElement.style.gridRow = "8";
         });
     }
     displayMarkers(){

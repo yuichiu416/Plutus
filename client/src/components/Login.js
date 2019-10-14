@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { LOGIN_USER } from "../graphql/mutations";
 import { translate } from 'react-switch-lang';
-import { Link } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
@@ -113,8 +112,8 @@ class Login extends Component {
                                     className="field1"
                                 />
                             </fieldset>
-                            <Link to="/index" ><button type="submit">{t("button.login")}</button></Link>
-                            <Link to="/index" ><button onClick={this.handleDemo}>{t("button.demo")}</button></Link>
+                            <a href="/index"><button type="submit">{t("button.login")}</button></a>
+                            <a href="/index"><button onClick={this.handleDemo}>{t("button.demo")}</button></a>
                             
                         </form>
                     </div>

@@ -22,7 +22,7 @@ class ItemShow extends React.Component {
             userActivity: [],
             username: null,
             text: '',
-            endpoint: "localhost:5000",
+            endpoint: window.location.origin.replace(/^http/, 'ws').replace(/3000/, "5000"),
             currentPrice: null,
             mybid: 0,
             sold: ""
@@ -32,6 +32,11 @@ class ItemShow extends React.Component {
         this.handlebid = this.handlebid.bind(this);
         this.id = this.props.match.params.id;
         this.currentPrice = 0;
+        this.countDown = this.countDown.bind(this);
+        this.timer = [];
+    }
+    componentWillUnmount() {
+        this.timer.forEach(id => clearInterval(id))
     }
     send(){
         if(parseInt(this.currentPrice) >= parseInt(this.state.mybid)){
@@ -59,38 +64,32 @@ class ItemShow extends React.Component {
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
-    countDown(endTime){
-        const that = this;
+    countDown(){
         const { t } = this.props;
         // Update the count down every 1 second
-        var x = setInterval(() => {
-            
-            // Get today's date and time
-            var now = new Date().getTime();
-            // Find the distance between now and the count down date
-            var distance = endTime - now;
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the result in the element with id="timer"
-            const timer = document.getElementById("timer");
-            if(!timer)
-                return;
-            timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
+        // Find the distance between now and the count down date
+        var distance = this.endTime - new Date().getTime();
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (that.timer || distance < 0) {
-                clearInterval(x);
-                timer.innerHTML = t("label.auctionEnded");
-                this.props.client.mutate({
-                    mutation: TOGGLE_SOLD,
-                    variables: { id: this.props.match.params.id }
-                });
-            }
-        }, 1000);
+        // Display the result in the element with id="timer"
+        const timer = document.getElementById("timer");
+        if(!timer)
+            return;
+        timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            timer.innerHTML = t("label.auctionEnded");
+            this.props.client.mutate({
+                mutation: TOGGLE_SOLD,
+                variables: { id: this.props.match.params.id }
+            });
+        }
     }
     
     updateCache(cache, { data }) {
@@ -136,14 +135,16 @@ class ItemShow extends React.Component {
                     if (data.items.length === 0)
                         return <h1>No items yet, <Link to="/items/new" > {t("button.createNewItem")}</Link></h1>
                     this.item = data.items.find(obj => obj.id === this.props.match.params.id);
-                    const countdownMinutes = this.item.endTime || 0;
-                    this.countDown(countdownMinutes);
+                    this.endTime = this.item.endTime || 0;
                     this.currentPrice = Math.max(this.item.starting_price, this.item.current_price);
                     const images = this.item.champions.map(champion => {
                         return <div className="box-images" key={champion}>
                             <Image className="box-image" cloudName='chinweenie' publicId={champion}/>
                         </div>
                     });
+                    if(!this.item.seller)
+                        return <h1>No seller information, please contact customer service</h1>
+                    this.timer.push(setInterval(this.countDown, 1000));
                     return (
                         <div className="item-show-body">
                         <div className="item-show-wrapper">

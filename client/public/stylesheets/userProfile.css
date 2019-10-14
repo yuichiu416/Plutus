@@ -1,0 +1,51 @@
+.hidden {
+    display: none
+}
+
+.nav-item {
+    cursor: pointer;
+}
+.nav-tabs {
+    margin-left: 100px;
+}
+
+.user-tab{
+    width: 75%;
+    margin: 100px auto;
+}
+
+.items-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.card {
+    width: 300px;
+    height: 350px;
+    margin: 10px;
+}
+
+.card .card-body > img {
+    display: flex;
+    width: 95%;
+    height: 70%;
+    border-radius: 5%;
+    margin-bottom: 10px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+.nav-link:hover{
+    cursor: pointer;
+}
+
+.user-notifications-ul {
+    list-style: none;
+}
+
+
+.user-notifications-ul > .unread {
+    font-weight: bolder;
+    color: black;
+    cursor: pointer;
+}
