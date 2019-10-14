@@ -22,23 +22,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-else{
-    app.use("/graphql", graphqlUploadExpress({
-        maxFileSize: 10000000,
-        maxFiles: 10
-    }), expressGraphQL(req => {
-        return {
-            schema,
-            // we are receiving the request and can check for our
-            // auth token under headers
-            context: {
-                token: req.headers.authorization
-            },
-            graphiql: true
-        };
-    })
-    );
-}
 
 mongoose
     .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -50,5 +33,19 @@ app.use(bodyParser.json());
 app.use(cors());
 // use the expressGraphQL middleware to connect our GraphQLSchema to Express
 // use graphqlUploadExpress middleware to upload file
+app.use("/graphql", graphqlUploadExpress({
+    maxFileSize: 10000000,
+    maxFiles: 10
+}), expressGraphQL(req => {
+    const graphiql = process.env.NODE_ENV === 'production' ? false : true
+        return {
+            schema,
+            context: {
+                token: req.headers.authorization
+            },
+            graphiql: graphiql
+        };
+    })
+);
 
 module.exports = app;
