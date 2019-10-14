@@ -37,7 +37,6 @@ class CreateMessage extends React.Component {
         }
         if (messages){
             let messagesArray = messages.messages;
-            debugger
             let newMessage = data.newMessage;
             cache.writeQuery({
                 query: FETCH_MESSAGES,
