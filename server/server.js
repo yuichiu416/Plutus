@@ -42,7 +42,7 @@ app.use("/graphql", cors(), graphqlUploadExpress({
             context: {
                 token: req.headers.authorization
             },
-            graphiql: false
+            graphiql: process.env.NODE_ENV === 'production' ? false : true
         };
     })
 );

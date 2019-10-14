@@ -30,7 +30,7 @@ cache.writeData({
 });
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:5000/graphql",
+    uri: window.location.origin.replace(/3000/, "5000") + "/graphql",
     headers: {
         // pass our token into the header of each request
         authorization: token
