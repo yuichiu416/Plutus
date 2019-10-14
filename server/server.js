@@ -33,17 +33,16 @@ app.use(bodyParser.json());
 app.use(cors());
 // use the expressGraphQL middleware to connect our GraphQLSchema to Express
 // use graphqlUploadExpress middleware to upload file
-app.use("/graphql", graphqlUploadExpress({
+app.use("/graphql", cors(), graphqlUploadExpress({
     maxFileSize: 10000000,
     maxFiles: 10
 }), expressGraphQL(req => {
-    const graphiql = process.env.NODE_ENV === 'production' ? false : true
         return {
             schema,
             context: {
                 token: req.headers.authorization
             },
-            graphiql: graphiql
+            graphiql: false
         };
     })
 );
