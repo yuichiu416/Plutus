@@ -2,10 +2,12 @@ import React from 'react'
 // import { Query } from 'react-apollo';
 import { Mutation } from "react-apollo";
 import { CREATE_MESSAGE } from '../../graphql/mutations';
+import Queries from '../../graphql/queries';
 // import Queries from '../../graphql/queries';
 import { translate } from 'react-switch-lang';
 import './CreateMessage.css';
 // const { FETCH_USERS } = Queries;
+const { FETCH_MESSAGES } = Queries;
 
 class CreateMessage extends React.Component {
     constructor(props){
@@ -16,12 +18,31 @@ class CreateMessage extends React.Component {
             receiver: this.props.userId,
             message: ""
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateCache = this.updateCache.bind(this);
     }
 
     update(field){
         return e => {
             this.setState({[field]: e.target.value});
+        }
+    }
+
+    updateCache(cache, { data }){
+        let messages;
+        try {
+            messages = cache.readQuery({ query: FETCH_MESSAGES })
+        } catch (error) {
+            return;
+        }
+        if (messages){
+            let messagesArray = messages.messages;
+            debugger
+            let newMessage = data.newMessage;
+            cache.writeQuery({
+                query: FETCH_MESSAGES,
+                data: { messages: messagesArray.concat(newMessage) }
+            })
         }
     }
 
@@ -49,9 +70,11 @@ class CreateMessage extends React.Component {
             <Mutation
                 mutation={CREATE_MESSAGE}
                 onError={err => this.setState({message: err.message})}
+                update={(cache, data) => this.updateCache(cache, data)}
                 onCompleted={data => {
                     this.setState({message: "The message has been sent"}); 
-                }}>
+                }}
+                >
                     {(newMessage, { data }) => {
                         return <div className="create-form">
                             <fieldset>
