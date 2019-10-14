@@ -92,7 +92,6 @@ class UserProfile extends Component {
                             </div>
                         )
                     } else {
-                        debugger
                         return (
                             <div>
                                 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
