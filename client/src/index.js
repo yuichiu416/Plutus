@@ -29,20 +29,26 @@ cache.writeData({
 });
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:5000/graphql",
+    uri: window.location.origin + "/graphql",
+    // uri: "http://localhost:5000/graphql",
     headers: {
         // pass our token into the header of each request
         authorization: token
     }
 });
 // make sure we log any additional errors we receive
-onError(({ graphQLErrors }) => {
-    if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        console.log('graphQLErrors', graphQLErrors);
+    }
+    if (networkError) {
+        console.log('networkError', networkError);
+    }
 });
-
+const link = ApolloLink.from([errorLink, httpLink]);
 
 const client = new ApolloClient({
-    link: httpLink,
+    link,
     cache,
     onError: ({ networkError, graphQLErrors }) => {
         console.log("graphQLErrors", graphQLErrors);
