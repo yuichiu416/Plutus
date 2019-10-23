@@ -10,7 +10,6 @@ const app = express();
 const cors = require("cors");
 const graphqlUpload = require('graphql-upload');
 const { graphqlUploadExpress } = graphqlUpload;
-const path = require('path');
 
 mongoose
 .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
