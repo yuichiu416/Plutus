@@ -24,8 +24,9 @@ if (!db) {
 // remember we use bodyParser to parse requests into json
 app.use(bodyParser.json());
 app.use(cors());
-app.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
-app.use(/\/((?!graphql).)*/, bodyParser.json());
+// app.use(/\/((?!graphql).)*/, bodyParser.urlencoded({ extended: true }));
+// app.use(/\/((?!graphql).)*/, bodyParser.json());
+
 // use the expressGraphQL middleware to connect our GraphQLSchema to Express
 // use graphqlUploadExpress middleware to upload file
 app.use("/graphql", graphqlUploadExpress({
