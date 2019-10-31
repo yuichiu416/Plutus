@@ -16,7 +16,7 @@ The technologies used for this project are:
 * Cloudinary DB
 * Google Map API
   
-## Functionaliy and MVP
+## Features
 * An "interactive" welcome page ![welcome](./images/welcome.gif)
 * Make a bid on an item and the latest price will be announced to all users in real-time. ![bidding](./images/bidding.gif)
 * A google map that shows users where the bidding location is ![map](./images/map.gif)
