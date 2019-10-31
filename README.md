@@ -5,6 +5,17 @@ products they like, or sell products for other users to bid.
 
 [Live Demo](https://plutus-5566.herokuapp.com/#/)
 
+## Technologies 
+The technologies used for this project are:
+* MongoDB
+* Express
+* React
+* Node.js
+* Apollo / GraphQL
+* Websocket
+* Cloudinary DB
+* Google Map API
+  
 ## Functionaliy and MVP
 * An "interactive" welcome page ![welcome](./images/welcome.gif)
 * Make a bid on an item and the latest price will be announced to all users in real-time. ![bidding](./images/bidding.gif)
@@ -15,28 +26,8 @@ products they like, or sell products for other users to bid.
 * A search form that the user can search for items ![search](./images/search.gif)
 * Responsive design ![responsive](./images/responsive.gif)
 
-## Technologies and Technical Challenges
-The technologies used for this project are:
-* GraphQL
-* Mongoose
-* Node
-* Apollo
-* Websocket
-* Cloudinary
-  
-The primary technical challenges we have identified so far are:
-* integrating google map into our app as well and to show the actual time before
-  the bidding session ends for one product
-* chatting feature and chatbot require the implementation of websocket
-
-
 ## Group members
 Our team consists of three members:
 * [Roger](https://github.com/yuichiu416)
 * [Stan](https://github.com/stanbond)
 * [Winnie](https://github.com/chinweenie)
-
-## Usage
-``npm install`` in the root directory **AND** in the client directory
-
-``npm run dev`` 

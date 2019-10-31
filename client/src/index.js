@@ -30,9 +30,7 @@ cache.writeData({
 });
 
 const httpLink = createHttpLink({
-    // uri: window.location.origin + "/graphql",
-    // uri: "http://localhost:5000/graphql",
-    uri: "https://plutus-5566.herokuapp.com/graphql",
+    uri: window.location.origin.replace(/3000/, "5000"),
     headers: {
         // pass our token into the header of each request
         authorization: token
