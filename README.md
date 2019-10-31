@@ -26,6 +26,36 @@ The technologies used for this project are:
 * A search form that the user can search for items ![search](./images/search.gif)
 * Responsive design ![responsive](./images/responsive.gif)
 
+## Code snippet example
+The algorithm to display the countdown
+```javascript
+   countDown(){
+        const { t } = this.props;
+
+        var distance = this.endTime - new Date().getTime();
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="timer"
+        const timer = document.getElementById("timer");
+        if(!timer)
+            return;
+        timer.innerHTML = t("label.auctionIsDueIn") + days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            timer.innerHTML = t("label.auctionEnded");
+            this.props.client.mutate({
+                mutation: TOGGLE_SOLD,
+                variables: { id: this.props.match.params.id }
+            });
+        }
+    }
+```
+
 ## Group members
 Our team consists of three members:
 * [Roger](https://github.com/yuichiu416)

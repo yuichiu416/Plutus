@@ -38,13 +38,19 @@ class ItemShow extends React.Component {
     componentWillUnmount() {
         this.timer.forEach(id => clearInterval(id))
     }
+    componentDidMount(){
+        const socket = socketIOClient(this.state.endpoint);
+        socket.on('bid', (currentPrice) => {
+                this.setState({ currentPrice: currentPrice });
+            });
+    }
     send(){
         if(parseInt(this.currentPrice) >= parseInt(this.state.mybid)){
             alert("Bid too low, please make a higher bid");
             return false;
         }
         if(this.item.endTime - new Date().getTime() <= 0){
-            alert("Sorry, the auction for this is ended.");
+            alert("Sorry, the auction for this item is ended.");
             return false;
         }
         const socket = socketIOClient(this.state.endpoint);
@@ -54,21 +60,14 @@ class ItemShow extends React.Component {
             input.value = "";
         return true;
     }
-    componentDidMount(){
-        const socket = socketIOClient(this.state.endpoint);
-        socket.on('bid', (currentPrice) => {
-                this.setState({ currentPrice: currentPrice });
-            });
-    }
 
     update(field) {
         return e => this.setState({ [field]: e.target.value });
     }
+    
     countDown(){
         const { t } = this.props;
-        // Update the count down every 1 second
 
-        // Find the distance between now and the count down date
         var distance = this.endTime - new Date().getTime();
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
