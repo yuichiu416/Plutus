@@ -73,10 +73,10 @@ const Nav = props => {
                                             <div>
                                                 <div>
                                                     <ul>
-                                                        <li><a href="#">Profile</a></li>
-                                                        <li><a href="#">Messages</a></li>
-                                                        <li><a href="#">Notifications</a></li>
-                                                        <li><a href="#">Contact</a></li>
+                                                        <li><a href="/">Profile</a></li>
+                                                        <li><a href="/">Messages</a></li>
+                                                        <li><a href="/">Notifications</a></li>
+                                                        <li><a href="/">Contact</a></li>
                                                         <SearchForm />
                                                     </ul>
                                                 </div>
