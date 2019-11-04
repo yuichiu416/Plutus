@@ -31,7 +31,8 @@ const App = () => {
         <AuthRoute exact path="/messages/new" component={CreateMessage} />
         <AuthRoute exact path="/messages/:messageId" component={MessageDetail}/>
         <AuthRoute exact path="/messages" component={MessagesIndex}/>
-        <AuthRoute exact path="/users/:userId" component={UserProfile}/>
+        <AuthRoute exact path="/users/:userId" component={UserProfile} />
+        <AuthRoute exact path="/users/:userId/:tabName" component={UserProfile}/>
         <Route exact path="/index" component={ItemIndex} />
         <Route exact path="/items/:id" component={ItemShow} />
         <Route exact path="/" component={Splash} />

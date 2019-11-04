@@ -27,7 +27,6 @@ class EditItem extends Component {
   
     update(field) {
         return e => this.setState({ [field]: e.target.value });
-        // this.setState({ category: e.target.options[e.target.selectedIndex].value })
     }
 
     fetchCategories(){

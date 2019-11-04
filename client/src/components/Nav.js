@@ -16,17 +16,11 @@ const Nav = props => {
             {client => (
                 <Query query={IS_LOGGED_IN}>
                     {({ data }) => {
+                        const id = localStorage.getItem("currentUser")
                         if (data.isLoggedIn) {
-                            const id = localStorage.getItem("currentUser")
                             return (
                                 <div className="loggedin-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
-                                    
-                                    
-                                        {/* <div className="menu-wrap">
-                                            <input type="checkbox" class="toggler"/>
-                                                <div className="hamburger"><div></div></div>
-                                                <div className="menu"> */}
                                         <div className="menu-wrap">
                                             <input type="checkbox" className="toggler" id="toggler"/>
                                                 <div className="hamburger"><div></div></div>
@@ -35,9 +29,9 @@ const Nav = props => {
                                                         <div>
                                                             <ul>
                                                         <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Profile</Link></li>
-                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Messages</Link></li>
-                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Notifications</Link></li>
-                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Contact</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/items`}>Items</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/messages`}>Messages</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/notifications`}>Notifications</Link></li>
                                                                 <SearchForm />
                                                             </ul>
                                                         </div>
@@ -73,10 +67,10 @@ const Nav = props => {
                                             <div>
                                                 <div>
                                                     <ul>
-                                                        <li><a href="/">Profile</a></li>
-                                                        <li><a href="/">Messages</a></li>
-                                                        <li><a href="/">Notifications</a></li>
-                                                        <li><a href="/">Contact</a></li>
+                                                        <li><a href={`/users/${id}`}>Profile</a></li>
+                                                        <li><a href={`/users/${id}/items`}>Items</a></li>
+                                                        <li><a href={`/users/${id}/messages`}>Messages</a></li>
+                                                        <li><a href={`/users/${id}/notifications`}>Notifications</a></li>
                                                         <SearchForm />
                                                     </ul>
                                                 </div>
