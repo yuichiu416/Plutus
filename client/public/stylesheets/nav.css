@@ -21,10 +21,10 @@
   top: 0;
   left: 0;
   z-index: 1;
-  width: 3vw;
-  height: 3vw;
+  width: 2.6vw;
+  height: 2.6vh;
   padding: 1rem;
-  background: var(--primary-color);
+  /* background: var(--primary-color); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +36,7 @@
   flex: none;
   width: 100%;
   height: 2px;
-  background: rgb(65, 64, 64);
+  background: rgb(107, 107, 107);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@
 
 .menu-wrap .toggler:checked ~ .menu > div {
   transform: scale(1);
-  transition-duration: var(--menu-speed);
+  transition-duration: 0.75s;
 }
 
 .menu-wrap .toggler:checked ~ .menu > div > div {

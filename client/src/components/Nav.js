@@ -8,7 +8,6 @@ import { translate } from 'react-switch-lang';
 
 
 const { IS_LOGGED_IN } = Queries;
-
 const Nav = props => {
     const { t } = props;
     
@@ -17,39 +16,28 @@ const Nav = props => {
             {client => (
                 <Query query={IS_LOGGED_IN}>
                     {({ data }) => {
+                        const id = localStorage.getItem("currentUser")
                         if (data.isLoggedIn) {
                             return (
                                 <div className="loggedin-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                         <div className="menu-wrap">
-                                            <input type="checkbox" className="toggler"/>
+                                            <input type="checkbox" className="toggler" id="toggler"/>
                                                 <div className="hamburger"><div></div></div>
-                                                <div className="menu">
+                                                <div className="menu" >
                                                     <div>
                                                         <div>
                                                             <ul>
-                                                                <li><a href="#">Profile</a></li>
-                                                                <li><a href="#">Messages</a></li>
-                                                                <li><a href="#">Notifications</a></li>
-                                                                <li><a href="#">Contact</a></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}`}>Profile</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/items`}>Items</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/messages`}>Messages</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/users/${id}/notifications`}>Notifications</Link></li>
                                                                 <SearchForm />
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                    {/* <ul className="profile-dropdown-main" id="profile-dropdown-main">
-                                        <li><img src="" className="" alt="" /></li>
-                                        <ul className="profile-dropdown-menu" id="profile-dropdown-menu">
-                                            <li className="profile-dropdown-header">
-                                                <img src="" className="" alt="" />
-                                            </li>
-                                            <li><Link to={`/users/:id`}>Profile</Link></li>
-                                        <li><Link to="/messages">Messages</Link></li>
-                                        </ul>
-                                    </ul> */}
-                                    
                                     <div className="nav-logout-div">
                                         <div className="box-lgout">
                                             <div className="logout-btn">
@@ -72,6 +60,23 @@ const Nav = props => {
                             return (
                                 <div className="loggedout-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
+                                    <div className="menu-wrap">
+                                        <input type="checkbox" className="toggler" />
+                                        <div className="hamburger"><div></div></div>
+                                        <div className="menu">
+                                            <div>
+                                                <div>
+                                                    <ul>
+                                                        <li><a href={`/users/${id}`}>Profile</a></li>
+                                                        <li><a href={`/users/${id}/items`}>Items</a></li>
+                                                        <li><a href={`/users/${id}/messages`}>Messages</a></li>
+                                                        <li><a href={`/users/${id}/notifications`}>Notifications</a></li>
+                                                        <SearchForm />
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="nav-button-duo">
                                         <Link to="/login" className="nav-button">{t("button.login")}</Link>
                                         <Link to="/register" className="nav-button">{t("button.signup")}</Link>

@@ -1,7 +1,7 @@
 .plutus-logo-nav {
   width: 40vw;
   max-width: 300px;;
-  margin-left: 15px;
+  margin-left: 18px;
   display: inline;
 }
 :root {
@@ -119,9 +119,13 @@ div[class*=box-lgout] {
   display: none;
 }
 
-/* .nav-search-div {
+.nav-search-bar {
+  height: 30px;
+  width: 200vw;
+  height: 200vw;
+}
   
-  align-items: center;
+  /* align-items: center; 
   position: absolute;
   display: inline-flex;
   flex-direction: row;
