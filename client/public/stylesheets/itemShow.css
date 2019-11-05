@@ -1,7 +1,9 @@
 .item-show-body  {
   margin: 30px;
   /* background-color: rgb(252, 252, 249); */
-  width: 95vw;
+  /* width: 95vw; */
+  margin-left: 50px;
+  margin-right: 50px;
   font-family: 'Raleway', sans-serif;
 }
 .item-show-wrapper{
@@ -17,6 +19,7 @@
   font-family: 'Raleway', sans-serif;
   color: rgb(66, 66, 66);
   font-size: 25px;
+  font-weight: bolder;
   /* border: 1px solid black; */
   /* align-self: start; */
 }
@@ -31,6 +34,8 @@
   font-family: 'Raleway', sans-serif;
   color: rgb(65, 64, 64);
   /* grid-auto-rows: minmax(200px auto); */
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .box-image{
   width: 450px;
@@ -54,6 +59,7 @@
   align-self: center;
   padding-left: 5%;
   font-family: 'Raleway', sans-serif;
+  margin: 20px;
 }
 .nested-timer {
   grid-row: 3;
@@ -69,6 +75,30 @@
   padding-left: 5%;
   font-family: 'Raleway', sans-serif;
 }
+
+.nested-bid-form >form > input {
+  margin-top: 10px;
+  height: 30px;
+  border-radius: 5%;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
+
+.nested-bid-form > form > button {
+  background: black;
+  color: white;
+  font-weight: bolder;
+  border: none;
+  height: 45px;
+  width: 400px;
+  border-radius: 5px;
+}
+
+.current-price {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
 .box-edit-link{
   grid-column: 2;
   grid-row: 3;

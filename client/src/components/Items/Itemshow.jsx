@@ -160,9 +160,9 @@ class ItemShow extends React.Component {
                             {/* <div className="box-bid"> */}
                                 <div className="nested-timer" id="timer"></div>
                                 <br/>
-                                    <label className="nested-current-price">
+                                <label className="nested-current-price">
                                     <br/>
-                                    {t("label.currentPrice")} {this.state.currentPrice || this.currentPrice}
+                                    <p className="current-price"> $ {this.state.currentPrice || this.currentPrice}</p>
                                 </label>
                                 <br />
                            {/* </div> */}
