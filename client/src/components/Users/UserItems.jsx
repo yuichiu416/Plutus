@@ -31,20 +31,20 @@ class UserItems extends Component {
                     const items = data.items.filter(item => item.seller.id === this.props.user.id);
                     const itemsLi = items.map(item => {
                         return (
-                            <li key={item.id} className="card border-primary mb-3" onClick={this.openItem(item.id)}>
-                                <div className="card-body">
+                            <li key={item.id} className="item-card" onClick={this.openItem(item.id)}>
+                                <div className="item-card-body">
                                     <Image cloudName='chinweenie' publicId={item.champions[0]} />
-                                    <h4 className="card-title">
+                                    <p className="item-card-title">
                                         {item.name}
-                                    </h4>
-                                    <p className="card-text">{t("p.sellingAt")} {item.starting_price}</p>
+                                    </p>
+                                    <p className="item-card-text">$ {item.starting_price}</p>
                                 </div>
                             </li>
                         )
                     })
                     return (
                         <div>
-                            <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
+                            {/* <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" /> */}
                             <ul className="items-list">
                                 {itemsLi}
                             </ul>

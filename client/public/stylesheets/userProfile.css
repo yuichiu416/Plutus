@@ -10,29 +10,49 @@
 }
 
 .user-tab{
-    width: 75%;
+    width: 90%;
     margin: 100px auto;
 }
 
 .items-list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 90px;
 }
 
-.card {
+.item-card {
     width: 300px;
     height: 350px;
-    margin: 10px;
+    margin: 15px;
+    border: 1px solid #1abc9c;
+    border-radius: 5%;
+    padding-top: 2%;
 }
 
-.card .card-body > img {
+.item-card .item-card-body > img {
     display: flex;
-    width: 95%;
-    height: 70%;
+    width: 250px;
+    height: 250px;
     border-radius: 5%;
-    margin-bottom: 10px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.item-card .item-card-body > p {
+    margin: 0;
+    font-weight: bolder;
+}
+
+.item-card-title {
+    width: 87%;
+    padding-left: 16%;
+}
+
+.item-card-text {
+    width: 85%;
+    padding-left: 16%;
 }
 
 .nav-link:hover{
