@@ -196,6 +196,7 @@ class Splash extends Component {
       <Link to="/index">
       <div className="splash-body">
         <div className="logo-container">
+          <p className="tagline">Welcome to Plutus. It is an live auction site for luxurious items. Click on the logo to proceed.</p>
           <img onClick={this.moveCanvas} src="Logo4.png" alt="plutus-logo" className="plutus-logo"/>
         </div>
       </div>

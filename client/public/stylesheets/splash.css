@@ -1,3 +1,12 @@
+.tagline {
+  position: absolute;
+  font-weight: bold;
+  top: 21%;
+  left: 25%;
+  z-index: 100;
+  color: white;
+}
+
 .splash-body{
   background-color: black;
   margin: 0;
@@ -14,7 +23,7 @@
 
 .plutus-logo {
   width: 70vw;
-  margin-top: 23%;
+  margin-top: 8%;
   margin-left: 15%;
   z-index: 11;
 }
