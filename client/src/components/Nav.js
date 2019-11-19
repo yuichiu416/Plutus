@@ -61,16 +61,16 @@ const Nav = props => {
                                 <div className="loggedout-navbar">
                                     <Link to="/index"><img src="Logo5.png" alt="plutus-logo" className="plutus-logo-nav" /></Link>
                                     <div className="menu-wrap">
-                                        <input type="checkbox" className="toggler" />
+                                        <input type="checkbox" className="toggler" id="toggler" />
                                         <div className="hamburger"><div></div></div>
                                         <div className="menu">
                                             <div>
                                                 <div>
                                                     <ul>
-                                                        <li><a href={`/users/${id}`}>Profile</a></li>
-                                                        <li><a href={`/users/${id}/items`}>Items</a></li>
-                                                        <li><a href={`/users/${id}/messages`}>Messages</a></li>
-                                                        <li><a href={`/users/${id}/notifications`}>Notifications</a></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/login`}>Profile</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/login`}>Items</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/login`}>Messages</Link></li>
+                                                        <li onClick={() => document.getElementById("toggler").click()}><Link to={`/login`}>Notifications</Link></li>
                                                         <SearchForm />
                                                     </ul>
                                                 </div>
