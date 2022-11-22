@@ -3,9 +3,6 @@
 Plutus is an auction bidding web app where users are allowed to bid on luxurious
 products they like, or sell products for other users to bid.
 
-[Live Demo](https://plutus-5566.herokuapp.com/#/)
-
-Update 2022/11/22: old account for Mongo db is down so live demo currently doesn't work as expected.
 
 ## Technologies 
 The technologies used for this project are:
